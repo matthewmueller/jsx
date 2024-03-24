@@ -3,7 +3,6 @@ package lexer
 import (
 	"fmt"
 	"strings"
-	"unicode"
 	"unicode/utf8"
 
 	"github.com/matthewmueller/jsx/internal/token"
@@ -53,9 +52,6 @@ type Lexer struct {
 
 	states []state // Stack of states
 	peaked []token.Token
-
-	inScript bool
-	inStyle  bool
 }
 
 func (l *Lexer) nextToken() token.Token {
@@ -118,91 +114,6 @@ func (l *Lexer) step() {
 	if l.cp == '\n' {
 		l.line++
 	}
-}
-
-func (l *Lexer) accept(cp rune, run ...rune) bool {
-	// Check the current rune
-	if l.cp != cp {
-		return false
-	}
-	str := l.peak(len(run))
-	if len(str) != len(run) {
-		return false
-	}
-	for i, r := range str {
-		if r != run[i] {
-			return false
-		}
-	}
-	for i := 0; i < len(run)+1; i++ {
-		l.step()
-	}
-	return true
-}
-
-func (l *Lexer) acceptFold(cp rune, run ...rune) bool {
-	// Check the current rune
-	if unicode.ToLower(l.cp) != unicode.ToLower(cp) {
-		return false
-	}
-	str := l.peak(len(run))
-	if len(str) != len(run) {
-		return false
-	}
-	for i, r := range str {
-		if unicode.ToLower(r) != unicode.ToLower(run[i]) {
-			return false
-		}
-	}
-	for i := 0; i < len(run)+1; i++ {
-		l.step()
-	}
-	return true
-}
-
-func (l *Lexer) text() string {
-	return l.input[l.start:l.end]
-}
-
-func (l *Lexer) stepUntil(rs ...rune) bool {
-	for {
-		if l.cp == eof {
-			return false
-		}
-		for _, r := range rs {
-			if l.cp == r {
-				return true
-			}
-		}
-		l.step()
-	}
-}
-
-// func (l *Lexer) peak1() rune {
-// 	cp, width := utf8.DecodeRuneInString(l.input[l.next:])
-// 	if width == 0 {
-// 		return eof
-// 	}
-// 	return cp
-// }
-
-func (l *Lexer) peak(n int) string {
-	s := new(strings.Builder)
-	if n == 0 {
-		s.WriteRune(l.cp)
-		return s.String()
-	}
-	next := l.next
-	for i := 0; i < n; i++ {
-		cp, width := utf8.DecodeRuneInString(l.input[next:])
-		if width == 0 {
-			cp = eof
-			break
-		}
-		s.WriteRune(cp)
-		next += width
-	}
-	return s.String()
 }
 
 func (l *Lexer) pushState(state state) {
@@ -425,24 +336,8 @@ func exprState(l *Lexer) (t token.Type) {
 	}
 }
 
-func isIdentifierHead(cp rune) bool {
-	return isAlpha(cp) || cp == '_' || cp == '$'
-}
-
 func isAlpha(cp rune) bool {
 	return (cp >= 'a' && cp <= 'z') || (cp >= 'A' && cp <= 'Z')
-}
-
-func isLower(cp rune) bool {
-	return cp >= 'a' && cp <= 'z'
-}
-
-func isLowerNumeric(cp rune) bool {
-	return isLower(cp) || (cp >= '0' && cp <= '9')
-}
-
-func isUpper(cp rune) bool {
-	return cp >= 'A' && cp <= 'Z'
 }
 
 func isAlphaNumeric(cp rune) bool {

@@ -25,7 +25,7 @@ func equal(t *testing.T, input, expected string) {
 		}
 		diff.TestString(t, strings.Join(actuals, " "), expected)
 		// Verify we can recover the original input if there were no errors
-		diff.TestString(t, string(actual.Bytes()), input)
+		diff.TestString(t, actual.String(), input)
 	})
 }
 
@@ -56,13 +56,13 @@ func equalFile(t *testing.T, path string) {
 			}
 			return
 		}
-		diff.TestString(t, string(actual.Bytes()), string(expect))
+		diff.TestString(t, actual.String(), string(expect))
 		// Verify we can recover the original input
 		generated := new(bytes.Buffer)
 		for _, token := range tokens {
 			generated.WriteString(token.Text)
 		}
-		diff.TestString(t, string(generated.Bytes()), string(input))
+		diff.TestString(t, generated.String(), string(input))
 	})
 }
 
