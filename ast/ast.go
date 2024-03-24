@@ -5,8 +5,19 @@ import (
 	"strings"
 )
 
+type Visitor interface {
+	VisitScript(*Script)
+	VisitText(*Text)
+	VisitField(*Field)
+	VisitStringValue(*StringValue)
+	VisitExpr(*Expr)
+	VisitBoolValue(*BoolValue)
+	VisitElement(*Element)
+}
+
 type Node interface {
 	String() string
+	Visit(Visitor)
 }
 
 var (
@@ -25,6 +36,10 @@ func (s *Script) String() string {
 	return sb.String()
 }
 
+func (s *Script) Visit(v Visitor) {
+	v.VisitScript(s)
+}
+
 type Fragment interface {
 	Node
 	fragment()
@@ -38,6 +53,10 @@ func (r *Text) fragment() {}
 
 func (r *Text) String() string {
 	return r.Value
+}
+
+func (r *Text) Visit(v Visitor) {
+	v.VisitText(r)
 }
 
 type Attr interface {
@@ -64,6 +83,10 @@ func (f *Field) String() string {
 	return f.Name + "=" + f.Value.String()
 }
 
+func (f *Field) Visit(v Visitor) {
+	v.VisitField(f)
+}
+
 type Value interface {
 	Node
 	value()
@@ -79,6 +102,10 @@ func (s *StringValue) String() string {
 	return s.Value
 }
 
+func (s *StringValue) Visit(v Visitor) {
+	v.VisitStringValue(s)
+}
+
 type Expr struct {
 	Value string
 }
@@ -91,6 +118,10 @@ func (e *Expr) String() string {
 	return "{" + e.Value + "}"
 }
 
+func (e *Expr) Visit(v Visitor) {
+	v.VisitExpr(e)
+}
+
 type BoolValue struct {
 	Value bool
 }
@@ -99,6 +130,10 @@ func (b *BoolValue) value() {}
 
 func (b *BoolValue) String() string {
 	return strconv.FormatBool(b.Value)
+}
+
+func (b *BoolValue) Visit(v Visitor) {
+	v.VisitBoolValue(b)
 }
 
 type Element struct {
@@ -134,4 +169,8 @@ func (e *Element) String() string {
 	out.WriteString(e.Name)
 	out.WriteString(">")
 	return out.String()
+}
+
+func (e *Element) Visit(v Visitor) {
+	v.VisitElement(e)
 }
