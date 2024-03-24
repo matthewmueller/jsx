@@ -1,0 +1,805 @@
+text:"import SlackButton from \"../components/slack-button\"\nimport Header from \"../components/header\"\nimport Footer from \"../components/footer\"\nimport uncaught from \"../lib/uncaught\"\nimport { h, Component } from \"preact\"\nimport * as log from \"../lib/log\"\nimport poss from \"../lib/poss\"\nimport env from \"../lib/env\"\nimport { Head } from \"elmo\"\n\nuncaught((type, err) =>\n  log.error(type, { error: err.message, stack: err.stack })\n)\n\nexport default class Page extends Component {\n  async componentDidMount() {\n    const { router } = this.context\n    const { url } = this.props\n    const { code } = url.query\n    if (code) {\n      const result = await poss(this.createTeam(code))\n      if (result instanceof Error) {\n        await log.error(\"unable to create team\", { error: result.message })\n        router.push(\"/?failure=1\")\n        return\n      }\n      router.push(\"/?success=1\")\n      await log.warn(\"new team\", { team: result.team_name })\n      return\n    }\n  }\n\n  async createTeam(code) {\n    console.log(env.SLACK_REDIRECT_URL)\n    const res = await fetch(env.API_URL + \"/slack/teams\", {\n      method: \"POST\",\n      body: JSON.stringify({\n        code,\n        redirect_url: env.SLACK_REDIRECT_URL,\n      }),\n    })\n    const json = await res.json()\n    if (json.error) {\n      throw new Error(json.error)\n    }\n    return json\n  }\n\n  render() {\n    const { url } = this.context\n    return (\n      "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"page\""
+>
+space:"\n        "
+<
+identifier:"Head"
+>
+space:"\n          "
+<
+identifier:"title"
+>
+text:"Standup Jack"
+</
+identifier:"title"
+>
+space:"\n        "
+</
+identifier:"Head"
+>
+space:"\n        "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"banner\""
+space:" "
+identifier:"data-success"
+=
+expr:"{!!url.query.success}"
+>
+space:"\n          "
+text:"Jack was successfully added to your team. Catch you on Slack!\n        "
+</
+identifier:"div"
+>
+space:"\n        "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"banner\""
+space:" "
+identifier:"data-failure"
+=
+expr:"{!!url.query.failure}"
+>
+space:"\n          "
+text:"There was an error adding Jack to your Slack. Second time’s a charm?\n        "
+</
+identifier:"div"
+>
+space:"\n        "
+<
+identifier:"Header"
+space:" "
+identifier:"success"
+=
+expr:"{url.query.success}"
+space:" "
+/>
+space:"\n        "
+<
+identifier:"Walkthrough"
+space:" "
+identifier:"success"
+=
+expr:"{url.query.success}"
+space:" "
+/>
+space:"\n        "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"footer\""
+>
+space:"\n          "
+<
+identifier:"Footer"
+space:" "
+identifier:"success"
+=
+expr:"{url.query.success}"
+space:" "
+/>
+space:"\n        "
+</
+identifier:"div"
+>
+space:"\n        "
+<
+identifier:"style"
+space:" "
+identifier:"jsx"
+>
+space:"\n          "
+expr:"{`\n            .page {\n              min-height: 100%;\n              min-width: 100%;\n            }\n\n            .banner {\n              display: none;\n              padding: 10px;\n              text-align: center;\n              top: 0;\n              left: 0;\n              right: 0;\n              z-index: 1;\n              position: absolute;\n            }\n\n            .banner[data-success=\"true\"],\n            .banner[data-failure=\"true\"] {\n              display: block;\n            }\n\n            .banner[data-success] {\n              background: #20d93f;\n              color: #2b8a3e;\n            }\n\n            .banner[data-failure] {\n              background: #ffa8a8;\n              color: #c92a2a;\n            }\n\n            .footer {\n              overflow: hidden;\n              margin-top: -178px;\n              width: 100%;\n            }\n          `}"
+space:"\n        "
+</
+identifier:"style"
+>
+space:"\n      "
+</
+identifier:"div"
+>
+space:"\n    "
+text:")\n  }\n}\n\nfunction Walkthrough({ success }) {\n  return (\n    "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"walkthrough\""
+>
+space:"\n      "
+<
+identifier:"ul"
+space:" "
+identifier:"className"
+=
+string:"\"list\""
+>
+space:"\n        "
+<
+identifier:"li"
+space:" "
+identifier:"className"
+=
+string:"\"item\""
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"count\""
+>
+text:"1"
+</
+identifier:"div"
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"left\""
+>
+space:"\n            "
+<
+identifier:"h3"
+>
+text:"Add Jack to Slack"
+</
+identifier:"h3"
+>
+space:"\n            "
+<
+identifier:"p"
+>
+text:"This will only take a minute."
+</
+identifier:"p"
+>
+space:"\n            "
+<
+identifier:"p"
+>
+space:"\n              "
+text:"Jack helps you plan your day and keep your teammates in the loop.\n            "
+</
+identifier:"p"
+>
+space:"\n          "
+</
+identifier:"div"
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"right\""
+>
+space:"\n            "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"button-container\""
+>
+space:"\n              "
+<
+identifier:"SlackButton"
+space:" "
+identifier:"success"
+=
+expr:"{success}"
+space:" "
+identifier:"jingle"
+=
+expr:"{true}"
+space:" "
+/>
+space:"\n            "
+</
+identifier:"div"
+>
+space:"\n            "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"feature-list\""
+>
+space:"\n              "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"feature-inner\""
+>
+space:"\n                "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"feature\""
+>
+space:"\n                  "
+<
+identifier:"img"
+space:" "
+identifier:"src"
+=
+string:"\"/static/images/checkmark-green.svg\""
+space:" "
+/>
+text:"5 minute setup\n                "
+</
+identifier:"div"
+>
+space:"\n                "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"feature\""
+>
+space:"\n                  "
+<
+identifier:"img"
+space:" "
+identifier:"src"
+=
+string:"\"/static/images/checkmark-green.svg\""
+space:" "
+/>
+space:"\n                  "
+text:"Remote ready\n                "
+</
+identifier:"div"
+>
+space:"\n                "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"feature\""
+>
+space:"\n                  "
+<
+identifier:"img"
+space:" "
+identifier:"src"
+=
+string:"\"/static/images/checkmark-green.svg\""
+space:" "
+/>
+space:"\n                  "
+text:"Manage inside Slack\n                "
+</
+identifier:"div"
+>
+space:"\n                "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"feature\""
+>
+space:"\n                  "
+<
+identifier:"img"
+space:" "
+identifier:"src"
+=
+string:"\"/static/images/checkmark-green.svg\""
+space:" "
+/>
+space:"\n                  "
+text:"14 days for free\n                "
+</
+identifier:"div"
+>
+space:"\n                "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"feature\""
+>
+space:"\n                  "
+<
+identifier:"img"
+space:" "
+identifier:"src"
+=
+string:"\"/static/images/checkmark-green.svg\""
+space:" "
+/>
+space:"\n                  "
+text:"$1 per user per month\n                "
+</
+identifier:"div"
+>
+space:"\n              "
+</
+identifier:"div"
+>
+space:"\n            "
+</
+identifier:"div"
+>
+space:"\n          "
+</
+identifier:"div"
+>
+space:"\n        "
+</
+identifier:"li"
+>
+space:"\n        "
+<
+identifier:"li"
+space:" "
+identifier:"className"
+=
+string:"\"item\""
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"count\""
+>
+text:"2"
+</
+identifier:"div"
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"left\""
+>
+space:"\n            "
+<
+identifier:"h3"
+>
+text:"Create a Standup"
+</
+identifier:"h3"
+>
+space:"\n            "
+<
+identifier:"p"
+>
+space:"\n              "
+text:"Once you add Jack to Slack, he will ask you what time you want to\n              have standup, with whom, and where to post the updates.\n            "
+</
+identifier:"p"
+>
+space:"\n            "
+<
+identifier:"p"
+>
+space:"\n              "
+text:"Jack will then introduce himself to each teammate and ask them to\n              pick a time that works best for them to give their update.\n            "
+</
+identifier:"p"
+>
+space:"\n          "
+</
+identifier:"div"
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"right\""
+>
+space:"\n            "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"image-container\""
+>
+space:"\n              "
+<
+identifier:"img"
+space:"\n                "
+identifier:"src"
+=
+string:"\"/static/images/create-standup.png\""
+space:"\n                "
+identifier:"alt"
+=
+string:"\"create standup\""
+space:"\n              "
+/>
+space:"\n            "
+</
+identifier:"div"
+>
+space:"\n          "
+</
+identifier:"div"
+>
+space:"\n        "
+</
+identifier:"li"
+>
+space:"\n        "
+<
+identifier:"li"
+space:" "
+identifier:"className"
+=
+string:"\"item\""
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"count\""
+>
+text:"3"
+</
+identifier:"div"
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"left\""
+>
+space:"\n            "
+<
+identifier:"h3"
+>
+text:"Give Jack your Daily Update"
+</
+identifier:"h3"
+>
+space:"\n            "
+<
+identifier:"p"
+>
+space:"\n              "
+text:"Jack will message you at the time you picked and ask you a few\n              questions.\n            "
+</
+identifier:"p"
+>
+space:"\n            "
+<
+identifier:"p"
+>
+space:"\n              "
+text:"These questions are designed to help you stay on track and let\n              your teammates know what you're up to.\n            "
+</
+identifier:"p"
+>
+space:"\n          "
+</
+identifier:"div"
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"right\""
+>
+space:"\n            "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"image-container\""
+>
+space:"\n              "
+<
+identifier:"img"
+space:" "
+identifier:"src"
+=
+string:"\"/static/images/give-update.png\""
+space:" "
+identifier:"alt"
+=
+string:"\"give update\""
+space:" "
+/>
+space:"\n            "
+</
+identifier:"div"
+>
+space:"\n          "
+</
+identifier:"div"
+>
+space:"\n        "
+</
+identifier:"li"
+>
+space:"\n        "
+<
+identifier:"li"
+space:" "
+identifier:"className"
+=
+string:"\"item\""
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"count\""
+>
+text:"4"
+</
+identifier:"div"
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"left\""
+>
+space:"\n            "
+<
+identifier:"h3"
+>
+text:"Get your Team's Updates"
+</
+identifier:"h3"
+>
+space:"\n            "
+<
+identifier:"p"
+>
+space:"\n              "
+text:"Every weekday at the time you picked, Jack will post everyone's\n              responses to the channel you chose.\n            "
+</
+identifier:"p"
+>
+space:"\n          "
+</
+identifier:"div"
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"right\""
+>
+space:"\n            "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"image-container\""
+>
+space:"\n              "
+<
+identifier:"img"
+space:" "
+identifier:"src"
+=
+string:"\"/static/images/post-standup.png\""
+space:" "
+identifier:"alt"
+=
+string:"\"post standup\""
+space:" "
+/>
+space:"\n            "
+</
+identifier:"div"
+>
+space:"\n          "
+</
+identifier:"div"
+>
+space:"\n        "
+</
+identifier:"li"
+>
+space:"\n        "
+<
+identifier:"li"
+space:" "
+identifier:"className"
+=
+string:"\"item\""
+space:" "
+identifier:"data-final"
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"count checkmark\""
+space:" "
+/>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"left\""
+>
+space:"\n            "
+<
+identifier:"h3"
+>
+text:"You're All Set!"
+</
+identifier:"h3"
+>
+space:"\n            "
+<
+identifier:"p"
+space:" "
+identifier:"className"
+=
+string:"\"casablanca\""
+>
+space:"\n              "
+<
+identifier:"a"
+space:"\n                "
+identifier:"href"
+=
+string:"\"https://www.youtube.com/watch?v=DDybg9CNXcM\""
+space:"\n                "
+identifier:"target"
+=
+string:"\"_blank\""
+space:"\n              "
+>
+space:"\n                "
+text:"I think this is the beginning of a beautiful friendship.\n              "
+</
+identifier:"a"
+>
+space:"\n            "
+</
+identifier:"p"
+>
+space:"\n          "
+</
+identifier:"div"
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"right\""
+>
+space:"\n            "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"slack-button\""
+>
+space:"\n              "
+<
+identifier:"SlackButton"
+space:" "
+identifier:"success"
+=
+expr:"{success}"
+space:" "
+identifier:"jingle"
+=
+expr:"{true}"
+space:" "
+/>
+space:"\n              "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"privacy\""
+>
+space:"\n                "
+<
+identifier:"a"
+space:" "
+identifier:"href"
+=
+string:"\"/privacy\""
+>
+text:"Privacy Policy"
+</
+identifier:"a"
+>
+space:"\n              "
+</
+identifier:"div"
+>
+space:"\n            "
+</
+identifier:"div"
+>
+space:"\n          "
+</
+identifier:"div"
+>
+space:"\n        "
+</
+identifier:"li"
+>
+space:"\n      "
+</
+identifier:"ul"
+>
+space:"\n      "
+<
+identifier:"style"
+space:" "
+identifier:"jsx"
+>
+space:"\n        "
+expr:"{`\n          .walkthrough {\n            background: #ffffff;\n            max-width: 1000px;\n            margin: 0 auto;\n            color: #4f433b;\n            width: 100%;\n          }\n\n          .list {\n            margin: 0 20px;\n            padding: 60px 0 0 0;\n            border-left: 2px solid #f4f4f4;\n            border-right: 2px solid #f4f4f4;\n          }\n\n          .item {\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            align-items: center;\n            position: relative;\n            list-style: none;\n            padding-bottom: 50px;\n            padding-right: 20px;\n            margin-bottom: 50px;\n            border-bottom: 1px solid #f5f5f5;\n          }\n          .item[data-final] {\n            border-bottom: none;\n            margin-bottom: 0;\n            height: 388px;\n          }\n          .item[data-final] .left {\n            width: 60%;\n          }\n          .item[data-final] .right {\n            width: 40%;\n          }\n          .item[data-final] .casablanca a {\n            text-decoration: none;\n            color: inherit;\n          }\n\n          .slack-button {\n            position: relative;\n            left: -100px;\n            top: -60px;\n          }\n\n          .count {\n            text-align: center;\n            line-height: 27px;\n            margin-left: -18px;\n            border: 3px solid #3386ff;\n            border-radius: 50%;\n            height: 33px;\n            width: 33px;\n            background: white;\n            font-size: 17px;\n            font-weight: 900;\n          }\n\n          .count.checkmark {\n            background-image: url(\"/static/images/checkmark.svg\");\n            background-position: center center;\n            background-repeat: no-repeat;\n            background-size: contain;\n          }\n\n          .left {\n            padding-right: 20px;\n            padding-left: 40px;\n            width: 45%;\n          }\n          .left h3 {\n            font-size: 26px;\n            font-weight: 800;\n          }\n          .left p {\n            color: #aaaaaa;\n            font-size: 17px;\n            font-weight: 400;\n            line-height: 1.2em;\n          }\n\n          .right {\n            text-align: center;\n            width: 55%;\n          }\n\n          .button-container {\n            margin-top: 50px;\n          }\n\n          .feature-list {\n            color: #212529;\n            padding: 20px 0 0 0;\n            list-style-type: none;\n            font-size: 16px;\n            display: flex;\n            flex-direction: column;\n          }\n\n          .feature-inner {\n            margin: 0 auto;\n            padding-left: 30px;\n          }\n\n          .feature {\n            margin-top: 8px;\n            display: flex;\n            line-height: 1.25;\n          }\n\n          .feature img {\n            height: 20px;\n            margin-right: 8px;\n          }\n\n          .image-container {\n            width: 100%;\n            padding: 20px;\n            border-radius: 10px;\n            border: 2px solid #f4f4f4;\n          }\n\n          .image-container > img {\n            max-width: 100%;\n          }\n\n          .image {\n            height: 100%;\n            background-size: contain;\n            background-repeat: no-repeat;\n          }\n          .image[data-start] {\n            background-image: url(\"/static/images/start.png\");\n            padding-bottom: 49.8%;\n          }\n          .image[data-update] {\n            background-image: url(\"/static/images/update.png\");\n            padding-bottom: 92.926%;\n          }\n          .image[data-standup] {\n            background-image: url(\"/static/images/standup.png\");\n            padding-bottom: 131%;\n          }\n\n          .privacy {\n            position: relative;\n            left: 0px;\n            top: 10px;\n          }\n\n          .privacy > a {\n            text-decoration: none;\n            font-size: 14px;\n            color: gray;\n          }\n\n          .privacy > a:hover {\n            text-decoration: underline;\n          }\n\n          @media (max-width: 670px) {\n            .item {\n              flex-direction: column;\n              padding-left: 15px;\n              padding-right: 15px;\n              padding-bottom: 15px;\n              margin-bottom: 15px;\n            }\n            .item:first-child {\n              padding-top: 50px;\n            }\n            .item[data-final] {\n              height: initial;\n              padding-bottom: 220px;\n            }\n            .item[data-final] .left {\n              width: 100%;\n            }\n            .item[data-final] .right {\n              width: 100%;\n            }\n\n            .left {\n              text-align: left;\n              padding-left: 10px;\n              padding-right: 0;\n              width: 100%;\n            }\n            .left h3 {\n              font-size: 24px;\n              text-align: center;\n            }\n\n            .right {\n              padding-top: 5px;\n              width: 100%;\n            }\n            .right .slack-button {\n              left: 0;\n              top: 0;\n            }\n          }\n        `}"
+space:"\n      "
+</
+identifier:"style"
+>
+space:"\n    "
+</
+identifier:"div"
+>
+space:"\n  "
+text:")\n}\n"

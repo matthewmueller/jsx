@@ -1,0 +1,257 @@
+/**
+ * Components
+ */
+
+import SlackButton from "../components/slack-button"
+import Header from "../components/header"
+import uncaught from "../lib/uncaught"
+
+uncaught((type, err) =>
+  log.error(type, { error: err.message, stack: err.stack })
+)
+
+/**
+ * Privacy policy
+ */
+
+export default function Privacy() {
+  return (
+    <div className="page">
+      {" "}
+      <Header />
+      <div class="privacy">
+        <div className="markdown">
+          <h1>Privacy Policy</h1>
+          <p>
+            <strong>Your privacy is critically important to us.</strong>
+          </p>
+          <p>
+            In general, we run a humane service here. We act responsibly and
+            always aim to do what's right by you.
+          </p>
+          <p>
+            You can always <a href="mailto:hi@standupjack.com">email us</a>{" "}
+            about any privacy concerns. You can also request access to the data
+            we've collected or to ask us to permanently delete your data. We're
+            not data hoarders and want to make sure you continue to feel
+            comfortable with us being stewards of your data.
+          </p>
+          <p>
+            Here's a human-readable privacy policy that covers the website and
+            the Slack Bot:
+          </p>
+          <ol>
+            <li>
+              We don't ask you for personal information unless we truly need it.
+              (We can't stand services that ask you for things like your gender
+              or income level for no apparent reason.)
+            </li>
+            <li>
+              We don't share your personal information with anyone except to
+              provide the service or comply with the law.
+            </li>
+            <li>
+              We do keep data on our servers after you've uninstalled the app to
+              make it easier for you to rejoin again later (which happens
+              surprisingly often!).
+            </li>
+            <li>
+              We collect the following data:
+              <ul>
+                <li>
+                  Slack team and user data granted to us when your team added
+                  Standup Jack. We don't simply download all the data we can,
+                  rather we collect and store the data we need to operate the
+                  service and make the service responsive.{" "}
+                </li>
+                <li>
+                  Standup data collected over the lifetime of the application,
+                  so we can post and aggregate standups at a later point in
+                  time.
+                </li>
+                <li>
+                  We also archive conversations with Jack to help diagnose any
+                  issues with the conversation engine.
+                </li>
+                <li>
+                  IP addresses in our log files from requests to
+                  http://standupjack.com. Any traffic within Slack will be from
+                  Slack's IP addresses.
+                </li>
+              </ul>
+            </li>
+            <li>
+              We try to maintain a minimal and reputable set of third-party
+              vendors. We currently work with the following vendors:
+              <ul>
+                <li>Netlify for hosting</li>
+                <li>Amazon Web Services providing the service</li>
+                <li>Stripe for payments</li>
+                <li>Google Analytics for website analytics</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+
+        <div class="buttons">
+          <span class="subtext">Ready to communicate better?</span>
+          <SlackButton jiggle={true} />
+        </div>
+      </div>
+      <style jsx>{`
+        .privacy {
+          min-height: 800px;
+          max-width: 33em;
+          margin: 0 auto;
+          padding-bottom: 200px;
+          color: #3b434b;
+          width: 100%;
+        }
+        .buttons {
+          margin-top: 40px;
+          border-top: 2px solid #e8f2ff;
+          padding-top: 40px;
+          text-align: center;
+        }
+
+        .subtext {
+          font-weight: 700;
+          font-size: 18px;
+          padding-right: 10px;
+          position: relative;
+          top: -6px;
+        }
+
+        .markdown {
+          font-size: 18px;
+          font-weight: 400;
+          color: #4c4c36;
+          padding: 1.875em 0;
+        }
+
+        a {
+          cursor: pointer;
+          color: #4c4c36;
+          font-weight: 400;
+          transition: color 0.1s ease-in-out;
+        }
+        a:hover {
+          color: #2b00ad;
+        }
+
+        hr {
+          clear: both;
+          float: none;
+          width: 80%;
+          height: 1px;
+          margin: 1.4em auto;
+          border: none;
+          background-image: linear-gradient(
+            to left,
+            rgba(204, 204, 204, 0),
+            rgba(204, 204, 204, 0.75),
+            rgba(204, 204, 204, 0)
+          );
+        }
+
+        p:first-child {
+          font-size: 1.15em;
+        }
+
+        p {
+          word-wrap: break-word;
+          line-height: 1.75em;
+        }
+
+        h1 {
+          padding-top: 2em;
+          padding-bottom: 0.3em;
+          color: #3386ff;
+          margin: 0;
+        }
+
+        h2 {
+          font-size: 1.25em;
+        }
+
+        h3 {
+          font-size: 1em;
+        }
+
+        h2,
+        h4,
+        h5 {
+          margin: 0;
+          font-weight: bold;
+          color: #3b434b;
+          padding: 1em 0;
+        }
+
+        h3,
+        h4,
+        h5 {
+          color: #4c4c36;
+          padding: 1em 0;
+          padding-bottom: 0.25em;
+          padding-top: 1.5em;
+        }
+
+        img {
+          text-align: center;
+          max-width: 100%;
+        }
+
+        p > img {
+          padding: 1em 0;
+        }
+
+        pre {
+          overflow: visible;
+          width: 100%;
+        }
+
+        blockquote {
+          border-left: 6px solid #2900b3;
+          margin-left: 15px;
+          padding-left: 15px;
+          padding-top: 3px;
+          padding-bottom: 3px;
+          font-style: italic;
+        }
+
+        code {
+          font-size: 14px;
+          overflow-x: scroll;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        ol,
+        ul {
+          margin: 0;
+        }
+
+        ol > li,
+        ul > li {
+          padding-top: 1.5em;
+          line-height: 1.75em;
+        }
+
+        ol > li:last-child,
+        ul > li:last-child {
+          padding-bottom: 1em;
+        }
+
+        ol > li {
+        }
+
+        ul > li {
+          list-style: square;
+        }
+
+        iframe {
+          width: 100%;
+        }
+      `}</style>
+    </div>
+  )
+}

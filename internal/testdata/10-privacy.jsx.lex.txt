@@ -1,0 +1,290 @@
+text:"/**\n * Components\n */\n\nimport SlackButton from \"../components/slack-button\"\nimport Header from \"../components/header\"\nimport uncaught from \"../lib/uncaught\"\n\nuncaught((type, err) =>\n  log.error(type, { error: err.message, stack: err.stack })\n)\n\n/**\n * Privacy policy\n */\n\nexport default function Privacy() {\n  return (\n    "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"page\""
+>
+space:"\n      "
+expr:"{\" \"}"
+space:"\n      "
+<
+identifier:"Header"
+space:" "
+/>
+space:"\n      "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"privacy\""
+>
+space:"\n        "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"markdown\""
+>
+space:"\n          "
+<
+identifier:"h1"
+>
+text:"Privacy Policy"
+</
+identifier:"h1"
+>
+space:"\n          "
+<
+identifier:"p"
+>
+space:"\n            "
+<
+identifier:"strong"
+>
+text:"Your privacy is critically important to us."
+</
+identifier:"strong"
+>
+space:"\n          "
+</
+identifier:"p"
+>
+space:"\n          "
+<
+identifier:"p"
+>
+space:"\n            "
+text:"In general, we run a humane service here. We act responsibly and\n            always aim to do what's right by you.\n          "
+</
+identifier:"p"
+>
+space:"\n          "
+<
+identifier:"p"
+>
+space:"\n            "
+text:"You can always "
+<
+identifier:"a"
+space:" "
+identifier:"href"
+=
+string:"\"mailto:hi@standupjack.com\""
+>
+text:"email us"
+</
+identifier:"a"
+>
+expr:"{\" \"}"
+space:"\n            "
+text:"about any privacy concerns. You can also request access to the data\n            we've collected or to ask us to permanently delete your data. We're\n            not data hoarders and want to make sure you continue to feel\n            comfortable with us being stewards of your data.\n          "
+</
+identifier:"p"
+>
+space:"\n          "
+<
+identifier:"p"
+>
+space:"\n            "
+text:"Here's a human-readable privacy policy that covers the website and\n            the Slack Bot:\n          "
+</
+identifier:"p"
+>
+space:"\n          "
+<
+identifier:"ol"
+>
+space:"\n            "
+<
+identifier:"li"
+>
+space:"\n              "
+text:"We don't ask you for personal information unless we truly need it.\n              (We can't stand services that ask you for things like your gender\n              or income level for no apparent reason.)\n            "
+</
+identifier:"li"
+>
+space:"\n            "
+<
+identifier:"li"
+>
+space:"\n              "
+text:"We don't share your personal information with anyone except to\n              provide the service or comply with the law.\n            "
+</
+identifier:"li"
+>
+space:"\n            "
+<
+identifier:"li"
+>
+space:"\n              "
+text:"We do keep data on our servers after you've uninstalled the app to\n              make it easier for you to rejoin again later (which happens\n              surprisingly often!).\n            "
+</
+identifier:"li"
+>
+space:"\n            "
+<
+identifier:"li"
+>
+space:"\n              "
+text:"We collect the following data:\n              "
+<
+identifier:"ul"
+>
+space:"\n                "
+<
+identifier:"li"
+>
+space:"\n                  "
+text:"Slack team and user data granted to us when your team added\n                  Standup Jack. We don't simply download all the data we can,\n                  rather we collect and store the data we need to operate the\n                  service and make the service responsive.{\" \"}\n                "
+</
+identifier:"li"
+>
+space:"\n                "
+<
+identifier:"li"
+>
+space:"\n                  "
+text:"Standup data collected over the lifetime of the application,\n                  so we can post and aggregate standups at a later point in\n                  time.\n                "
+</
+identifier:"li"
+>
+space:"\n                "
+<
+identifier:"li"
+>
+space:"\n                  "
+text:"We also archive conversations with Jack to help diagnose any\n                  issues with the conversation engine.\n                "
+</
+identifier:"li"
+>
+space:"\n                "
+<
+identifier:"li"
+>
+space:"\n                  "
+text:"IP addresses in our log files from requests to\n                  http://standupjack.com. Any traffic within Slack will be from\n                  Slack's IP addresses.\n                "
+</
+identifier:"li"
+>
+space:"\n              "
+</
+identifier:"ul"
+>
+space:"\n            "
+</
+identifier:"li"
+>
+space:"\n            "
+<
+identifier:"li"
+>
+space:"\n              "
+text:"We try to maintain a minimal and reputable set of third-party\n              vendors. We currently work with the following vendors:\n              "
+<
+identifier:"ul"
+>
+space:"\n                "
+<
+identifier:"li"
+>
+text:"Netlify for hosting"
+</
+identifier:"li"
+>
+space:"\n                "
+<
+identifier:"li"
+>
+text:"Amazon Web Services providing the service"
+</
+identifier:"li"
+>
+space:"\n                "
+<
+identifier:"li"
+>
+text:"Stripe for payments"
+</
+identifier:"li"
+>
+space:"\n                "
+<
+identifier:"li"
+>
+text:"Google Analytics for website analytics"
+</
+identifier:"li"
+>
+space:"\n              "
+</
+identifier:"ul"
+>
+space:"\n            "
+</
+identifier:"li"
+>
+space:"\n          "
+</
+identifier:"ol"
+>
+space:"\n        "
+</
+identifier:"div"
+>
+space:"\n\n        "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"buttons\""
+>
+space:"\n          "
+<
+identifier:"span"
+space:" "
+identifier:"class"
+=
+string:"\"subtext\""
+>
+text:"Ready to communicate better?"
+</
+identifier:"span"
+>
+space:"\n          "
+<
+identifier:"SlackButton"
+space:" "
+identifier:"jiggle"
+=
+expr:"{true}"
+space:" "
+/>
+space:"\n        "
+</
+identifier:"div"
+>
+space:"\n      "
+</
+identifier:"div"
+>
+space:"\n      "
+<
+identifier:"style"
+space:" "
+identifier:"jsx"
+>
+expr:"{`\n        .privacy {\n          min-height: 800px;\n          max-width: 33em;\n          margin: 0 auto;\n          padding-bottom: 200px;\n          color: #3b434b;\n          width: 100%;\n        }\n        .buttons {\n          margin-top: 40px;\n          border-top: 2px solid #e8f2ff;\n          padding-top: 40px;\n          text-align: center;\n        }\n\n        .subtext {\n          font-weight: 700;\n          font-size: 18px;\n          padding-right: 10px;\n          position: relative;\n          top: -6px;\n        }\n\n        .markdown {\n          font-size: 18px;\n          font-weight: 400;\n          color: #4c4c36;\n          padding: 1.875em 0;\n        }\n\n        a {\n          cursor: pointer;\n          color: #4c4c36;\n          font-weight: 400;\n          transition: color 0.1s ease-in-out;\n        }\n        a:hover {\n          color: #2b00ad;\n        }\n\n        hr {\n          clear: both;\n          float: none;\n          width: 80%;\n          height: 1px;\n          margin: 1.4em auto;\n          border: none;\n          background-image: linear-gradient(\n            to left,\n            rgba(204, 204, 204, 0),\n            rgba(204, 204, 204, 0.75),\n            rgba(204, 204, 204, 0)\n          );\n        }\n\n        p:first-child {\n          font-size: 1.15em;\n        }\n\n        p {\n          word-wrap: break-word;\n          line-height: 1.75em;\n        }\n\n        h1 {\n          padding-top: 2em;\n          padding-bottom: 0.3em;\n          color: #3386ff;\n          margin: 0;\n        }\n\n        h2 {\n          font-size: 1.25em;\n        }\n\n        h3 {\n          font-size: 1em;\n        }\n\n        h2,\n        h4,\n        h5 {\n          margin: 0;\n          font-weight: bold;\n          color: #3b434b;\n          padding: 1em 0;\n        }\n\n        h3,\n        h4,\n        h5 {\n          color: #4c4c36;\n          padding: 1em 0;\n          padding-bottom: 0.25em;\n          padding-top: 1.5em;\n        }\n\n        img {\n          text-align: center;\n          max-width: 100%;\n        }\n\n        p > img {\n          padding: 1em 0;\n        }\n\n        pre {\n          overflow: visible;\n          width: 100%;\n        }\n\n        blockquote {\n          border-left: 6px solid #2900b3;\n          margin-left: 15px;\n          padding-left: 15px;\n          padding-top: 3px;\n          padding-bottom: 3px;\n          font-style: italic;\n        }\n\n        code {\n          font-size: 14px;\n          overflow-x: scroll;\n          -webkit-overflow-scrolling: touch;\n        }\n\n        ol,\n        ul {\n          margin: 0;\n        }\n\n        ol > li,\n        ul > li {\n          padding-top: 1.5em;\n          line-height: 1.75em;\n        }\n\n        ol > li:last-child,\n        ul > li:last-child {\n          padding-bottom: 1em;\n        }\n\n        ol > li {\n        }\n\n        ul > li {\n          list-style: square;\n        }\n\n        iframe {\n          width: 100%;\n        }\n      `}"
+</
+identifier:"style"
+>
+space:"\n    "
+</
+identifier:"div"
+>
+space:"\n  "
+text:")\n}\n"

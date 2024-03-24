@@ -1,0 +1,290 @@
+text:"// _document is only rendered on the server side and not on the client side\nimport { Document } from \"elmo\"\nconst { Head, Page, Scripts } = Document\nimport { h } from \"preact\"\n\nconst site = {\n  lang: \"en\",\n  title: \"Standup Jack\",\n  description:\n    \"Standup Jack is a Slack Bot for your Standups. Each weekday at a time of your choosing, Jack will message you a few questions. These questions are designed to help you plan your day and let your teammates know what you're up to.\",\n  url: \"https://standupjack.com\",\n  twitter: \"@mattmueller\",\n  card: \"https://standupjack.com/static/images/card-wide.png\",\n  favicon: \"https://standupjack.com/static/favicon.ico\",\n}\n\nexport default class Base extends Document {\n  render() {\n    return (\n      "
+<
+identifier:"html"
+space:" "
+identifier:"lang"
+=
+expr:"{site.lang}"
+>
+space:"\n        "
+<
+identifier:"Head"
+>
+space:"\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"name"
+=
+string:"\"description\""
+space:" "
+identifier:"content"
+=
+expr:"{site.description}"
+space:" "
+/>
+space:"\n\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"property"
+=
+string:"\"og:title\""
+space:" "
+identifier:"content"
+=
+expr:"{site.title}"
+space:" "
+/>
+space:"\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"property"
+=
+string:"\"og:url\""
+space:" "
+identifier:"content"
+=
+expr:"{site.url}"
+space:" "
+/>
+space:"\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"property"
+=
+string:"\"og:description\""
+space:" "
+identifier:"content"
+=
+expr:"{site.description}"
+space:" "
+/>
+space:"\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"property"
+=
+string:"\"og:image:type\""
+space:" "
+identifier:"content"
+=
+string:"\"image/png\""
+space:" "
+/>
+space:"\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"property"
+=
+string:"\"og:image:width\""
+space:" "
+identifier:"content"
+=
+string:"\"940\""
+space:" "
+/>
+space:"\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"property"
+=
+string:"\"og:image:height\""
+space:" "
+identifier:"content"
+=
+string:"\"550\""
+space:" "
+/>
+space:"\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"property"
+=
+string:"\"og:image\""
+space:" "
+identifier:"content"
+=
+expr:"{`${site.card}`}"
+space:" "
+/>
+space:"\n\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"name"
+=
+string:"\"twitter:card\""
+space:" "
+identifier:"content"
+=
+string:"\"summary_large_image\""
+space:" "
+/>
+space:"\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"name"
+=
+string:"\"twitter:site\""
+space:" "
+identifier:"content"
+=
+expr:"{site.twitter}"
+space:" "
+/>
+space:"\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"name"
+=
+string:"\"twitter:creator\""
+space:" "
+identifier:"content"
+=
+expr:"{site.twitter}"
+space:" "
+/>
+space:"\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"name"
+=
+string:"\"twitter:image\""
+space:" "
+identifier:"content"
+=
+expr:"{`${site.card}`}"
+space:" "
+/>
+space:"\n\n          "
+<
+identifier:"link"
+space:" "
+identifier:"rel"
+=
+string:"\"shortcut icon\""
+space:" "
+identifier:"href"
+=
+expr:"{site.favicon}"
+space:" "
+/>
+space:"\n          "
+<
+identifier:"link"
+space:" "
+identifier:"rel"
+=
+string:"\"icon\""
+space:" "
+identifier:"sizes"
+=
+string:"\"16x16 32x32\""
+space:" "
+identifier:"href"
+=
+expr:"{site.favicon}"
+space:" "
+/>
+space:"\n\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"name"
+=
+string:"\"viewport\""
+space:" "
+identifier:"content"
+=
+string:"\"width=device-width, initial-scale=1\""
+space:" "
+/>
+space:"\n\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"httpEquiv"
+=
+string:"\"X-UA-Compatible\""
+space:" "
+identifier:"content"
+=
+string:"\"IE=edge,chrome=1\""
+space:" "
+/>
+space:"\n          "
+<
+identifier:"meta"
+space:" "
+identifier:"charSet"
+=
+string:"\"utf-8\""
+space:" "
+/>
+space:"\n\n          "
+<
+identifier:"style"
+space:"\n            "
+identifier:"dangerouslySetInnerHTML"
+=
+expr:"{{\n              __html: `\n              * {\n                box-sizing: border-box;\n                text-rendering: optimizeLegibility;\n                -webkit-font-smoothing: antialiased;\n              }\n\n              html,\n              body,\n              #__next {\n                margin: 0;\n              }\n\n              html {\n              }\n\n              body {\n                font-family: -system-ui, sans-serif;\n                font-size: 16px;\n                background: #ffffff;\n              }\n            `,\n            }}"
+space:"\n          "
+/>
+space:"\n        "
+</
+identifier:"Head"
+>
+space:"\n        "
+<
+identifier:"body"
+>
+space:"\n          "
+<
+identifier:"Page"
+space:" "
+/>
+space:"\n          "
+<
+identifier:"Scripts"
+space:" "
+/>
+space:"\n          "
+<
+identifier:"script"
+space:"\n            "
+identifier:"async"
+space:"\n            "
+identifier:"src"
+=
+string:"\"https://www.googletagmanager.com/gtag/js?id=UA-10351690-15\""
+space:"\n          "
+/>
+space:"\n          "
+<
+identifier:"script"
+space:"\n            "
+identifier:"dangerouslySetInnerHTML"
+=
+expr:"{{\n              __html: `\n                window.dataLayer = window.dataLayer || [];\n                function gtag(){dataLayer.push(arguments);}\n                gtag('js', new Date());\n\n                gtag('config', 'UA-10351690-15');\n              `,\n            }}"
+space:"\n          "
+/>
+space:"\n        "
+</
+identifier:"body"
+>
+space:"\n      "
+</
+identifier:"html"
+>
+space:"\n    "
+text:")\n  }\n}\n"

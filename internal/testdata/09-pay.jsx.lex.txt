@@ -1,0 +1,288 @@
+text:"import Footer from '../components/footer'\nimport uncaught from '../lib/uncaught'\nimport { h, Component } from 'preact'\nimport Stripe from 'stripe-checkout'\nimport * as log from '../lib/log'\nimport poss from '../lib/poss'\nimport unfetch from 'unfetch'\nimport env from '../lib/env'\n\nuncaught((type, err) => log.error(type, { error: err.message, stack: err.stack }))\n\nconst stripe = new Stripe({ key: env.STRIPE_CLIENT_KEY })\n\nexport default class Page extends Component {\n  state = {\n    content: null\n  }\n\n  // /pay/:teams => /pay/wqzXYrYa\n  async componentDidMount() {\n    const { team } = this.context.params\n    const plan = 'team-monthly'\n    // try getting the customer\n    const customer = await poss(this.getCustomer(team))\n    if (customer instanceof Error) {\n      await log.error('unable to get customer', { team, message: customer.message })\n      return this.setState({ content: "
+<
+identifier:"UnknownServerError"
+space:" "
+/>
+text:" })\n    } else if (customer.error) {\n      await log.error('unable to get customer', { team, message: customer.error })\n      return this.setState({ content: "
+<
+identifier:"UserError"
+space:" "
+identifier:"error"
+=
+expr:"{customer.error}"
+space:" "
+/>
+text:" })\n    } else if (customer.existing) {\n      return this.setState({ content: "
+<
+identifier:"ExistingCustomer"
+space:" "
+identifier:"team"
+=
+expr:"{team}"
+space:" "
+/>
+text:" })\n    }\n\n    // try updating the customer\n    const payment = await this.checkout(customer.amount)\n    const updatedCustomer = await this.putCustomer(payment, plan, team)\n    if (updatedCustomer instanceof Error) {\n      await log.error('unable to put customer', {\n        team,\n        plan,\n        payment,\n        message: updatedCustomer.message\n      })\n      return this.setState({ content: "
+<
+identifier:"UnknownServerError"
+space:" "
+/>
+text:" })\n    } else if (updatedCustomer.error) {\n      await log.error('unable to put customer', {\n        team,\n        plan,\n        payment,\n        message: updatedCustomer.error\n      })\n      return this.setState({ content: "
+<
+identifier:"UserError"
+space:" "
+identifier:"error"
+=
+expr:"{updatedCustomer.error}"
+space:" "
+/>
+text:" })\n    }\n    return this.setState({ content: "
+<
+identifier:"SuccessMessage"
+space:" "
+/>
+text:" })\n  }\n\n  async getCustomer(team) {\n    if (!team) return null\n    const res = await poss(unfetch(`${env.API_URL}/stripe/customers/${team}`))\n    if (res instanceof Error) return res\n    const json = await poss(res.json())\n    if (json instanceof Error) return json\n    return json\n  }\n\n  async checkout(amount) {\n    const token = await stripe({\n      locale: 'auto',\n      name: 'Standup Jack',\n      description: 'A Slack Bot for your Standups',\n      amount: amount,\n      allowRememberMe: false,\n      image: '/static/images/jack-icon.png'\n    })\n    if (!token) {\n      return this.checkout(amount)\n    }\n    return token\n  }\n\n  async putCustomer(payment, plan, team) {\n    const res = await poss(\n      unfetch(`${env.API_URL}/stripe/customers/${team}`, {\n        method: 'PUT',\n        headers: {\n          'content-type': 'application/json'\n        },\n        body: JSON.stringify({\n          email: payment.email,\n          token: payment.id,\n          plan: plan\n        })\n      })\n    )\n    if (res instanceof Error) return res\n    const json = await poss(res.json())\n    if (json instanceof Error) return json\n    return json\n  }\n\n  render() {\n    const { content } = this.state\n    return (\n      "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"page\""
+>
+space:"\n        "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"cloud-1\""
+space:" "
+/>
+space:"\n        "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"cloud-2\""
+space:" "
+/>
+space:"\n        "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"content\""
+>
+expr:"{content}"
+</
+identifier:"div"
+>
+space:"\n        "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"footer\""
+>
+space:"\n          "
+<
+identifier:"Footer"
+space:" "
+/>
+space:"\n        "
+</
+identifier:"div"
+>
+space:"\n        "
+<
+identifier:"style"
+space:" "
+identifier:"jsx"
+>
+expr:"{`\n          .page {\n            display: flex;\n            align-items: center;\n            min-width: 100vw;\n            min-height: 100vh;\n            background: #f4f9ff;\n          }\n\n          .cloud-1 {\n            background-image: url('/static/images/cloud-1.svg');\n            position: absolute;\n            width: 159px;\n            height: 92px;\n            top: 50px;\n            right: 800px;\n            animation: float infinite 5s ease-in;\n          }\n\n          .cloud-2 {\n            background-image: url('/static/images/cloud-2.svg');\n            position: absolute;\n            height: 128px;\n            width: 228px;\n            right: 500px;\n            top: 30px;\n            animation: float infinite 5s ease-in;\n          }\n\n          .error:empty {\n            display: none;\n          }\n\n          .content {\n            text-align: center;\n            margin: 0 auto;\n          }\n\n          .footer {\n            position: absolute;\n            bottom: 0;\n            overflow: hidden;\n            width: 100%;\n          }\n        `}"
+</
+identifier:"style"
+>
+space:"\n      "
+</
+identifier:"div"
+>
+space:"\n    "
+text:")\n  }\n}\n\nconst UnknownServerError = () => (\n  "
+<
+identifier:"div"
+space:" "
+identifier:"style"
+=
+expr:"{{ maxWidth: 400 }}"
+>
+space:"\n    "
+<
+identifier:"h2"
+>
+text:"Drat! We encountered an error"
+</
+identifier:"h2"
+>
+space:"\n    "
+<
+identifier:"p"
+>
+space:"\n      "
+text:"Try refreshing your page and if it's still not working, please contact{' '}\n      "
+<
+identifier:"strong"
+>
+text:"support@standupjack.com"
+</
+identifier:"strong"
+>
+text:".\n    "
+</
+identifier:"p"
+>
+space:"\n  "
+</
+identifier:"div"
+>
+space:"\n"
+text:")\n\nconst SuccessMessage = () => (\n  "
+<
+identifier:"div"
+space:" "
+identifier:"style"
+=
+expr:"{{ maxWidth: 400 }}"
+>
+space:"\n    "
+<
+identifier:"h2"
+>
+text:"All set!"
+</
+identifier:"h2"
+>
+space:"\n    "
+<
+identifier:"p"
+>
+text:"Thanks for your support."
+</
+identifier:"p"
+>
+space:"\n    "
+<
+identifier:"p"
+space:" "
+identifier:"style"
+=
+expr:"{{ fontSize: 64 }}"
+>
+text:"🙌"
+</
+identifier:"p"
+>
+space:"\n  "
+</
+identifier:"div"
+>
+space:"\n"
+text:")\n\nconst ExistingCustomer = () => (\n  "
+<
+identifier:"div"
+space:" "
+identifier:"style"
+=
+expr:"{{ maxWidth: 400 }}"
+>
+space:"\n    "
+<
+identifier:"h2"
+>
+text:"You're already a customer!"
+</
+identifier:"h2"
+>
+space:"\n    "
+<
+identifier:"p"
+>
+text:"Thanks for your support."
+</
+identifier:"p"
+>
+space:"\n    "
+<
+identifier:"p"
+space:" "
+identifier:"style"
+=
+expr:"{{ fontSize: 64 }}"
+>
+text:"🙌"
+</
+identifier:"p"
+>
+space:"\n  "
+</
+identifier:"div"
+>
+space:"\n"
+text:")\n\nconst UserError = ({ error }) => (\n  "
+<
+identifier:"div"
+space:" "
+identifier:"style"
+=
+expr:"{{ maxWidth: 500 }}"
+>
+space:"\n    "
+<
+identifier:"h2"
+>
+text:"Woops! Something's not quite right..."
+</
+identifier:"h2"
+>
+space:"\n    "
+<
+identifier:"p"
+>
+space:"\n      "
+text:"Here's the error we got back: "
+<
+identifier:"code"
+>
+expr:"{error}"
+</
+identifier:"code"
+>
+space:"\n    "
+</
+identifier:"p"
+>
+space:"\n    "
+<
+identifier:"p"
+>
+space:"\n      "
+text:"Please double-check the URL and try refreshing your page. If it's still not working, please\n      contact "
+<
+identifier:"strong"
+>
+text:"support@standupjack.com"
+</
+identifier:"strong"
+>
+text:".\n    "
+</
+identifier:"p"
+>
+space:"\n  "
+</
+identifier:"div"
+>
+space:"\n"
+text:")\n"

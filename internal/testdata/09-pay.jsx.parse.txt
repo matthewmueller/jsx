@@ -1,0 +1,199 @@
+import Footer from '../components/footer'
+import uncaught from '../lib/uncaught'
+import { h, Component } from 'preact'
+import Stripe from 'stripe-checkout'
+import * as log from '../lib/log'
+import poss from '../lib/poss'
+import unfetch from 'unfetch'
+import env from '../lib/env'
+
+uncaught((type, err) => log.error(type, { error: err.message, stack: err.stack }))
+
+const stripe = new Stripe({ key: env.STRIPE_CLIENT_KEY })
+
+export default class Page extends Component {
+  state = {
+    content: null
+  }
+
+  // /pay/:teams => /pay/wqzXYrYa
+  async componentDidMount() {
+    const { team } = this.context.params
+    const plan = 'team-monthly'
+    // try getting the customer
+    const customer = await poss(this.getCustomer(team))
+    if (customer instanceof Error) {
+      await log.error('unable to get customer', { team, message: customer.message })
+      return this.setState({ content: <UnknownServerError /> })
+    } else if (customer.error) {
+      await log.error('unable to get customer', { team, message: customer.error })
+      return this.setState({ content: <UserError error={customer.error} /> })
+    } else if (customer.existing) {
+      return this.setState({ content: <ExistingCustomer team={team} /> })
+    }
+
+    // try updating the customer
+    const payment = await this.checkout(customer.amount)
+    const updatedCustomer = await this.putCustomer(payment, plan, team)
+    if (updatedCustomer instanceof Error) {
+      await log.error('unable to put customer', {
+        team,
+        plan,
+        payment,
+        message: updatedCustomer.message
+      })
+      return this.setState({ content: <UnknownServerError /> })
+    } else if (updatedCustomer.error) {
+      await log.error('unable to put customer', {
+        team,
+        plan,
+        payment,
+        message: updatedCustomer.error
+      })
+      return this.setState({ content: <UserError error={updatedCustomer.error} /> })
+    }
+    return this.setState({ content: <SuccessMessage /> })
+  }
+
+  async getCustomer(team) {
+    if (!team) return null
+    const res = await poss(unfetch(`${env.API_URL}/stripe/customers/${team}`))
+    if (res instanceof Error) return res
+    const json = await poss(res.json())
+    if (json instanceof Error) return json
+    return json
+  }
+
+  async checkout(amount) {
+    const token = await stripe({
+      locale: 'auto',
+      name: 'Standup Jack',
+      description: 'A Slack Bot for your Standups',
+      amount: amount,
+      allowRememberMe: false,
+      image: '/static/images/jack-icon.png'
+    })
+    if (!token) {
+      return this.checkout(amount)
+    }
+    return token
+  }
+
+  async putCustomer(payment, plan, team) {
+    const res = await poss(
+      unfetch(`${env.API_URL}/stripe/customers/${team}`, {
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: payment.email,
+          token: payment.id,
+          plan: plan
+        })
+      })
+    )
+    if (res instanceof Error) return res
+    const json = await poss(res.json())
+    if (json instanceof Error) return json
+    return json
+  }
+
+  render() {
+    const { content } = this.state
+    return (
+      <div class="page">
+        <div className="cloud-1" />
+        <div className="cloud-2" />
+        <div className="content">{content}</div>
+        <div className="footer">
+          <Footer />
+        </div>
+        <style jsx>{`
+          .page {
+            display: flex;
+            align-items: center;
+            min-width: 100vw;
+            min-height: 100vh;
+            background: #f4f9ff;
+          }
+
+          .cloud-1 {
+            background-image: url('/static/images/cloud-1.svg');
+            position: absolute;
+            width: 159px;
+            height: 92px;
+            top: 50px;
+            right: 800px;
+            animation: float infinite 5s ease-in;
+          }
+
+          .cloud-2 {
+            background-image: url('/static/images/cloud-2.svg');
+            position: absolute;
+            height: 128px;
+            width: 228px;
+            right: 500px;
+            top: 30px;
+            animation: float infinite 5s ease-in;
+          }
+
+          .error:empty {
+            display: none;
+          }
+
+          .content {
+            text-align: center;
+            margin: 0 auto;
+          }
+
+          .footer {
+            position: absolute;
+            bottom: 0;
+            overflow: hidden;
+            width: 100%;
+          }
+        `}</style>
+      </div>
+    )
+  }
+}
+
+const UnknownServerError = () => (
+  <div style={{ maxWidth: 400 }}>
+    <h2>Drat! We encountered an error</h2>
+    <p>
+      Try refreshing your page and if it's still not working, please contact{' '}
+      <strong>support@standupjack.com</strong>.
+    </p>
+  </div>
+)
+
+const SuccessMessage = () => (
+  <div style={{ maxWidth: 400 }}>
+    <h2>All set!</h2>
+    <p>Thanks for your support.</p>
+    <p style={{ fontSize: 64 }}>🙌</p>
+  </div>
+)
+
+const ExistingCustomer = () => (
+  <div style={{ maxWidth: 400 }}>
+    <h2>You're already a customer!</h2>
+    <p>Thanks for your support.</p>
+    <p style={{ fontSize: 64 }}>🙌</p>
+  </div>
+)
+
+const UserError = ({ error }) => (
+  <div style={{ maxWidth: 500 }}>
+    <h2>Woops! Something's not quite right...</h2>
+    <p>
+      Here's the error we got back: <code>{error}</code>
+    </p>
+    <p>
+      Please double-check the URL and try refreshing your page. If it's still not working, please
+      contact <strong>support@standupjack.com</strong>.
+    </p>
+  </div>
+)

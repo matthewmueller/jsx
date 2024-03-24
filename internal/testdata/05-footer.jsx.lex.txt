@@ -1,0 +1,94 @@
+text:"import { Link } from 'elmo'\n\nexport default function Footer() {\n  return (\n    "
+<
+identifier:"footer"
+>
+space:"\n      "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"left-scene\""
+space:" "
+/>
+space:"\n      "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"scene\""
+>
+space:"\n        "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"grass\""
+space:" "
+/>
+space:"\n        "
+<
+identifier:"Link"
+space:" "
+identifier:"href"
+=
+string:"\"/\""
+space:" "
+identifier:"prefetch"
+>
+space:"\n          "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"jack\""
+space:" "
+/>
+space:"\n        "
+</
+identifier:"Link"
+>
+space:"\n      "
+</
+identifier:"div"
+>
+space:"\n      "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"right-scene\""
+>
+space:"\n        "
+<
+identifier:"div"
+space:" "
+identifier:"className"
+=
+string:"\"right-scene-inner\""
+space:" "
+/>
+space:"\n      "
+</
+identifier:"div"
+>
+space:"\n      "
+<
+identifier:"style"
+space:" "
+identifier:"jsx"
+>
+expr:"{`\n        footer {\n          position: relative;\n          width: 100%;\n          height: 198px;\n        }\n\n        .left-scene {\n          background-image: url('/static/images/grass.svg');\n          background-position: -2px;\n          position: absolute;\n          bottom: -30px;\n          left: -500px;\n          height: 68px;\n          width: 50%;\n        }\n\n        .scene {\n          margin: 0 auto;\n          max-width: 1000px;\n          height: 100%;\n          width: 100%;\n          position: relative;\n        }\n\n        .grass {\n          z-index: 1;\n          background-image: url('/static/images/grass.svg');\n          background-position: -330px;\n          bottom: -30px;\n          position: absolute;\n          height: 68px;\n          width: 100%;\n        }\n\n        .jack {\n          background-image: url('/static/images/jack-home.svg');\n          background-position: 0px 10px;\n          background-repeat: no-repeat;\n          position: absolute;\n          right: 82px;\n          top: 0px;\n          height: 198px;\n          width: 371px;\n          cursor: pointer;\n        }\n        .jack[data-url$='faq'] {\n          background-image: url('/static/images/jack-faq.svg');\n        }\n        .jack[data-url$='faq'] {\n          background-image: url('/static/images/jack-contact.svg');\n        }\n\n        .right-scene {\n          position: absolute;\n          overflow: hidden;\n          bottom: -30px;\n          height: 68px;\n          width: 50%;\n          right: 0;\n        }\n        .right-scene-inner {\n          position: absolute;\n          height: 100%;\n          width: 100%;\n          right: -500px;\n          background-image: url('/static/images/grass.svg');\n          background-position: -462px;\n        }\n      `}"
+</
+identifier:"style"
+>
+space:"\n    "
+</
+identifier:"footer"
+>
+space:"\n  "
+text:")\n}\n"

@@ -1,0 +1,37 @@
+text:"import { Component, JSX, Fragment, h } from \"preact\"\n\ntype VNode = {\n  type: string\n  props: Record"
+text:"<string, string>\n  // children: (VNode | string)[]\n}\n\nexport type DocumentProps = {\n  script?: string\n  heads: VNode[]\n  style?: string\n  page?: string\n}\n\ntype DocumentContext = {\n  _docProps: DocumentProps\n}\n\nexport default class Document extends Component"
+text:"<DocumentProps> {\n  static Head: typeof Head\n  static Page: typeof Page\n  static Scripts: typeof Scripts\n  getChildContext(): DocumentContext {\n    return {\n      _docProps: {\n        heads: this.props.heads,\n        page: this.props.page,\n      },\n    }\n  }\n  render(): JSX.Element {\n    return "
+<
+>
+</
+>
+space:"\n  "
+text:"}\n}\n\nexport class Head extends Component {\n  render() {\n    const docProps = this.context._docProps || {}\n    const heads = docProps.heads || []\n    return (\n      "
+<
+identifier:"head"
+>
+space:"\n        "
+expr:"{(this.props.children || ([] as any)).concat(\n          heads.map((node: VNode) => h(node.type, node.props))\n        )}"
+space:"\n      "
+</
+identifier:"head"
+>
+space:"\n    "
+text:")\n  }\n}\n\nexport class Page extends Component {\n  render() {\n    const docProps = this.context._docProps || {}\n    return (\n      "
+<
+identifier:"div"
+space:"\n        "
+identifier:"id"
+=
+string:"\"bud#target\""
+space:"\n        "
+identifier:"dangerouslySetInnerHTML"
+=
+expr:"{{ __html: docProps.page }}"
+space:"\n      "
+>
+</
+identifier:"div"
+>
+space:"\n    "
+text:")\n  }\n}\n\nexport class Scripts extends Component {\n  render() {\n    return []\n  }\n}\n"

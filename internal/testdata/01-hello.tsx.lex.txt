@@ -1,0 +1,42 @@
+text:"import { h, Component } from 'preact';\nimport { useState } from 'preact/hooks';\ntype TextProps = {\n  text: string;\n}\nexport default function App"
+text:"<TextProps>(props: TextProps) {\n  const [count, setCount] = useState"
+text:"<number>(0);\n  return (\n    "
+<
+identifier:"div"
+>
+space:"\n      "
+<
+identifier:"p"
+>
+text:"Count: {count}"
+</
+identifier:"p"
+>
+space:"\n      "
+<
+identifier:"button"
+space:" "
+identifier:"onClick"
+=
+expr:"{() => setCount(count + 1)}"
+>
+text:"Click me"
+</
+identifier:"button"
+>
+space:"\n      "
+<
+identifier:"style"
+space:" "
+identifier:"scoped"
+>
+expr:"{`\n        p {\n          color: red;\n        }\n        button {\n          background: blue;\n        }\n      `}"
+</
+identifier:"style"
+>
+space:"\n    "
+</
+identifier:"div"
+>
+space:"\n  "
+text:");\n}\n"
