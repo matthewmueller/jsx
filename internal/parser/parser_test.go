@@ -124,6 +124,24 @@ func TestMultiLineExpr(t *testing.T) {
 	}})
 }
 
+func TestTemplateLiteral(t *testing.T) {
+	t.Skip("template literals are not supported yet")
+	equal(t, `export default () => (<h2 class={`+"`"+`hello`+"`"+`}>`, ``)
+	equal(t, `export default () => (<h2 class={`+"`"+`${hello}`+"`"+`}>`, ``)
+	equal(t, `export default () => (<h2 class={`+"`"+`${hello}${world}`+"`"+`}>`, ``)
+	equal(t, `export default () => (<h2 class={`+"`"+`${hello}${world}!`+"`"+`}>`, ``)
+	equal(t, `export default () => (<h2 class={`+"`"+`hello ${hello}${world}!`+"`"+`}>`, ``)
+	equal(t, `export default () => (<h2 class={`+"`"+`hello ${hello} ${world}!`+"`"+`}>`, ``)
+}
+
+func TestInExpr(t *testing.T) {
+	t.Skip("elements in an expr is not supported yet")
+	equal(t, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`)
+	equal(t, `export default function { return (<H2 func={() => <Header>hello world</Header>} />) }`, `export default function { return (<H2 func={() => <Header>hello world</Header>} />) }`)
+	equalAST(t, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`, nil)
+	equalAST(t, `export default function { return (<H2 func={() => <Header>hello world</Header>} />) }`, nil)
+}
+
 func TestFile(t *testing.T) {
 	equalFile(t, "01-hello.tsx")
 	equalFile(t, "02-document.jsx")

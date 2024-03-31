@@ -99,7 +99,7 @@ type StringValue struct {
 func (s *StringValue) value() {}
 
 func (s *StringValue) String() string {
-	return s.Value
+	return strconv.Quote(s.Value)
 }
 
 func (s *StringValue) Visit(v Visitor) {

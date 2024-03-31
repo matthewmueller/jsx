@@ -2,6 +2,7 @@ package parser
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/matthewmueller/jsx/ast"
@@ -263,8 +264,12 @@ func (p *Parser) parseField() (*ast.Field, error) {
 func (p *Parser) parseAttrValue() (ast.Value, error) {
 	switch {
 	case p.Accept(token.String):
+		value, err := strconv.Unquote(p.Text())
+		if err != nil {
+			return nil, err
+		}
 		return &ast.StringValue{
-			Value: p.Text(),
+			Value: value,
 		}, nil
 	case p.Accept(token.Expr):
 		return &ast.Expr{
