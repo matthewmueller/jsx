@@ -2,11 +2,13 @@ text:"import SlackButton from \"../components/slack-button\"\nimport Header from
 <
 identifier:"div"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"Head"
 >
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"title"
 >
@@ -14,18 +16,21 @@ text:"FAQ –\u00a0Standup Jack"
 </
 identifier:"title"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 </
 identifier:"Head"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"Header"
 space:" "
 expr:"{...props}"
 space:" "
 />
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"div"
 space:" "
@@ -33,7 +38,8 @@ identifier:"class"
 =
 string:"\"page\""
 >
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"div"
 space:" "
@@ -41,7 +47,8 @@ identifier:"className"
 =
 string:"\"markdown\""
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -49,7 +56,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -57,11 +65,13 @@ text:"How much does Standup Jack cost?"
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Jack is free for everyone to try for the first 14 days. After that\n              Jack costs "
 <
 identifier:"strong"
@@ -74,31 +84,39 @@ text:".\n            "
 </
 identifier:"p"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Jack will message you when you're getting close to the end of your\n              trial period with details on how to upgrade.\n            "
 </
 identifier:"p"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"If you choose to let your trial expire, Jack will gracefully go\n              into hibernation until you choose to upgrade or decide to remove\n              him.\n            "
 </
 identifier:"p"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 expr:"{/* <p>\n              I'll be offering yearly pricing very soon for <strong>$2/user/month</strong>. If\n              you're interested in that, please <a href={'mailto:' + props.email}>contact me</a>.\n            </p> */}"
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -106,7 +124,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -114,29 +133,36 @@ text:"Does Standup Jack support different timezones?"
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Yes of course! Jack looks up the timezone setting in your Slack\n              profile and makes sure that 10am is not 3am where you live.\n            "
 </
 identifier:"p"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"You'll definitely want to double-check that the timezone settings\n              are up-to-date, because Slack doesn't do this automatically for\n              you.\n            "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -144,7 +170,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -152,11 +179,13 @@ text:"Can I change the time I get asked for an update?"
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Of course! You just need to say "
 <
 identifier:"strong"
@@ -169,11 +198,14 @@ text:",\n              then pick your time and confirm.\n            "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -181,7 +213,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -189,11 +222,13 @@ text:"Can I change the time when standup gets posted?"
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Certainly! You just need to say{\" \"}\n              "
 <
 identifier:"strong"
@@ -206,11 +241,14 @@ text:", then pick a new time.\n            "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -218,7 +256,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -226,11 +265,13 @@ text:"Can I have standups on different days?"
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Definitely! You just need to say "
 <
 identifier:"strong"
@@ -247,15 +288,19 @@ text:"10am mondays, wednesdays and fridays"
 </
 identifier:"strong"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -263,7 +308,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -271,11 +317,13 @@ text:"Can I change who is participating in standup?"
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Absolutely! You just need to say "
 <
 identifier:"strong"
@@ -298,11 +346,14 @@ text:"to remove a\n              teammate.\n            "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -310,7 +361,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -318,11 +370,13 @@ text:"Can I post team standup to a different channel?"
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Yep! You just need to say "
 <
 identifier:"strong"
@@ -335,11 +389,14 @@ text:",\n              then pick which channel you want to post to.\n           
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -347,7 +404,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -355,11 +413,13 @@ text:"Can I have multiple standups per team?"
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Absolutely! You just need to say "
 <
 identifier:"strong"
@@ -369,16 +429,20 @@ text:"create a standup"
 identifier:"strong"
 >
 expr:"{\" \"}"
-space:"\n              "
+space:"\n"
+space:"              "
 text:"to create a new standup\n            "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -386,7 +450,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -394,24 +459,29 @@ text:"Can I pick my own questions?"
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Most def! You can add questions, change questions or remove\n              questions. To pick your own questions, message Jack:\n            "
 </
 identifier:"p"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"ul"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 <
 identifier:"li"
 >
-space:"\n                "
+space:"\n"
+space:"                "
 <
 identifier:"strong"
 >
@@ -424,11 +494,13 @@ text:"to add a new question to standup\n              "
 </
 identifier:"li"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 <
 identifier:"li"
 >
-space:"\n                "
+space:"\n"
+space:"                "
 <
 identifier:"strong"
 >
@@ -441,11 +513,13 @@ text:"to change an existing question\n              "
 </
 identifier:"li"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 <
 identifier:"li"
 >
-space:"\n                "
+space:"\n"
+space:"                "
 <
 identifier:"strong"
 >
@@ -458,15 +532,19 @@ text:"to remove a question from\n                standup\n              "
 </
 identifier:"li"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 </
 identifier:"ul"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -474,7 +552,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -482,20 +561,25 @@ text:"Can I tell Jack to post into private groups?"
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Yep! Whenever you create a new standup, you'll have the option to\n              invite @jack to a private group. There's a couple more steps, but\n              Jack will walk you through what you need to do to get that setup.\n            "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -503,7 +587,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -511,11 +596,13 @@ text:"Where can I read your privacy policy?"
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"You can visit "
 <
 identifier:"a"
@@ -533,7 +620,8 @@ text:"to learn\n              more about what data we retain, for how long and h
 <
 identifier:"p"
 >
-space:"\n                "
+space:"\n"
+space:"                "
 text:"If you have any questions or concerns, please don't hesitate to{\" \"}\n                "
 <
 identifier:"a"
@@ -550,15 +638,19 @@ text:"!\n              "
 </
 identifier:"p"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -566,7 +658,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -574,11 +667,13 @@ text:"I love this idea! But our team doesn't use Slack."
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Happy to hear you're interested! Right now Jack is only available\n              on Slack, but "
 <
 identifier:"a"
@@ -592,16 +687,20 @@ text:"contact me"
 identifier:"a"
 >
 expr:"{\" \"}"
-space:"\n              "
+space:"\n"
+space:"              "
 text:"if you'd like Jack on your system. I will build additional\n              adapters for email, hipchat, IRC or any other system depending on\n              demand.\n            "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -609,7 +708,8 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"h2"
 >
@@ -617,24 +717,29 @@ text:"What type of animal is Jack?"
 </
 identifier:"h2"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"p"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"Jack is a rooster. But he doesn't consider himself to be like the\n              other roosters. His friends say he's a good listener and very\n              respectful.\n            "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"div"
 >
-space:"\n        "
+space:"\n"
+space:"        "
 </
 identifier:"div"
 >
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"div"
 space:" "
@@ -642,7 +747,8 @@ identifier:"class"
 =
 string:"\"buttons\""
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"span"
 space:" "
@@ -654,7 +760,8 @@ text:"Ready to communicate better?"
 </
 identifier:"span"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"SlackButton"
 space:" "
@@ -665,15 +772,18 @@ space:" "
 expr:"{...props}"
 space:" "
 />
-space:"\n        "
+space:"\n"
+space:"        "
 </
 identifier:"div"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 </
 identifier:"div"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"div"
 space:" "
@@ -681,18 +791,21 @@ identifier:"className"
 =
 string:"\"footer\""
 >
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"Footer"
 space:" "
 expr:"{...props}"
 space:" "
 />
-space:"\n      "
+space:"\n"
+space:"      "
 </
 identifier:"div"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"style"
 space:" "
@@ -702,9 +815,11 @@ expr:"{`\n        .page {\n          min-height: 800px;\n          max-width: 36
 </
 identifier:"style"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 </
 identifier:"div"
 >
-space:"\n  "
+space:"\n"
+space:"  "
 text:")\n}\n"

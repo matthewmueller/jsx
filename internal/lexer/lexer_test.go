@@ -72,19 +72,52 @@ const children = `<body>
 </body>
 `
 
+const scoped = `export default () => {
+	return (
+		<p>hello</p>
+		<style scoped>{` + "`" + `
+			p {
+				color: red;
+			}
+			button {
+				background: blue;
+			}
+		` + "`" + `}</style>
+	)
+}
+`
+
+const newlined = `export default () => (
+	<div
+		className="hello"
+	>
+		hello
+		<span>world</span>
+	</div>
+)`
+
 func TestSample(t *testing.T) {
+	equal(t, `function() { return <h2>hello <span>world</span>.</h2> }`, `text:"function() { return " < identifier:"h2" > text:"hello " < identifier:"span" > text:"world" </ identifier:"span" > text:"." </ identifier:"h2" > space:" " text:"}"`)
 	equal(t, `hello <span>world</span>`, `text:"hello " < identifier:"span" > text:"world" </ identifier:"span" >`)
 	equal(t, `hello <span class="hello-world">world</span>`, `text:"hello " < identifier:"span" space:" " identifier:"class" = string:"\"hello-world\"" > text:"world" </ identifier:"span" >`)
 	equal(t, `hello <span data-class="hello-world" id = "wonderful">world</span>`, `text:"hello " < identifier:"span" space:" " identifier:"data-class" = string:"\"hello-world\"" space:" " identifier:"id" space:" " = space:" " string:"\"wonderful\"" > text:"world" </ identifier:"span" >`)
 	equal(t, `hello <button onClick={() => setCount(count + 1)}>Click me</button>`, `text:"hello " < identifier:"button" space:" " identifier:"onClick" = expr:"{() => setCount(count + 1)}" > text:"Click me" </ identifier:"button" >`)
 	equal(t, `hello <h2>world</h2>`, `text:"hello " < identifier:"h2" > text:"world" </ identifier:"h2" >`)
-	equal(t, `hello <input type="text" /> world`, `text:"hello " < identifier:"input" space:" " identifier:"type" = string:"\"text\"" space:" " /> text:" world"`)
+	equal(t, `hello <input type="text" /> world`, `text:"hello " < identifier:"input" space:" " identifier:"type" = string:"\"text\"" space:" " /> space:" " text:"world"`)
 	equal(t, `hello <h2>Record<string,string></h2>`, `text:"hello " < identifier:"h2" > text:"Record" < identifier:"string" text:",string>" </ identifier:"h2" >`)
 	equal(t, `type Record<string> = {}; function() { return <h2>hello world</h2> }`, `text:"type Record" text:"<string> = {}; function() { return " < identifier:"h2" > text:"hello world" </ identifier:"h2" > space:" " text:"}"`)
 	equal(t, `type Record<string> = {}; function() { return (<h2>hello world</h2>) }`, `text:"type Record" text:"<string> = {}; function() { return (" < identifier:"h2" > text:"hello world" </ identifier:"h2" > text:") }"`)
 	equal(t, `hello <Planet>mars</Planet>`, `text:"hello " < identifier:"Planet" > text:"mars" </ identifier:"Planet" >`)
-	equal(t, children, `< identifier:"body" > space:"\n\t" < identifier:"Page" space:" " /> space:"\n\t" < identifier:"Scripts" space:" " /> space:"\n" </ identifier:"body" > space:"\n"`)
+	equal(t, children, `< identifier:"body" > space:"\n" space:"\t" < identifier:"Page" space:" " /> space:"\n" space:"\t" < identifier:"Scripts" space:" " /> space:"\n" </ identifier:"body" > space:"\n"`)
 	equal(t, `hello <>fragment</>`, `text:"hello " < > text:"fragment" </ >`)
+	equal(t, scoped, `text:"export default () => {\n\treturn (\n\t\t" < identifier:"p" > text:"hello" </ identifier:"p" > space:"\n" space:"\t\t" < identifier:"style" space:" " identifier:"scoped" > expr:"{`+"`"+`\n\t\t\tp {\n\t\t\t\tcolor: red;\n\t\t\t}\n\t\t\tbutton {\n\t\t\t\tbackground: blue;\n\t\t\t}\n\t\t`+"`"+`}" </ identifier:"style" > space:"\n" space:"\t" text:")\n}\n"`)
+	equal(t, newlined, `text:"export default () => (\n\t" < identifier:"div" space:"\n" space:"\t\t" identifier:"className" = string:"\"hello\"" space:"\n" space:"\t" > space:"\n" space:"\t\t" text:"hello\n\t\t" < identifier:"span" > text:"world" </ identifier:"span" > space:"\n" space:"\t" </ identifier:"div" > space:"\n" text:")"`)
+}
+
+func TestInExpr(t *testing.T) {
+	t.Skip("not supported yet")
+	equal(t, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`, `text:"export default function { return (" < identifier:"H1" space:" " identifier:"func" = { text:"() => " < identifier:"h1" > text:"hello world" </ identifier:"h1" > } space:" " /> text:") }"`)
+	equal(t, `export default function { return (<H2 func={() => <Header>hello <span>world</span></Header>} />) }`, `text:"export default function { return (" < identifier:"H2" space:" " identifier:"func" = { text:"() => " < identifier:"Header" > text:"hello " < identifier:"span" > text:"world" </ identifier:"span" > </ identifier:"Header" > } space:" " /> text:") }"`)
 }
 
 func TestTemplateLiteral(t *testing.T) {
@@ -95,12 +128,6 @@ func TestTemplateLiteral(t *testing.T) {
 	equal(t, `export default () => (<h2 class={`+"`"+`${hello}${world}!`+"`"+`}>`, ``)
 	equal(t, `export default () => (<h2 class={`+"`"+`hello ${hello}${world}!`+"`"+`}>`, ``)
 	equal(t, `export default () => (<h2 class={`+"`"+`hello ${hello} ${world}!`+"`"+`}>`, ``)
-}
-
-func TestInExpr(t *testing.T) {
-	t.Skip("elements in an expr is not supported yet")
-	equal(t, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`, ``)
-	equal(t, `export default function { return (<H2 func={() => <Header>hello world</Header>} />) }`, ``)
 }
 
 func TestFile(t *testing.T) {

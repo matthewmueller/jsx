@@ -162,7 +162,8 @@ func (p *Parser) parseElement() (ast.Fragment, error) {
 	node := &ast.Element{
 		Name: name,
 	}
-	p.Accept(token.Space)
+	for p.Accept(token.Space) {
+	}
 	// Handle attributes
 	for !p.Check(token.SlashGreaterThan) && !p.Check(token.GreaterThan) {
 		attr, err := p.parseAttr()
@@ -170,7 +171,8 @@ func (p *Parser) parseElement() (ast.Fragment, error) {
 			return nil, err
 		}
 		node.Attrs = append(node.Attrs, attr)
-		p.Accept(token.Space)
+		for p.Accept(token.Space) {
+		}
 	}
 	if p.Accept(token.SlashGreaterThan) {
 		node.SelfClosing = true

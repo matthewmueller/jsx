@@ -6,31 +6,39 @@ identifier:"href"
 =
 expr:"{props.href}"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"button"
 >
-space:"\n        "
+space:"\n"
+space:"        "
 expr:"{props.children}"
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"style"
 space:" "
 identifier:"jsx"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 expr:"{`\n            button {\n              outline: none;\n              height: 33px;\n              border: 1px solid #ccced1;\n              text-decoration: none;\n              background: white;\n              border-radius: 6px;\n              padding: 6px 11px 8px 11px;\n              display: inline-block;\n              user-select: none;\n              color: #3b434b;\n              font-size: 15px;\n              font-weight: 700;\n              cursor: pointer;\n            }\n\n            button:hover {\n              border-color: #aaa;\n            }\n\n            button:active {\n              border-color: #aaa;\n            }\n          `}"
-space:"\n        "
+space:"\n"
+space:"        "
 </
 identifier:"style"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 </
 identifier:"button"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 </
 identifier:"Link"
 >
-space:"\n  "
+space:"\n"
+space:"  "
 text:")\n}\n"

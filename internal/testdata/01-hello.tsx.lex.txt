@@ -4,7 +4,8 @@ text:"<number>(0);\n  return (\n    "
 <
 identifier:"div"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"p"
 >
@@ -12,7 +13,8 @@ text:"Count: {count}"
 </
 identifier:"p"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"button"
 space:" "
@@ -24,7 +26,8 @@ text:"Click me"
 </
 identifier:"button"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"style"
 space:" "
@@ -34,9 +37,11 @@ expr:"{`\n        p {\n          color: red;\n        }\n        button {\n     
 </
 identifier:"style"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 </
 identifier:"div"
 >
-space:"\n  "
+space:"\n"
+space:"  "
 text:");\n}\n"

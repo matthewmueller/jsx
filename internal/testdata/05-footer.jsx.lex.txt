@@ -2,7 +2,8 @@ text:"import { Link } from 'elmo'\n\nexport default function Footer() {\n  retur
 <
 identifier:"footer"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"div"
 space:" "
@@ -11,7 +12,8 @@ identifier:"className"
 string:"\"left-scene\""
 space:" "
 />
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"div"
 space:" "
@@ -19,7 +21,8 @@ identifier:"className"
 =
 string:"\"scene\""
 >
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"div"
 space:" "
@@ -28,7 +31,8 @@ identifier:"className"
 string:"\"grass\""
 space:" "
 />
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"Link"
 space:" "
@@ -38,7 +42,8 @@ string:"\"/\""
 space:" "
 identifier:"prefetch"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"div"
 space:" "
@@ -47,15 +52,18 @@ identifier:"className"
 string:"\"jack\""
 space:" "
 />
-space:"\n        "
+space:"\n"
+space:"        "
 </
 identifier:"Link"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 </
 identifier:"div"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"div"
 space:" "
@@ -63,7 +71,8 @@ identifier:"className"
 =
 string:"\"right-scene\""
 >
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"div"
 space:" "
@@ -72,11 +81,13 @@ identifier:"className"
 string:"\"right-scene-inner\""
 space:" "
 />
-space:"\n      "
+space:"\n"
+space:"      "
 </
 identifier:"div"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"style"
 space:" "
@@ -86,9 +97,11 @@ expr:"{`\n        footer {\n          position: relative;\n          width: 100%
 </
 identifier:"style"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 </
 identifier:"footer"
 >
-space:"\n  "
+space:"\n"
+space:"  "
 text:")\n}\n"

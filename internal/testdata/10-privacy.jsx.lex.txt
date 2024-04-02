@@ -6,14 +6,17 @@ identifier:"className"
 =
 string:"\"page\""
 >
-space:"\n      "
+space:"\n"
+space:"      "
 expr:"{\" \"}"
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"Header"
 space:" "
 />
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"div"
 space:" "
@@ -21,7 +24,8 @@ identifier:"class"
 =
 string:"\"privacy\""
 >
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"div"
 space:" "
@@ -29,7 +33,8 @@ identifier:"className"
 =
 string:"\"markdown\""
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"h1"
 >
@@ -37,11 +42,13 @@ text:"Privacy Policy"
 </
 identifier:"h1"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"p"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"strong"
 >
@@ -49,24 +56,29 @@ text:"Your privacy is critically important to us."
 </
 identifier:"strong"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"p"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 text:"In general, we run a humane service here. We act responsibly and\n            always aim to do what's right by you.\n          "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"p"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 text:"You can always "
 <
 identifier:"a"
@@ -80,114 +92,139 @@ text:"email us"
 identifier:"a"
 >
 expr:"{\" \"}"
-space:"\n            "
+space:"\n"
+space:"            "
 text:"about any privacy concerns. You can also request access to the data\n            we've collected or to ask us to permanently delete your data. We're\n            not data hoarders and want to make sure you continue to feel\n            comfortable with us being stewards of your data.\n          "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"p"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 text:"Here's a human-readable privacy policy that covers the website and\n            the Slack Bot:\n          "
 </
 identifier:"p"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"ol"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"li"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"We don't ask you for personal information unless we truly need it.\n              (We can't stand services that ask you for things like your gender\n              or income level for no apparent reason.)\n            "
 </
 identifier:"li"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"li"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"We don't share your personal information with anyone except to\n              provide the service or comply with the law.\n            "
 </
 identifier:"li"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"li"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"We do keep data on our servers after you've uninstalled the app to\n              make it easier for you to rejoin again later (which happens\n              surprisingly often!).\n            "
 </
 identifier:"li"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"li"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"We collect the following data:\n              "
 <
 identifier:"ul"
 >
-space:"\n                "
+space:"\n"
+space:"                "
 <
 identifier:"li"
 >
-space:"\n                  "
+space:"\n"
+space:"                  "
 text:"Slack team and user data granted to us when your team added\n                  Standup Jack. We don't simply download all the data we can,\n                  rather we collect and store the data we need to operate the\n                  service and make the service responsive.{\" \"}\n                "
 </
 identifier:"li"
 >
-space:"\n                "
+space:"\n"
+space:"                "
 <
 identifier:"li"
 >
-space:"\n                  "
+space:"\n"
+space:"                  "
 text:"Standup data collected over the lifetime of the application,\n                  so we can post and aggregate standups at a later point in\n                  time.\n                "
 </
 identifier:"li"
 >
-space:"\n                "
+space:"\n"
+space:"                "
 <
 identifier:"li"
 >
-space:"\n                  "
+space:"\n"
+space:"                  "
 text:"We also archive conversations with Jack to help diagnose any\n                  issues with the conversation engine.\n                "
 </
 identifier:"li"
 >
-space:"\n                "
+space:"\n"
+space:"                "
 <
 identifier:"li"
 >
-space:"\n                  "
+space:"\n"
+space:"                  "
 text:"IP addresses in our log files from requests to\n                  http://standupjack.com. Any traffic within Slack will be from\n                  Slack's IP addresses.\n                "
 </
 identifier:"li"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 </
 identifier:"ul"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 </
 identifier:"li"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 <
 identifier:"li"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 text:"We try to maintain a minimal and reputable set of third-party\n              vendors. We currently work with the following vendors:\n              "
 <
 identifier:"ul"
 >
-space:"\n                "
+space:"\n"
+space:"                "
 <
 identifier:"li"
 >
@@ -195,7 +232,8 @@ text:"Netlify for hosting"
 </
 identifier:"li"
 >
-space:"\n                "
+space:"\n"
+space:"                "
 <
 identifier:"li"
 >
@@ -203,7 +241,8 @@ text:"Amazon Web Services providing the service"
 </
 identifier:"li"
 >
-space:"\n                "
+space:"\n"
+space:"                "
 <
 identifier:"li"
 >
@@ -211,7 +250,8 @@ text:"Stripe for payments"
 </
 identifier:"li"
 >
-space:"\n                "
+space:"\n"
+space:"                "
 <
 identifier:"li"
 >
@@ -219,23 +259,29 @@ text:"Google Analytics for website analytics"
 </
 identifier:"li"
 >
-space:"\n              "
+space:"\n"
+space:"              "
 </
 identifier:"ul"
 >
-space:"\n            "
+space:"\n"
+space:"            "
 </
 identifier:"li"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 </
 identifier:"ol"
 >
-space:"\n        "
+space:"\n"
+space:"        "
 </
 identifier:"div"
 >
-space:"\n\n        "
+space:"\n"
+space:"\n"
+space:"        "
 <
 identifier:"div"
 space:" "
@@ -243,7 +289,8 @@ identifier:"class"
 =
 string:"\"buttons\""
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"span"
 space:" "
@@ -255,7 +302,8 @@ text:"Ready to communicate better?"
 </
 identifier:"span"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"SlackButton"
 space:" "
@@ -264,15 +312,18 @@ identifier:"jiggle"
 expr:"{true}"
 space:" "
 />
-space:"\n        "
+space:"\n"
+space:"        "
 </
 identifier:"div"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 </
 identifier:"div"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 <
 identifier:"style"
 space:" "
@@ -282,9 +333,11 @@ expr:"{`\n        .privacy {\n          min-height: 800px;\n          max-width:
 </
 identifier:"style"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 </
 identifier:"div"
 >
-space:"\n  "
+space:"\n"
+space:"  "
 text:")\n}\n"

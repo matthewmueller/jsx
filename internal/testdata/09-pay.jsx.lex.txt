@@ -3,7 +3,8 @@ text:"import Footer from '../components/footer'\nimport uncaught from '../lib/un
 identifier:"UnknownServerError"
 space:" "
 />
-text:" })\n    } else if (customer.error) {\n      await log.error('unable to get customer', { team, message: customer.error })\n      return this.setState({ content: "
+space:" "
+text:"})\n    } else if (customer.error) {\n      await log.error('unable to get customer', { team, message: customer.error })\n      return this.setState({ content: "
 <
 identifier:"UserError"
 space:" "
@@ -12,7 +13,8 @@ identifier:"error"
 expr:"{customer.error}"
 space:" "
 />
-text:" })\n    } else if (customer.existing) {\n      return this.setState({ content: "
+space:" "
+text:"})\n    } else if (customer.existing) {\n      return this.setState({ content: "
 <
 identifier:"ExistingCustomer"
 space:" "
@@ -21,12 +23,14 @@ identifier:"team"
 expr:"{team}"
 space:" "
 />
-text:" })\n    }\n\n    // try updating the customer\n    const payment = await this.checkout(customer.amount)\n    const updatedCustomer = await this.putCustomer(payment, plan, team)\n    if (updatedCustomer instanceof Error) {\n      await log.error('unable to put customer', {\n        team,\n        plan,\n        payment,\n        message: updatedCustomer.message\n      })\n      return this.setState({ content: "
+space:" "
+text:"})\n    }\n\n    // try updating the customer\n    const payment = await this.checkout(customer.amount)\n    const updatedCustomer = await this.putCustomer(payment, plan, team)\n    if (updatedCustomer instanceof Error) {\n      await log.error('unable to put customer', {\n        team,\n        plan,\n        payment,\n        message: updatedCustomer.message\n      })\n      return this.setState({ content: "
 <
 identifier:"UnknownServerError"
 space:" "
 />
-text:" })\n    } else if (updatedCustomer.error) {\n      await log.error('unable to put customer', {\n        team,\n        plan,\n        payment,\n        message: updatedCustomer.error\n      })\n      return this.setState({ content: "
+space:" "
+text:"})\n    } else if (updatedCustomer.error) {\n      await log.error('unable to put customer', {\n        team,\n        plan,\n        payment,\n        message: updatedCustomer.error\n      })\n      return this.setState({ content: "
 <
 identifier:"UserError"
 space:" "
@@ -35,12 +39,14 @@ identifier:"error"
 expr:"{updatedCustomer.error}"
 space:" "
 />
-text:" })\n    }\n    return this.setState({ content: "
+space:" "
+text:"})\n    }\n    return this.setState({ content: "
 <
 identifier:"SuccessMessage"
 space:" "
 />
-text:" })\n  }\n\n  async getCustomer(team) {\n    if (!team) return null\n    const res = await poss(unfetch(`${env.API_URL}/stripe/customers/${team}`))\n    if (res instanceof Error) return res\n    const json = await poss(res.json())\n    if (json instanceof Error) return json\n    return json\n  }\n\n  async checkout(amount) {\n    const token = await stripe({\n      locale: 'auto',\n      name: 'Standup Jack',\n      description: 'A Slack Bot for your Standups',\n      amount: amount,\n      allowRememberMe: false,\n      image: '/static/images/jack-icon.png'\n    })\n    if (!token) {\n      return this.checkout(amount)\n    }\n    return token\n  }\n\n  async putCustomer(payment, plan, team) {\n    const res = await poss(\n      unfetch(`${env.API_URL}/stripe/customers/${team}`, {\n        method: 'PUT',\n        headers: {\n          'content-type': 'application/json'\n        },\n        body: JSON.stringify({\n          email: payment.email,\n          token: payment.id,\n          plan: plan\n        })\n      })\n    )\n    if (res instanceof Error) return res\n    const json = await poss(res.json())\n    if (json instanceof Error) return json\n    return json\n  }\n\n  render() {\n    const { content } = this.state\n    return (\n      "
+space:" "
+text:"})\n  }\n\n  async getCustomer(team) {\n    if (!team) return null\n    const res = await poss(unfetch(`${env.API_URL}/stripe/customers/${team}`))\n    if (res instanceof Error) return res\n    const json = await poss(res.json())\n    if (json instanceof Error) return json\n    return json\n  }\n\n  async checkout(amount) {\n    const token = await stripe({\n      locale: 'auto',\n      name: 'Standup Jack',\n      description: 'A Slack Bot for your Standups',\n      amount: amount,\n      allowRememberMe: false,\n      image: '/static/images/jack-icon.png'\n    })\n    if (!token) {\n      return this.checkout(amount)\n    }\n    return token\n  }\n\n  async putCustomer(payment, plan, team) {\n    const res = await poss(\n      unfetch(`${env.API_URL}/stripe/customers/${team}`, {\n        method: 'PUT',\n        headers: {\n          'content-type': 'application/json'\n        },\n        body: JSON.stringify({\n          email: payment.email,\n          token: payment.id,\n          plan: plan\n        })\n      })\n    )\n    if (res instanceof Error) return res\n    const json = await poss(res.json())\n    if (json instanceof Error) return json\n    return json\n  }\n\n  render() {\n    const { content } = this.state\n    return (\n      "
 <
 identifier:"div"
 space:" "
@@ -48,7 +54,8 @@ identifier:"class"
 =
 string:"\"page\""
 >
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"div"
 space:" "
@@ -57,7 +64,8 @@ identifier:"className"
 string:"\"cloud-1\""
 space:" "
 />
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"div"
 space:" "
@@ -66,7 +74,8 @@ identifier:"className"
 string:"\"cloud-2\""
 space:" "
 />
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"div"
 space:" "
@@ -78,7 +87,8 @@ expr:"{content}"
 </
 identifier:"div"
 >
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"div"
 space:" "
@@ -86,16 +96,19 @@ identifier:"className"
 =
 string:"\"footer\""
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"Footer"
 space:" "
 />
-space:"\n        "
+space:"\n"
+space:"        "
 </
 identifier:"div"
 >
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"style"
 space:" "
@@ -105,11 +118,13 @@ expr:"{`\n          .page {\n            display: flex;\n            align-items
 </
 identifier:"style"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 </
 identifier:"div"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 text:")\n  }\n}\n\nconst UnknownServerError = () => (\n  "
 <
 identifier:"div"
@@ -118,7 +133,8 @@ identifier:"style"
 =
 expr:"{{ maxWidth: 400 }}"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 <
 identifier:"h2"
 >
@@ -126,11 +142,13 @@ text:"Drat! We encountered an error"
 </
 identifier:"h2"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 <
 identifier:"p"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 text:"Try refreshing your page and if it's still not working, please contact{' '}\n      "
 <
 identifier:"strong"
@@ -143,7 +161,8 @@ text:".\n    "
 </
 identifier:"p"
 >
-space:"\n  "
+space:"\n"
+space:"  "
 </
 identifier:"div"
 >
@@ -156,7 +175,8 @@ identifier:"style"
 =
 expr:"{{ maxWidth: 400 }}"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 <
 identifier:"h2"
 >
@@ -164,7 +184,8 @@ text:"All set!"
 </
 identifier:"h2"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 <
 identifier:"p"
 >
@@ -172,7 +193,8 @@ text:"Thanks for your support."
 </
 identifier:"p"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 <
 identifier:"p"
 space:" "
@@ -184,7 +206,8 @@ text:"🙌"
 </
 identifier:"p"
 >
-space:"\n  "
+space:"\n"
+space:"  "
 </
 identifier:"div"
 >
@@ -197,7 +220,8 @@ identifier:"style"
 =
 expr:"{{ maxWidth: 400 }}"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 <
 identifier:"h2"
 >
@@ -205,7 +229,8 @@ text:"You're already a customer!"
 </
 identifier:"h2"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 <
 identifier:"p"
 >
@@ -213,7 +238,8 @@ text:"Thanks for your support."
 </
 identifier:"p"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 <
 identifier:"p"
 space:" "
@@ -225,7 +251,8 @@ text:"🙌"
 </
 identifier:"p"
 >
-space:"\n  "
+space:"\n"
+space:"  "
 </
 identifier:"div"
 >
@@ -238,7 +265,8 @@ identifier:"style"
 =
 expr:"{{ maxWidth: 500 }}"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 <
 identifier:"h2"
 >
@@ -246,11 +274,13 @@ text:"Woops! Something's not quite right..."
 </
 identifier:"h2"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 <
 identifier:"p"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 text:"Here's the error we got back: "
 <
 identifier:"code"
@@ -259,15 +289,18 @@ expr:"{error}"
 </
 identifier:"code"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 </
 identifier:"p"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 <
 identifier:"p"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 text:"Please double-check the URL and try refreshing your page. If it's still not working, please\n      contact "
 <
 identifier:"strong"
@@ -280,7 +313,8 @@ text:".\n    "
 </
 identifier:"p"
 >
-space:"\n  "
+space:"\n"
+space:"  "
 </
 identifier:"div"
 >

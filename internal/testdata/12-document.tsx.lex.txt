@@ -5,33 +5,41 @@ text:"<DocumentProps> {\n  static Head: typeof Head\n  static Page: typeof Page\
 >
 </
 >
-space:"\n  "
+space:"\n"
+space:"  "
 text:"}\n}\n\nexport class Head extends Component {\n  render() {\n    const docProps = this.context._docProps || {}\n    const heads = docProps.heads || []\n    return (\n      "
 <
 identifier:"head"
 >
-space:"\n        "
+space:"\n"
+space:"        "
 expr:"{(this.props.children || ([] as any)).concat(\n          heads.map((node: VNode) => h(node.type, node.props))\n        )}"
-space:"\n      "
+space:"\n"
+space:"      "
 </
 identifier:"head"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 text:")\n  }\n}\n\nexport class Page extends Component {\n  render() {\n    const docProps = this.context._docProps || {}\n    return (\n      "
 <
 identifier:"div"
-space:"\n        "
+space:"\n"
+space:"        "
 identifier:"id"
 =
 string:"\"bud#target\""
-space:"\n        "
+space:"\n"
+space:"        "
 identifier:"dangerouslySetInnerHTML"
 =
 expr:"{{ __html: docProps.page }}"
-space:"\n      "
+space:"\n"
+space:"      "
 >
 </
 identifier:"div"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 text:")\n  }\n}\n\nexport class Scripts extends Component {\n  render() {\n    return []\n  }\n}\n"

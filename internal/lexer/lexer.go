@@ -57,11 +57,18 @@ type Lexer struct {
 func (l *Lexer) nextToken() token.Token {
 	l.start = l.end
 	tokenType := l.states[len(l.states)-1](l)
+	text := l.input[l.start:l.end]
 	t := token.Token{
 		Type:  tokenType,
 		Start: l.start,
-		Text:  l.input[l.start:l.end],
+		Text:  text,
 		Line:  l.line,
+	}
+	// update newlines
+	for _, ch := range text {
+		if ch == '\n' {
+			l.line++
+		}
 	}
 	if tokenType == token.Error {
 		t.Error = l.err
@@ -111,9 +118,6 @@ func (l *Lexer) step() {
 	l.cp = codePoint
 	l.end = l.next
 	l.next += width
-	if l.cp == '\n' {
-		l.line++
-	}
 }
 
 func (l *Lexer) pushState(state state) {
@@ -142,13 +146,22 @@ func initialState(l *Lexer) (t token.Type) {
 		case eof:
 			return token.EOF
 		case '<':
-			if l.prev == 0 || isSpace(l.prev) || l.prev == '(' {
+			if l.prev == 0 || isNewline(l.prev) || isSpace(l.prev) || l.prev == '(' {
 				l.step()
 				l.pushState(startOpenTagState)
 				return token.LessThan
 			}
 			l.step()
 			continue
+		case '\n':
+			l.step()
+			return token.Space
+		case ' ', '\t', '\r':
+			l.step()
+			for isSpace(l.cp) {
+				l.step()
+			}
+			return token.Space
 		default:
 			l.step()
 			for l.cp != '<' && l.cp != eof {
@@ -168,6 +181,7 @@ func childTagState(l *Lexer) (t token.Type) {
 		switch {
 		case l.cp == '/':
 			l.step()
+			l.popState()
 			l.pushState(startCloseTagState)
 			return token.LessThanSlash
 		case isAlpha(l.cp):
@@ -179,7 +193,10 @@ func childTagState(l *Lexer) (t token.Type) {
 	case '{':
 		l.step()
 		return exprState(l)
-	case ' ', '\t', '\n', '\r':
+	case '\n':
+		l.step()
+		return token.Space
+	case ' ', '\t', '\r':
 		l.step()
 		for isSpace(l.cp) {
 			l.step()
@@ -196,6 +213,9 @@ func childTagState(l *Lexer) (t token.Type) {
 
 func startOpenTagState(l *Lexer) (t token.Type) {
 	switch {
+	case isNewline(l.cp):
+		l.step()
+		return token.Space
 	case isSpace(l.cp):
 		l.step()
 		for isSpace(l.cp) {
@@ -258,6 +278,9 @@ func middleTagState(l *Lexer) (t token.Type) {
 	case l.cp == '{':
 		l.step()
 		return exprState(l)
+	case isNewline(l.cp):
+		l.step()
+		return token.Space
 	case isSpace(l.cp):
 		l.step()
 		for isSpace(l.cp) {
@@ -349,5 +372,9 @@ func isDash(cp rune) bool {
 }
 
 func isSpace(cp rune) bool {
-	return cp == ' ' || cp == '\t' || cp == '\n' || cp == '\r'
+	return cp == ' ' || cp == '\t' || cp == '\r'
+}
+
+func isNewline(cp rune) bool {
+	return cp == '\n'
 }

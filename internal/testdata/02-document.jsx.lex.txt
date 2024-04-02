@@ -6,11 +6,13 @@ identifier:"lang"
 =
 expr:"{site.lang}"
 >
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"Head"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -23,7 +25,9 @@ identifier:"content"
 expr:"{site.description}"
 space:" "
 />
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -36,7 +40,8 @@ identifier:"content"
 expr:"{site.title}"
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -49,7 +54,8 @@ identifier:"content"
 expr:"{site.url}"
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -62,7 +68,8 @@ identifier:"content"
 expr:"{site.description}"
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -75,7 +82,8 @@ identifier:"content"
 string:"\"image/png\""
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -88,7 +96,8 @@ identifier:"content"
 string:"\"940\""
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -101,7 +110,8 @@ identifier:"content"
 string:"\"550\""
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -114,7 +124,9 @@ identifier:"content"
 expr:"{`${site.card}`}"
 space:" "
 />
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -127,7 +139,8 @@ identifier:"content"
 string:"\"summary_large_image\""
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -140,7 +153,8 @@ identifier:"content"
 expr:"{site.twitter}"
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -153,7 +167,8 @@ identifier:"content"
 expr:"{site.twitter}"
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -166,7 +181,9 @@ identifier:"content"
 expr:"{`${site.card}`}"
 space:" "
 />
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"link"
 space:" "
@@ -179,7 +196,8 @@ identifier:"href"
 expr:"{site.favicon}"
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"link"
 space:" "
@@ -196,7 +214,9 @@ identifier:"href"
 expr:"{site.favicon}"
 space:" "
 />
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -209,7 +229,9 @@ identifier:"content"
 string:"\"width=device-width, initial-scale=1\""
 space:" "
 />
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -222,7 +244,8 @@ identifier:"content"
 string:"\"IE=edge,chrome=1\""
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"meta"
 space:" "
@@ -231,60 +254,78 @@ identifier:"charSet"
 string:"\"utf-8\""
 space:" "
 />
-space:"\n\n          "
+space:"\n"
+space:"\n"
+space:"          "
 <
 identifier:"style"
-space:"\n            "
+space:"\n"
+space:"            "
 identifier:"dangerouslySetInnerHTML"
 =
 expr:"{{\n              __html: `\n              * {\n                box-sizing: border-box;\n                text-rendering: optimizeLegibility;\n                -webkit-font-smoothing: antialiased;\n              }\n\n              html,\n              body,\n              #__next {\n                margin: 0;\n              }\n\n              html {\n              }\n\n              body {\n                font-family: -system-ui, sans-serif;\n                font-size: 16px;\n                background: #ffffff;\n              }\n            `,\n            }}"
-space:"\n          "
+space:"\n"
+space:"          "
 />
-space:"\n        "
+space:"\n"
+space:"        "
 </
 identifier:"Head"
 >
-space:"\n        "
+space:"\n"
+space:"        "
 <
 identifier:"body"
 >
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"Page"
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"Scripts"
 space:" "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"script"
-space:"\n            "
+space:"\n"
+space:"            "
 identifier:"async"
-space:"\n            "
+space:"\n"
+space:"            "
 identifier:"src"
 =
 string:"\"https://www.googletagmanager.com/gtag/js?id=UA-10351690-15\""
-space:"\n          "
+space:"\n"
+space:"          "
 />
-space:"\n          "
+space:"\n"
+space:"          "
 <
 identifier:"script"
-space:"\n            "
+space:"\n"
+space:"            "
 identifier:"dangerouslySetInnerHTML"
 =
 expr:"{{\n              __html: `\n                window.dataLayer = window.dataLayer || [];\n                function gtag(){dataLayer.push(arguments);}\n                gtag('js', new Date());\n\n                gtag('config', 'UA-10351690-15');\n              `,\n            }}"
-space:"\n          "
+space:"\n"
+space:"          "
 />
-space:"\n        "
+space:"\n"
+space:"        "
 </
 identifier:"body"
 >
-space:"\n      "
+space:"\n"
+space:"      "
 </
 identifier:"html"
 >
-space:"\n    "
+space:"\n"
+space:"    "
 text:")\n  }\n}\n"
