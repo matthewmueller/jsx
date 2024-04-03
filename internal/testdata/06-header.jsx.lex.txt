@@ -2,8 +2,7 @@ text:"import SlackButton from \"./11-slack-button\"\nimport Button from \"./butt
 <
 identifier:"header"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"div"
 space:" "
@@ -12,8 +11,7 @@ identifier:"className"
 string:"\"left-scene\""
 space:" "
 />
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"div"
 space:" "
@@ -21,8 +19,7 @@ identifier:"className"
 =
 string:"\"scene\""
 >
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"nav"
 space:" "
@@ -30,8 +27,7 @@ identifier:"className"
 =
 string:"\"buttons\""
 >
-space:"\n"
-space:"          "
+text:"\n          "
 {
 expr:"/* "
 <
@@ -40,11 +36,7 @@ space:" "
 identifier:"href"
 =
 {
-expr:"`mailto:$"
-expr:"{"
-expr:"props.email"
-expr:"}"
-expr:"`"
+expr:"`mailto:${props.email}`"
 }
 >
 text:"Contact"
@@ -53,8 +45,7 @@ identifier:"Button"
 >
 expr:" */"
 }
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"Button"
 space:" "
@@ -66,8 +57,7 @@ text:"FAQ"
 </
 identifier:"Button"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"SlackButton"
 space:" "
@@ -78,13 +68,11 @@ expr:"success"
 }
 space:" "
 />
-space:"\n"
-space:"        "
+text:"\n        "
 </
 identifier:"nav"
 >
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"div"
 space:" "
@@ -92,8 +80,7 @@ identifier:"className"
 =
 string:"\"top-tagline\""
 >
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"span"
 >
@@ -101,8 +88,7 @@ text:"Meet"
 </
 identifier:"span"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"span"
 space:" "
@@ -111,8 +97,7 @@ identifier:"className"
 string:"\"jack-text\""
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"span"
 space:" "
@@ -124,13 +109,11 @@ text:","
 </
 identifier:"span"
 >
-space:"\n"
-space:"        "
+text:"\n        "
 </
 identifier:"div"
 >
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"div"
 space:" "
@@ -142,8 +125,7 @@ text:"A Slack Bot for your Standups"
 </
 identifier:"div"
 >
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"div"
 space:" "
@@ -152,8 +134,7 @@ identifier:"className"
 string:"\"grass\""
 space:" "
 />
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"Link"
 space:" "
@@ -163,8 +144,7 @@ string:"\"/\""
 space:" "
 identifier:"prefetch"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"div"
 space:" "
@@ -173,13 +153,11 @@ identifier:"className"
 string:"\"jack\""
 space:" "
 />
-space:"\n"
-space:"        "
+text:"\n        "
 </
 identifier:"Link"
 >
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"div"
 space:" "
@@ -188,8 +166,7 @@ identifier:"className"
 string:"\"cloud-1\""
 space:" "
 />
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"div"
 space:" "
@@ -198,13 +175,11 @@ identifier:"className"
 string:"\"cloud-2\""
 space:" "
 />
-space:"\n"
-space:"      "
+text:"\n      "
 </
 identifier:"div"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"div"
 space:" "
@@ -212,8 +187,7 @@ identifier:"className"
 =
 string:"\"right-scene\""
 >
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"div"
 space:" "
@@ -222,13 +196,11 @@ identifier:"className"
 string:"\"right-scene-inner\""
 space:" "
 />
-space:"\n"
-space:"      "
+text:"\n      "
 </
 identifier:"div"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"nav"
 space:" "
@@ -236,8 +208,7 @@ identifier:"className"
 =
 string:"\"mobile-buttons\""
 >
-space:"\n"
-space:"        "
+text:"\n        "
 {
 expr:"/* "
 <
@@ -250,23 +221,16 @@ space:" "
 identifier:"href"
 =
 {
-expr:"`mailto:$"
-expr:"{"
-expr:"props.email"
-expr:"}"
-expr:"`"
+expr:"`mailto:${props.email}`"
 }
 >
-space:"\n"
-space:"          "
-text:"Contact\n        "
+text:"\n          Contact\n        "
 </
 identifier:"a"
 >
 expr:" */"
 }
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"Button"
 space:" "
@@ -278,153 +242,26 @@ text:"FAQ"
 </
 identifier:"Button"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 </
 identifier:"nav"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"style"
 space:" "
 identifier:"jsx"
 >
-space:"\n"
-space:"        "
+text:"\n        "
 {
-expr:"`\n          header "
-expr:"{"
-expr:"\n            background-color: #f4f9ff;\n            height: 450px;\n            width: 100%;\n            position: relative;\n          "
-expr:"}"
-expr:"\n\n          .scene "
-expr:"{"
-expr:"\n            margin: 0 auto;\n            max-width: 1000px;\n            height: 100%;\n            width: 100%;\n            position: relative;\n          "
-expr:"}"
-expr:"\n\n          .grass "
-expr:"{"
-expr:"\n            z-index: 1;\n            background-image: url(\"/static/images/grass.svg\");\n            background-position: middle center;\n            bottom: -30px;\n            position: absolute;\n            height: 68px;\n            width: 100%;\n          "
-expr:"}"
-expr:"\n\n          .top-tagline "
-expr:"{"
-expr:"\n            position: absolute;\n            font-size: 28px;\n            color: #3b434b;\n            font-weight: 900;\n            left: 400px;\n            top: 260px;\n          "
-expr:"}"
-expr:"\n\n          .jack-text "
-expr:"{"
-expr:"\n            background-image: url(\"/static/images/jack-text.svg\");\n            background-size: contain;\n            position: absolute;\n            left: 79px;\n            top: -2px;\n            height: 34px;\n            width: 77px;\n          "
-expr:"}"
-expr:"\n\n          .comma "
-expr:"{"
-expr:"\n            position: relative;\n            left: 95px;\n          "
-expr:"}"
-expr:"\n\n          .tagline "
-expr:"{"
-expr:"\n            font-size: 40px;\n            color: #3b434b;\n            font-weight: 900;\n            position: absolute;\n            top: 300px;\n            left: 400px;\n          "
-expr:"}"
-expr:"\n\n          .left-scene "
-expr:"{"
-expr:"\n            background-image: url(\"/static/images/grass.svg\");\n            background-position: right;\n            position: absolute;\n            bottom: -30px;\n            left: -500px;\n            height: 68px;\n            width: 50%;\n          "
-expr:"}"
-expr:"\n\n          .right-scene "
-expr:"{"
-expr:"\n            position: absolute;\n            overflow: hidden;\n            bottom: -30px;\n            height: 68px;\n            width: 50%;\n            right: 0;\n          "
-expr:"}"
-expr:"\n\n          .right-scene-inner "
-expr:"{"
-expr:"\n            position: absolute;\n            height: 100%;\n            width: 100%;\n            right: -500px;\n            background-image: url(\"/static/images/grass.svg\");\n            background-position: -185px;\n          "
-expr:"}"
-expr:"\n\n          .cloud-1 "
-expr:"{"
-expr:"\n            background-image: url(\"/static/images/cloud-1.svg\");\n            position: absolute;\n            width: 159px;\n            height: 92px;\n            top: 50px;\n            right: 800px;\n            animation: float infinite 5s ease-in;\n          "
-expr:"}"
-expr:"\n\n          .cloud-2 "
-expr:"{"
-expr:"\n            background-image: url(\"/static/images/cloud-2.svg\");\n            position: absolute;\n            height: 128px;\n            width: 228px;\n            right: 500px;\n            top: 30px;\n            animation: float infinite 5s ease-in;\n          "
-expr:"}"
-expr:"\n\n          .jack "
-expr:"{"
-expr:"\n            background-image: url(\"/static/images/jack.svg\");\n            left: 60px;\n            bottom: -8px;\n            position: absolute;\n            cursor: pointer;\n            height: 241px;\n            width: 241px;\n          "
-expr:"}"
-expr:"\n\n          .buttons "
-expr:"{"
-expr:"\n            display: flex;\n            align-items: center;\n            position: absolute;\n            right: 10px;\n            top: 20px;\n          "
-expr:"}"
-expr:"\n\n          .buttons > :global(*) "
-expr:"{"
-expr:"\n            margin-right: 15px;\n          "
-expr:"}"
-expr:"\n\n          .buttons > :global(*:last-child) "
-expr:"{"
-expr:"\n            margin-right: 0px;\n          "
-expr:"}"
-expr:"\n\n          .mobile-buttons "
-expr:"{"
-expr:"\n            position: absolute;\n            text-align: center;\n            bottom: -90px;\n            width: 100%;\n            border-bottom: 2px solid #f5f5f5;\n            padding: 20px;\n            background: white;\n            display: none;\n          "
-expr:"}"
-expr:"\n\n          @keyframes float "
-expr:"{"
-expr:"\n            0% "
-expr:"{"
-expr:"\n              transform: translate(0, 0);\n            "
-expr:"}"
-expr:"\n\n            50% "
-expr:"{"
-expr:"\n              transform: translate(7px, 0px) rotate(5deg);\n            "
-expr:"}"
-expr:"\n          "
-expr:"}"
-expr:"\n\n          @media (max-width: 670px) "
-expr:"{"
-expr:"\n            header "
-expr:"{"
-expr:"\n              height: 450px;\n            "
-expr:"}"
-expr:"\n\n            .mobile-buttons "
-expr:"{"
-expr:"\n              display: block;\n            "
-expr:"}"
-expr:"\n\n            .cloud-1 "
-expr:"{"
-expr:"\n              right: 20px;\n              opacity: 0.4;\n            "
-expr:"}"
-expr:"\n\n            .cloud-2 "
-expr:"{"
-expr:"\n              display: none;\n            "
-expr:"}"
-expr:"\n\n            .top-tagline "
-expr:"{"
-expr:"\n              z-index: 1;\n              left: 30px;\n              top: 50px;\n              font-size: 20px;\n            "
-expr:"}"
-expr:"\n\n            .jack-text "
-expr:"{"
-expr:"\n              left: 54px;\n              top: -1px;\n              height: 24px;\n              width: 54px;\n            "
-expr:"}"
-expr:"\n\n            .comma "
-expr:"{"
-expr:"\n              left: 65px;\n            "
-expr:"}"
-expr:"\n\n            .tagline "
-expr:"{"
-expr:"\n              z-index: 1;\n              top: 80px;\n              left: 30px;\n              font-size: 30px;\n            "
-expr:"}"
-expr:"\n\n            .buttons "
-expr:"{"
-expr:"\n              display: none;\n              width: 100%;\n              text-align: center;\n            "
-expr:"}"
-expr:"\n          "
-expr:"}"
-expr:"\n        `"
+expr:"`\n          header {\n            background-color: #f4f9ff;\n            height: 450px;\n            width: 100%;\n            position: relative;\n          }\n\n          .scene {\n            margin: 0 auto;\n            max-width: 1000px;\n            height: 100%;\n            width: 100%;\n            position: relative;\n          }\n\n          .grass {\n            z-index: 1;\n            background-image: url(\"/static/images/grass.svg\");\n            background-position: middle center;\n            bottom: -30px;\n            position: absolute;\n            height: 68px;\n            width: 100%;\n          }\n\n          .top-tagline {\n            position: absolute;\n            font-size: 28px;\n            color: #3b434b;\n            font-weight: 900;\n            left: 400px;\n            top: 260px;\n          }\n\n          .jack-text {\n            background-image: url(\"/static/images/jack-text.svg\");\n            background-size: contain;\n            position: absolute;\n            left: 79px;\n            top: -2px;\n            height: 34px;\n            width: 77px;\n          }\n\n          .comma {\n            position: relative;\n            left: 95px;\n          }\n\n          .tagline {\n            font-size: 40px;\n            color: #3b434b;\n            font-weight: 900;\n            position: absolute;\n            top: 300px;\n            left: 400px;\n          }\n\n          .left-scene {\n            background-image: url(\"/static/images/grass.svg\");\n            background-position: right;\n            position: absolute;\n            bottom: -30px;\n            left: -500px;\n            height: 68px;\n            width: 50%;\n          }\n\n          .right-scene {\n            position: absolute;\n            overflow: hidden;\n            bottom: -30px;\n            height: 68px;\n            width: 50%;\n            right: 0;\n          }\n\n          .right-scene-inner {\n            position: absolute;\n            height: 100%;\n            width: 100%;\n            right: -500px;\n            background-image: url(\"/static/images/grass.svg\");\n            background-position: -185px;\n          }\n\n          .cloud-1 {\n            background-image: url(\"/static/images/cloud-1.svg\");\n            position: absolute;\n            width: 159px;\n            height: 92px;\n            top: 50px;\n            right: 800px;\n            animation: float infinite 5s ease-in;\n          }\n\n          .cloud-2 {\n            background-image: url(\"/static/images/cloud-2.svg\");\n            position: absolute;\n            height: 128px;\n            width: 228px;\n            right: 500px;\n            top: 30px;\n            animation: float infinite 5s ease-in;\n          }\n\n          .jack {\n            background-image: url(\"/static/images/jack.svg\");\n            left: 60px;\n            bottom: -8px;\n            position: absolute;\n            cursor: pointer;\n            height: 241px;\n            width: 241px;\n          }\n\n          .buttons {\n            display: flex;\n            align-items: center;\n            position: absolute;\n            right: 10px;\n            top: 20px;\n          }\n\n          .buttons > :global(*) {\n            margin-right: 15px;\n          }\n\n          .buttons > :global(*:last-child) {\n            margin-right: 0px;\n          }\n\n          .mobile-buttons {\n            position: absolute;\n            text-align: center;\n            bottom: -90px;\n            width: 100%;\n            border-bottom: 2px solid #f5f5f5;\n            padding: 20px;\n            background: white;\n            display: none;\n          }\n\n          @keyframes float {\n            0% {\n              transform: translate(0, 0);\n            }\n\n            50% {\n              transform: translate(7px, 0px) rotate(5deg);\n            }\n          }\n\n          @media (max-width: 670px) {\n            header {\n              height: 450px;\n            }\n\n            .mobile-buttons {\n              display: block;\n            }\n\n            .cloud-1 {\n              right: 20px;\n              opacity: 0.4;\n            }\n\n            .cloud-2 {\n              display: none;\n            }\n\n            .top-tagline {\n              z-index: 1;\n              left: 30px;\n              top: 50px;\n              font-size: 20px;\n            }\n\n            .jack-text {\n              left: 54px;\n              top: -1px;\n              height: 24px;\n              width: 54px;\n            }\n\n            .comma {\n              left: 65px;\n            }\n\n            .tagline {\n              z-index: 1;\n              top: 80px;\n              left: 30px;\n              font-size: 30px;\n            }\n\n            .buttons {\n              display: none;\n              width: 100%;\n              text-align: center;\n            }\n          }\n        `"
 }
-space:"\n"
-space:"      "
+text:"\n      "
 </
 identifier:"style"
 >
-space:"\n"
-space:"    "
+text:"\n    "
 </
 identifier:"header"
 >
-space:"\n"
-space:"  "
-text:")\n}\n"
+text:"\n  )\n}\n"

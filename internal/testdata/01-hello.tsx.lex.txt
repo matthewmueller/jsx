@@ -1,20 +1,19 @@
-text:"import { h, Component } from 'preact';\nimport { useState } from 'preact/hooks';\ntype TextProps = {\n  text: string;\n}\nexport default function App"
-text:"<TextProps>(props: TextProps) {\n  const [count, setCount] = useState"
-text:"<number>(0);\n  return (\n    "
+text:"import { h, Component } from 'preact';\nimport { useState } from 'preact/hooks';\ntype TextProps = {\n  text: string;\n}\nexport default function App<TextProps>(props: TextProps) {\n  const [count, setCount] = useState<number>(0);\n  return (\n    "
 <
 identifier:"div"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"p"
 >
-text:"Count: {count}"
+text:"Count: "
+{
+expr:"count"
+}
 </
 identifier:"p"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"button"
 space:" "
@@ -28,32 +27,20 @@ text:"Click me"
 </
 identifier:"button"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"style"
 space:" "
 identifier:"scoped"
 >
 {
-expr:"`\n        p "
-expr:"{"
-expr:"\n          color: red;\n        "
-expr:"}"
-expr:"\n        button "
-expr:"{"
-expr:"\n          background: blue;\n        "
-expr:"}"
-expr:"\n      `"
+expr:"`\n        p {\n          color: red;\n        }\n        button {\n          background: blue;\n        }\n      `"
 }
 </
 identifier:"style"
 >
-space:"\n"
-space:"    "
+text:"\n    "
 </
 identifier:"div"
 >
-space:"\n"
-space:"  "
-text:");\n}\n"
+text:"\n  );\n}\n"

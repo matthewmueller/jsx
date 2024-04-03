@@ -8,13 +8,11 @@ identifier:"lang"
 expr:"site.lang"
 }
 >
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"Head"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"meta"
 space:" "
@@ -29,9 +27,7 @@ expr:"site.description"
 }
 space:" "
 />
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"meta"
 space:" "
@@ -46,8 +42,7 @@ expr:"site.title"
 }
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"meta"
 space:" "
@@ -62,8 +57,7 @@ expr:"site.url"
 }
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"meta"
 space:" "
@@ -78,8 +72,7 @@ expr:"site.description"
 }
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"meta"
 space:" "
@@ -92,8 +85,7 @@ identifier:"content"
 string:"\"image/png\""
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"meta"
 space:" "
@@ -106,8 +98,7 @@ identifier:"content"
 string:"\"940\""
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"meta"
 space:" "
@@ -120,8 +111,7 @@ identifier:"content"
 string:"\"550\""
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"meta"
 space:" "
@@ -132,17 +122,11 @@ space:" "
 identifier:"content"
 =
 {
-expr:"`$"
-expr:"{"
-expr:"site.card"
-expr:"}"
-expr:"`"
+expr:"`${site.card}`"
 }
 space:" "
 />
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"meta"
 space:" "
@@ -155,8 +139,7 @@ identifier:"content"
 string:"\"summary_large_image\""
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"meta"
 space:" "
@@ -171,8 +154,7 @@ expr:"site.twitter"
 }
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"meta"
 space:" "
@@ -187,8 +169,7 @@ expr:"site.twitter"
 }
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"meta"
 space:" "
@@ -199,17 +180,11 @@ space:" "
 identifier:"content"
 =
 {
-expr:"`$"
-expr:"{"
-expr:"site.card"
-expr:"}"
-expr:"`"
+expr:"`${site.card}`"
 }
 space:" "
 />
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"link"
 space:" "
@@ -224,8 +199,7 @@ expr:"site.favicon"
 }
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"link"
 space:" "
@@ -244,9 +218,7 @@ expr:"site.favicon"
 }
 space:" "
 />
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"meta"
 space:" "
@@ -259,9 +231,7 @@ identifier:"content"
 string:"\"width=device-width, initial-scale=1\""
 space:" "
 />
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"meta"
 space:" "
@@ -274,8 +244,7 @@ identifier:"content"
 string:"\"IE=edge,chrome=1\""
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"meta"
 space:" "
@@ -284,106 +253,63 @@ identifier:"charSet"
 string:"\"utf-8\""
 space:" "
 />
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"style"
-space:"\n"
-space:"            "
+space:"\n            "
 identifier:"dangerouslySetInnerHTML"
 =
 {
-expr:"{"
-expr:"\n              __html: `\n              * "
-expr:"{"
-expr:"\n                box-sizing: border-box;\n                text-rendering: optimizeLegibility;\n                -webkit-font-smoothing: antialiased;\n              "
-expr:"}"
-expr:"\n\n              html,\n              body,\n              #__next "
-expr:"{"
-expr:"\n                margin: 0;\n              "
-expr:"}"
-expr:"\n\n              html "
-expr:"{"
-expr:"\n              "
-expr:"}"
-expr:"\n\n              body "
-expr:"{"
-expr:"\n                font-family: -system-ui, sans-serif;\n                font-size: 16px;\n                background: #ffffff;\n              "
-expr:"}"
-expr:"\n            `,\n            "
-expr:"}"
+expr:"{\n              __html: `\n              * {\n                box-sizing: border-box;\n                text-rendering: optimizeLegibility;\n                -webkit-font-smoothing: antialiased;\n              }\n\n              html,\n              body,\n              #__next {\n                margin: 0;\n              }\n\n              html {\n              }\n\n              body {\n                font-family: -system-ui, sans-serif;\n                font-size: 16px;\n                background: #ffffff;\n              }\n            `,\n            }"
 }
-space:"\n"
-space:"          "
+space:"\n          "
 />
-space:"\n"
-space:"        "
+text:"\n        "
 </
 identifier:"Head"
 >
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"body"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"Page"
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"Scripts"
 space:" "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"script"
-space:"\n"
-space:"            "
+space:"\n            "
 identifier:"async"
-space:"\n"
-space:"            "
+space:"\n            "
 identifier:"src"
 =
 string:"\"https://www.googletagmanager.com/gtag/js?id=UA-10351690-15\""
-space:"\n"
-space:"          "
+space:"\n          "
 />
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"script"
-space:"\n"
-space:"            "
+space:"\n            "
 identifier:"dangerouslySetInnerHTML"
 =
 {
-expr:"{"
-expr:"\n              __html: `\n                window.dataLayer = window.dataLayer || [];\n                function gtag()"
-expr:"{"
-expr:"dataLayer.push(arguments);"
-expr:"}"
-expr:"\n                gtag('js', new Date());\n\n                gtag('config', 'UA-10351690-15');\n              `,\n            "
-expr:"}"
+expr:"{\n              __html: `\n                window.dataLayer = window.dataLayer || [];\n                function gtag(){dataLayer.push(arguments);}\n                gtag('js', new Date());\n\n                gtag('config', 'UA-10351690-15');\n              `,\n            }"
 }
-space:"\n"
-space:"          "
+space:"\n          "
 />
-space:"\n"
-space:"        "
+text:"\n        "
 </
 identifier:"body"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 </
 identifier:"html"
 >
-space:"\n"
-space:"    "
-text:")\n  }\n}\n"
+text:"\n    )\n  }\n}\n"

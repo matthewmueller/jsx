@@ -2,13 +2,11 @@ text:"import SlackButton from \"../components/slack-button\"\nimport Header from
 <
 identifier:"div"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"Head"
 >
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"title"
 >
@@ -16,13 +14,11 @@ text:"FAQ –\u00a0Standup Jack"
 </
 identifier:"title"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 </
 identifier:"Head"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"Header"
 space:" "
@@ -31,8 +27,7 @@ expr:"...props"
 }
 space:" "
 />
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"div"
 space:" "
@@ -40,8 +35,7 @@ identifier:"class"
 =
 string:"\"page\""
 >
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"div"
 space:" "
@@ -49,8 +43,7 @@ identifier:"className"
 =
 string:"\"markdown\""
 >
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"div"
 space:" "
@@ -58,8 +51,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -67,14 +59,11 @@ text:"How much does Standup Jack cost?"
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Jack is free for everyone to try for the first 14 days. After that\n              Jack costs "
+text:"\n              Jack is free for everyone to try for the first 14 days. After that\n              Jack costs "
 <
 identifier:"strong"
 >
@@ -86,38 +75,29 @@ text:".\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Jack will message you when you're getting close to the end of your\n              trial period with details on how to upgrade.\n            "
+text:"\n              Jack will message you when you're getting close to the end of your\n              trial period with details on how to upgrade.\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"If you choose to let your trial expire, Jack will gracefully go\n              into hibernation until you choose to upgrade or decide to remove\n              him.\n            "
+text:"\n              If you choose to let your trial expire, Jack will gracefully go\n              into hibernation until you choose to upgrade or decide to remove\n              him.\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 {
 expr:"/* "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"I'll be offering yearly pricing very soon for "
+text:"\n              I'll be offering yearly pricing very soon for "
 <
 identifier:"strong"
 >
@@ -145,14 +125,11 @@ identifier:"p"
 >
 expr:" */"
 }
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"div"
 space:" "
@@ -160,8 +137,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -169,36 +145,27 @@ text:"Does Standup Jack support different timezones?"
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Yes of course! Jack looks up the timezone setting in your Slack\n              profile and makes sure that 10am is not 3am where you live.\n            "
+text:"\n              Yes of course! Jack looks up the timezone setting in your Slack\n              profile and makes sure that 10am is not 3am where you live.\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"You'll definitely want to double-check that the timezone settings\n              are up-to-date, because Slack doesn't do this automatically for\n              you.\n            "
+text:"\n              You'll definitely want to double-check that the timezone settings\n              are up-to-date, because Slack doesn't do this automatically for\n              you.\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"div"
 space:" "
@@ -206,8 +173,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -215,14 +181,11 @@ text:"Can I change the time I get asked for an update?"
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Of course! You just need to say "
+text:"\n              Of course! You just need to say "
 <
 identifier:"strong"
 >
@@ -234,14 +197,11 @@ text:",\n              then pick your time and confirm.\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"div"
 space:" "
@@ -249,8 +209,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -258,14 +217,15 @@ text:"Can I change the time when standup gets posted?"
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Certainly! You just need to say{\" \"}\n              "
+text:"\n              Certainly! You just need to say"
+{
+expr:"\" \""
+}
+text:"\n              "
 <
 identifier:"strong"
 >
@@ -277,14 +237,11 @@ text:", then pick a new time.\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"div"
 space:" "
@@ -292,8 +249,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -301,14 +257,11 @@ text:"Can I have standups on different days?"
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Definitely! You just need to say "
+text:"\n              Definitely! You just need to say "
 <
 identifier:"strong"
 >
@@ -316,7 +269,11 @@ text:"change my time"
 </
 identifier:"strong"
 >
-text:",\n              then include the days you want to have standup. For example,{\" \"}\n              "
+text:",\n              then include the days you want to have standup. For example,"
+{
+expr:"\" \""
+}
+text:"\n              "
 <
 identifier:"strong"
 >
@@ -324,19 +281,15 @@ text:"10am mondays, wednesdays and fridays"
 </
 identifier:"strong"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"div"
 space:" "
@@ -344,8 +297,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -353,14 +305,11 @@ text:"Can I change who is participating in standup?"
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Absolutely! You just need to say "
+text:"\n              Absolutely! You just need to say "
 <
 identifier:"strong"
 >
@@ -368,8 +317,7 @@ text:"add a user"
 </
 identifier:"strong"
 >
-space:" "
-text:"to\n              add your teammates or "
+text:" to\n              add your teammates or "
 <
 identifier:"strong"
 >
@@ -377,19 +325,15 @@ text:"remove a user"
 </
 identifier:"strong"
 >
-space:" "
-text:"to remove a\n              teammate.\n            "
+text:" to remove a\n              teammate.\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"div"
 space:" "
@@ -397,8 +341,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -406,14 +349,11 @@ text:"Can I post team standup to a different channel?"
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Yep! You just need to say "
+text:"\n              Yep! You just need to say "
 <
 identifier:"strong"
 >
@@ -425,14 +365,11 @@ text:",\n              then pick which channel you want to post to.\n           
 </
 identifier:"p"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"div"
 space:" "
@@ -440,8 +377,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -449,14 +385,11 @@ text:"Can I have multiple standups per team?"
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Absolutely! You just need to say "
+text:"\n              Absolutely! You just need to say "
 <
 identifier:"strong"
 >
@@ -467,20 +400,15 @@ identifier:"strong"
 {
 expr:"\" \""
 }
-space:"\n"
-space:"              "
-text:"to create a new standup\n            "
+text:"\n              to create a new standup\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"div"
 space:" "
@@ -488,8 +416,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -497,29 +424,23 @@ text:"Can I pick my own questions?"
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Most def! You can add questions, change questions or remove\n              questions. To pick your own questions, message Jack:\n            "
+text:"\n              Most def! You can add questions, change questions or remove\n              questions. To pick your own questions, message Jack:\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"ul"
 >
-space:"\n"
-space:"              "
+text:"\n              "
 <
 identifier:"li"
 >
-space:"\n"
-space:"                "
+text:"\n                "
 <
 identifier:"strong"
 >
@@ -527,18 +448,15 @@ text:"add question"
 </
 identifier:"strong"
 >
-space:" "
-text:"to add a new question to standup\n              "
+text:" to add a new question to standup\n              "
 </
 identifier:"li"
 >
-space:"\n"
-space:"              "
+text:"\n              "
 <
 identifier:"li"
 >
-space:"\n"
-space:"                "
+text:"\n                "
 <
 identifier:"strong"
 >
@@ -546,18 +464,15 @@ text:"change question"
 </
 identifier:"strong"
 >
-space:" "
-text:"to change an existing question\n              "
+text:" to change an existing question\n              "
 </
 identifier:"li"
 >
-space:"\n"
-space:"              "
+text:"\n              "
 <
 identifier:"li"
 >
-space:"\n"
-space:"                "
+text:"\n                "
 <
 identifier:"strong"
 >
@@ -565,24 +480,19 @@ text:"delete question"
 </
 identifier:"strong"
 >
-space:" "
-text:"to remove a question from\n                standup\n              "
+text:" to remove a question from\n                standup\n              "
 </
 identifier:"li"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 </
 identifier:"ul"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"div"
 space:" "
@@ -590,8 +500,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -599,25 +508,19 @@ text:"Can I tell Jack to post into private groups?"
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Yep! Whenever you create a new standup, you'll have the option to\n              invite @jack to a private group. There's a couple more steps, but\n              Jack will walk you through what you need to do to get that setup.\n            "
+text:"\n              Yep! Whenever you create a new standup, you'll have the option to\n              invite @jack to a private group. There's a couple more steps, but\n              Jack will walk you through what you need to do to get that setup.\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"div"
 space:" "
@@ -625,8 +528,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -634,14 +536,11 @@ text:"Where can I read your privacy policy?"
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"You can visit "
+text:"\n              You can visit "
 <
 identifier:"a"
 space:" "
@@ -653,14 +552,15 @@ text:"our privacy policy"
 </
 identifier:"a"
 >
-space:" "
-text:"to learn\n              more about what data we retain, for how long and how you can\n              request data removal. interested! Right now Jack is only available\n              "
+text:" to learn\n              more about what data we retain, for how long and how you can\n              request data removal. interested! Right now Jack is only available\n              "
 <
 identifier:"p"
 >
-space:"\n"
-space:"                "
-text:"If you have any questions or concerns, please don't hesitate to{\" \"}\n                "
+text:"\n                If you have any questions or concerns, please don't hesitate to"
+{
+expr:"\" \""
+}
+text:"\n                "
 <
 identifier:"a"
 space:" "
@@ -678,19 +578,15 @@ text:"!\n              "
 </
 identifier:"p"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"div"
 space:" "
@@ -698,8 +594,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -707,14 +602,11 @@ text:"I love this idea! But our team doesn't use Slack."
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Happy to hear you're interested! Right now Jack is only available\n              on Slack, but "
+text:"\n              Happy to hear you're interested! Right now Jack is only available\n              on Slack, but "
 <
 identifier:"a"
 space:" "
@@ -731,20 +623,15 @@ identifier:"a"
 {
 expr:"\" \""
 }
-space:"\n"
-space:"              "
-text:"if you'd like Jack on your system. I will build additional\n              adapters for email, hipchat, IRC or any other system depending on\n              demand.\n            "
+text:"\n              if you'd like Jack on your system. I will build additional\n              adapters for email, hipchat, IRC or any other system depending on\n              demand.\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"\n"
-space:"          "
+text:"\n\n          "
 <
 identifier:"div"
 space:" "
@@ -752,8 +639,7 @@ identifier:"class"
 =
 string:"\"question\""
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"h2"
 >
@@ -761,29 +647,23 @@ text:"What type of animal is Jack?"
 </
 identifier:"h2"
 >
-space:"\n"
-space:"            "
+text:"\n            "
 <
 identifier:"p"
 >
-space:"\n"
-space:"              "
-text:"Jack is a rooster. But he doesn't consider himself to be like the\n              other roosters. His friends say he's a good listener and very\n              respectful.\n            "
+text:"\n              Jack is a rooster. But he doesn't consider himself to be like the\n              other roosters. His friends say he's a good listener and very\n              respectful.\n            "
 </
 identifier:"p"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 </
 identifier:"div"
 >
-space:"\n"
-space:"        "
+text:"\n        "
 </
 identifier:"div"
 >
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"div"
 space:" "
@@ -791,8 +671,7 @@ identifier:"class"
 =
 string:"\"buttons\""
 >
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"span"
 space:" "
@@ -804,8 +683,7 @@ text:"Ready to communicate better?"
 </
 identifier:"span"
 >
-space:"\n"
-space:"          "
+text:"\n          "
 <
 identifier:"SlackButton"
 space:" "
@@ -820,18 +698,15 @@ expr:"...props"
 }
 space:" "
 />
-space:"\n"
-space:"        "
+text:"\n        "
 </
 identifier:"div"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 </
 identifier:"div"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"div"
 space:" "
@@ -839,8 +714,7 @@ identifier:"className"
 =
 string:"\"footer\""
 >
-space:"\n"
-space:"        "
+text:"\n        "
 <
 identifier:"Footer"
 space:" "
@@ -849,137 +723,24 @@ expr:"...props"
 }
 space:" "
 />
-space:"\n"
-space:"      "
+text:"\n      "
 </
 identifier:"div"
 >
-space:"\n"
-space:"      "
+text:"\n      "
 <
 identifier:"style"
 space:" "
 identifier:"jsx"
 >
 {
-expr:"`\n        .page "
-expr:"{"
-expr:"\n          min-height: 800px;\n          max-width: 36em;\n          margin: 0 auto;\n          padding: 75px 0;\n          color: #3b434b;\n          width: 100%;\n        "
-expr:"}"
-expr:"\n\n        .buttons "
-expr:"{"
-expr:"\n          margin-top: 40px;\n          border-top: 2px solid #e8f2ff;\n          padding-top: 40px;\n          text-align: center;\n        "
-expr:"}"
-expr:"\n\n        .subtext "
-expr:"{"
-expr:"\n          font-weight: 700;\n          font-size: 18px;\n          padding-right: 10px;\n          position: relative;\n          top: -6px;\n        "
-expr:"}"
-expr:"\n\n        .image "
-expr:"{"
-expr:"\n          height: 100%;\n          background-size: contain;\n          background-repeat: no-repeat;\n          border: 10px solid #fff;\n        "
-expr:"}"
-expr:"\n\n        .footer "
-expr:"{"
-expr:"\n          overflow: hidden;\n          width: 100%;\n        "
-expr:"}"
-expr:"\n\n        .markdown "
-expr:"{"
-expr:"\n          font-size: 18px;\n          font-weight: 400;\n          color: #4c4c36;\n          padding: 1.875em 0;\n        "
-expr:"}"
-expr:"\n\n        a "
-expr:"{"
-expr:"\n          cursor: pointer;\n          color: #4c4c36;\n          font-weight: 400;\n          transition: color 0.1s ease-in-out;\n        "
-expr:"}"
-expr:"\n        a:hover "
-expr:"{"
-expr:"\n          color: #2b00ad;\n        "
-expr:"}"
-expr:"\n\n        hr "
-expr:"{"
-expr:"\n          clear: both;\n          float: none;\n          width: 80%;\n          height: 1px;\n          margin: 1.4em auto;\n          border: none;\n          background-image: linear-gradient(\n            to left,\n            rgba(204, 204, 204, 0),\n            rgba(204, 204, 204, 0.75),\n            rgba(204, 204, 204, 0)\n          );\n        "
-expr:"}"
-expr:"\n\n        p:first-child "
-expr:"{"
-expr:"\n          font-size: 1.15em;\n        "
-expr:"}"
-expr:"\n\n        p "
-expr:"{"
-expr:"\n          word-wrap: break-word;\n          line-height: 1.75em;\n        "
-expr:"}"
-expr:"\n\n        h1 "
-expr:"{"
-expr:"\n          padding-top: 2em;\n          padding-bottom: 0.3em;\n          color: #3386ff;\n          margin: 0;\n        "
-expr:"}"
-expr:"\n\n        h2 "
-expr:"{"
-expr:"\n          font-size: 1.25em;\n        "
-expr:"}"
-expr:"\n\n        h3 "
-expr:"{"
-expr:"\n          font-size: 1em;\n        "
-expr:"}"
-expr:"\n\n        h2,\n        h4,\n        h5 "
-expr:"{"
-expr:"\n          margin: 0;\n          font-weight: bold;\n          color: #3b434b;\n          padding: 1em 0;\n        "
-expr:"}"
-expr:"\n\n        h3,\n        h4,\n        h5 "
-expr:"{"
-expr:"\n          color: #4c4c36;\n          padding: 1em 0;\n          padding-bottom: 0.25em;\n          padding-top: 1.5em;\n        "
-expr:"}"
-expr:"\n\n        img "
-expr:"{"
-expr:"\n          text-align: center;\n          max-width: 100%;\n        "
-expr:"}"
-expr:"\n\n        p > img "
-expr:"{"
-expr:"\n          padding: 1em 0;\n        "
-expr:"}"
-expr:"\n\n        pre "
-expr:"{"
-expr:"\n          overflow: visible;\n          width: 100%;\n        "
-expr:"}"
-expr:"\n\n        blockquote "
-expr:"{"
-expr:"\n          border-left: 6px solid #2900b3;\n          margin-left: 15px;\n          padding-left: 15px;\n          padding-top: 3px;\n          padding-bottom: 3px;\n          font-style: italic;\n        "
-expr:"}"
-expr:"\n\n        code "
-expr:"{"
-expr:"\n          font-size: 14px;\n          overflow-x: scroll;\n          -webkit-overflow-scrolling: touch;\n        "
-expr:"}"
-expr:"\n\n        ol,\n        ul "
-expr:"{"
-expr:"\n          margin: 0;\n        "
-expr:"}"
-expr:"\n\n        ol > li,\n        ul > li "
-expr:"{"
-expr:"\n          line-height: 1.75em;\n        "
-expr:"}"
-expr:"\n\n        ol > li:last-child,\n        ul > li:last-child "
-expr:"{"
-expr:"\n          padding-bottom: 1em;\n        "
-expr:"}"
-expr:"\n\n        ol > li "
-expr:"{"
-expr:"\n          list-style: lower-roman;\n        "
-expr:"}"
-expr:"\n\n        ul > li "
-expr:"{"
-expr:"\n          list-style: square;\n        "
-expr:"}"
-expr:"\n\n        iframe "
-expr:"{"
-expr:"\n          width: 100%;\n        "
-expr:"}"
-expr:"\n      `"
+expr:"`\n        .page {\n          min-height: 800px;\n          max-width: 36em;\n          margin: 0 auto;\n          padding: 75px 0;\n          color: #3b434b;\n          width: 100%;\n        }\n\n        .buttons {\n          margin-top: 40px;\n          border-top: 2px solid #e8f2ff;\n          padding-top: 40px;\n          text-align: center;\n        }\n\n        .subtext {\n          font-weight: 700;\n          font-size: 18px;\n          padding-right: 10px;\n          position: relative;\n          top: -6px;\n        }\n\n        .image {\n          height: 100%;\n          background-size: contain;\n          background-repeat: no-repeat;\n          border: 10px solid #fff;\n        }\n\n        .footer {\n          overflow: hidden;\n          width: 100%;\n        }\n\n        .markdown {\n          font-size: 18px;\n          font-weight: 400;\n          color: #4c4c36;\n          padding: 1.875em 0;\n        }\n\n        a {\n          cursor: pointer;\n          color: #4c4c36;\n          font-weight: 400;\n          transition: color 0.1s ease-in-out;\n        }\n        a:hover {\n          color: #2b00ad;\n        }\n\n        hr {\n          clear: both;\n          float: none;\n          width: 80%;\n          height: 1px;\n          margin: 1.4em auto;\n          border: none;\n          background-image: linear-gradient(\n            to left,\n            rgba(204, 204, 204, 0),\n            rgba(204, 204, 204, 0.75),\n            rgba(204, 204, 204, 0)\n          );\n        }\n\n        p:first-child {\n          font-size: 1.15em;\n        }\n\n        p {\n          word-wrap: break-word;\n          line-height: 1.75em;\n        }\n\n        h1 {\n          padding-top: 2em;\n          padding-bottom: 0.3em;\n          color: #3386ff;\n          margin: 0;\n        }\n\n        h2 {\n          font-size: 1.25em;\n        }\n\n        h3 {\n          font-size: 1em;\n        }\n\n        h2,\n        h4,\n        h5 {\n          margin: 0;\n          font-weight: bold;\n          color: #3b434b;\n          padding: 1em 0;\n        }\n\n        h3,\n        h4,\n        h5 {\n          color: #4c4c36;\n          padding: 1em 0;\n          padding-bottom: 0.25em;\n          padding-top: 1.5em;\n        }\n\n        img {\n          text-align: center;\n          max-width: 100%;\n        }\n\n        p > img {\n          padding: 1em 0;\n        }\n\n        pre {\n          overflow: visible;\n          width: 100%;\n        }\n\n        blockquote {\n          border-left: 6px solid #2900b3;\n          margin-left: 15px;\n          padding-left: 15px;\n          padding-top: 3px;\n          padding-bottom: 3px;\n          font-style: italic;\n        }\n\n        code {\n          font-size: 14px;\n          overflow-x: scroll;\n          -webkit-overflow-scrolling: touch;\n        }\n\n        ol,\n        ul {\n          margin: 0;\n        }\n\n        ol > li,\n        ul > li {\n          line-height: 1.75em;\n        }\n\n        ol > li:last-child,\n        ul > li:last-child {\n          padding-bottom: 1em;\n        }\n\n        ol > li {\n          list-style: lower-roman;\n        }\n\n        ul > li {\n          list-style: square;\n        }\n\n        iframe {\n          width: 100%;\n        }\n      `"
 }
 </
 identifier:"style"
 >
-space:"\n"
-space:"    "
+text:"\n    "
 </
 identifier:"div"
 >
-space:"\n"
-space:"  "
-text:")\n}\n"
+text:"\n  )\n}\n"

@@ -101,11 +101,7 @@ func TestStyle(t *testing.T) {
 				},
 				Children: []ast.Fragment{&ast.Expr{
 					Fragments: []ast.Fragment{
-						&ast.Text{Value: "`h1 "},
-						&ast.Text{Value: "{"},
-						&ast.Text{Value: " background-color: lightblue; "},
-						&ast.Text{Value: "}"},
-						&ast.Text{Value: "`"},
+						&ast.Text{Value: "`h1 { background-color: lightblue; }`"},
 					}},
 				},
 			},

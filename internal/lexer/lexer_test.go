@@ -82,27 +82,28 @@ const newlined = `export default () => (
 )`
 
 func TestSample(t *testing.T) {
-	equal(t, `function() { return <h2>hello <span>world</span>.</h2> }`, `text:"function() { return " < identifier:"h2" > text:"hello " < identifier:"span" > text:"world" </ identifier:"span" > text:"." </ identifier:"h2" > space:" " text:"}"`)
+	equal(t, `function() { return <h2>hello <span>world</span>.</h2> }`, `text:"function() { return " < identifier:"h2" > text:"hello " < identifier:"span" > text:"world" </ identifier:"span" > text:"." </ identifier:"h2" > text:" }"`)
 	equal(t, `hello <span>world</span>`, `text:"hello " < identifier:"span" > text:"world" </ identifier:"span" >`)
 	equal(t, `hello <span class="hello-world">world</span>`, `text:"hello " < identifier:"span" space:" " identifier:"class" = string:"\"hello-world\"" > text:"world" </ identifier:"span" >`)
 	equal(t, `hello <span data-class="hello-world" id = "wonderful">world</span>`, `text:"hello " < identifier:"span" space:" " identifier:"data-class" = string:"\"hello-world\"" space:" " identifier:"id" space:" " = space:" " string:"\"wonderful\"" > text:"world" </ identifier:"span" >`)
 	equal(t, `hello <button onClick={() => setCount(count + 1)}>Click me</button>`, `text:"hello " < identifier:"button" space:" " identifier:"onClick" = { expr:"() => setCount(count + 1)" } > text:"Click me" </ identifier:"button" >`)
 	equal(t, `hello <h2>world</h2>`, `text:"hello " < identifier:"h2" > text:"world" </ identifier:"h2" >`)
-	equal(t, `hello <input type="text" /> world`, `text:"hello " < identifier:"input" space:" " identifier:"type" = string:"\"text\"" space:" " /> space:" " text:"world"`)
+	equal(t, `hello <input type="text" /> world`, `text:"hello " < identifier:"input" space:" " identifier:"type" = string:"\"text\"" space:" " /> text:" world"`)
 	equal(t, `hello <h2>Record<string,string></h2>`, `text:"hello " < identifier:"h2" > text:"Record" < identifier:"string" text:",string>" </ identifier:"h2" >`)
-	equal(t, `type Record<string> = {}; function() { return <h2>hello world</h2> }`, `text:"type Record" text:"<string> = {}; function() { return " < identifier:"h2" > text:"hello world" </ identifier:"h2" > space:" " text:"}"`)
-	equal(t, `type Record<string> = {}; function() { return (<h2>hello world</h2>) }`, `text:"type Record" text:"<string> = {}; function() { return (" < identifier:"h2" > text:"hello world" </ identifier:"h2" > text:") }"`)
+	equal(t, `type Record<string> = {}; function() { return <h2>hello world</h2> }`, `text:"type Record<string> = {}; function() { return " < identifier:"h2" > text:"hello world" </ identifier:"h2" > text:" }"`)
+	equal(t, `type Record<string> = {}; function() { return (<h2>hello world</h2>) }`, `text:"type Record<string> = {}; function() { return (" < identifier:"h2" > text:"hello world" </ identifier:"h2" > text:") }"`)
 	equal(t, `hello <Planet>mars</Planet>`, `text:"hello " < identifier:"Planet" > text:"mars" </ identifier:"Planet" >`)
-	equal(t, `<hr style={{ maxWidth: 400 }} />`, `< identifier:"hr" space:" " identifier:"style" = { expr:"{" expr:" maxWidth: 400 " expr:"}" } space:" " />`)
-	equal(t, children, `< identifier:"body" > space:"\n" space:"\t" < identifier:"Page" space:" " /> space:"\n" space:"\t" < identifier:"Scripts" space:" " /> space:"\n" </ identifier:"body" > space:"\n"`)
+	equal(t, `<hr style={{ maxWidth: 400 }} />`, `< identifier:"hr" space:" " identifier:"style" = { expr:"{ maxWidth: 400 }" } space:" " />`)
+	equal(t, children, `< identifier:"body" > text:"\n\t" < identifier:"Page" space:" " /> text:"\n\t" < identifier:"Scripts" space:" " /> text:"\n" </ identifier:"body" > text:"\n"`)
 	equal(t, `hello <>fragment</>`, `text:"hello " < > text:"fragment" </ >`)
-	equal(t, newlined, `text:"export default () => (\n\t" < identifier:"div" space:"\n" space:"\t\t" identifier:"className" = string:"\"hello\"" space:"\n" space:"\t" > space:"\n" space:"\t\t" text:"hello\n\t\t" < identifier:"span" > text:"world" </ identifier:"span" > space:"\n" space:"\t" </ identifier:"div" > space:"\n" text:")"`)
+	equal(t, newlined, `text:"export default () => (\n\t" < identifier:"div" space:"\n\t\t" identifier:"className" = string:"\"hello\"" space:"\n\t" > text:"\n\t\thello\n\t\t" < identifier:"span" > text:"world" </ identifier:"span" > text:"\n\t" </ identifier:"div" > text:"\n)"`)
 }
 
 func TestInExpr(t *testing.T) {
 	equal(t, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`, `text:"export default function { return (" < identifier:"H1" space:" " identifier:"func" = { expr:"() => " < identifier:"h1" > text:"hello world" </ identifier:"h1" > } space:" " /> text:") }"`)
 	equal(t, `export default function { return (<H2 func={() => <Header>hello <span>world</span></Header>} />) }`, `text:"export default function { return (" < identifier:"H2" space:" " identifier:"func" = { expr:"() => " < identifier:"Header" > text:"hello " < identifier:"span" > text:"world" </ identifier:"span" > </ identifier:"Header" > } space:" " /> text:") }"`)
 	equal(t, `export default function (props) { return (<H2 func={() => <Header {...props}>hello <span>world</span></Header>} />) }`, `text:"export default function (props) { return (" < identifier:"H2" space:" " identifier:"func" = { expr:"() => " < identifier:"Header" space:" " { expr:"...props" } > text:"hello " < identifier:"span" > text:"world" </ identifier:"span" > </ identifier:"Header" > } space:" " /> text:") }"`)
+	equal(t, `export default function (props: Record<string>) { return (<H2 func={() => <Header {...props}>hello <span>world</span></Header>} />) }`, `text:"export default function (props: Record<string>) { return (" < identifier:"H2" space:" " identifier:"func" = { expr:"() => " < identifier:"Header" space:" " { expr:"...props" } > text:"hello " < identifier:"span" > text:"world" </ identifier:"span" > </ identifier:"Header" > } space:" " /> text:") }"`)
 }
 
 func TestTemplateLiteral(t *testing.T) {
