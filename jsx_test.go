@@ -50,7 +50,9 @@ func (p *Printer) VisitStringValue(s *ast.StringValue) {
 
 func (p *Printer) VisitExpr(e *ast.Expr) {
 	p.s.WriteString("{")
-	p.s.WriteString(e.Value)
+	for _, frag := range e.Fragments {
+		frag.Visit(p)
+	}
 	p.s.WriteString("}")
 }
 

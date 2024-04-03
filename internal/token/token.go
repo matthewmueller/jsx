@@ -43,6 +43,8 @@ const (
 	Equal            Type = "="          // =
 	Text             Type = "text"       // Raw text
 	Expr             Type = "expr"       // { ... }
+	OpenCurly        Type = "{"          // {
+	CloseCurly       Type = "}"          // }
 	String           Type = "string"     // "..." or '...'
 	Space            Type = "space"      // Any whitespace
 

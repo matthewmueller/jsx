@@ -13,7 +13,9 @@ identifier:"head"
 >
 space:"\n"
 space:"        "
-expr:"{(this.props.children || ([] as any)).concat(\n          heads.map((node: VNode) => h(node.type, node.props))\n        )}"
+{
+expr:"(this.props.children || ([] as any)).concat(\n          heads.map((node: VNode) => h(node.type, node.props))\n        )"
+}
 space:"\n"
 space:"      "
 </
@@ -33,7 +35,11 @@ space:"\n"
 space:"        "
 identifier:"dangerouslySetInnerHTML"
 =
-expr:"{{ __html: docProps.page }}"
+{
+expr:"{"
+expr:" __html: docProps.page "
+expr:"}"
+}
 space:"\n"
 space:"      "
 >

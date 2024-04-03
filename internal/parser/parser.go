@@ -3,7 +3,6 @@ package parser
 import (
 	"fmt"
 	"strconv"
-	"strings"
 
 	"github.com/matthewmueller/jsx/ast"
 	"github.com/matthewmueller/jsx/internal/lexer"
@@ -122,10 +121,8 @@ func (p *Parser) parseFragment() (ast.Fragment, error) {
 		return p.parseText()
 	case p.Accept(token.LessThan):
 		return p.parseElement()
-	case p.Accept(token.Expr):
-		return &ast.Expr{
-			Value: trimExpr(p.Text()),
-		}, nil
+	case p.Accept(token.OpenCurly):
+		return p.parseExpr()
 	default:
 		return nil, p.unexpected("fragment")
 	}
@@ -226,10 +223,8 @@ func (p *Parser) parseAttr() (ast.Attr, error) {
 	switch {
 	case p.Accept(token.Identifier):
 		return p.parseField()
-	case p.Accept(token.Expr):
-		return &ast.Expr{
-			Value: trimExpr(p.Text()),
-		}, nil
+	case p.Accept(token.OpenCurly):
+		return p.parseExpr()
 	default:
 		return nil, p.unexpected("attribute")
 	}
@@ -273,15 +268,33 @@ func (p *Parser) parseAttrValue() (ast.Value, error) {
 		return &ast.StringValue{
 			Value: value,
 		}, nil
-	case p.Accept(token.Expr):
-		return &ast.Expr{
-			Value: trimExpr(p.Text()),
-		}, nil
+	case p.Accept(token.OpenCurly):
+		return p.parseExpr()
 	default:
 		return nil, p.unexpected("attr value")
 	}
 }
 
-func trimExpr(value string) string {
-	return strings.TrimSuffix(strings.TrimPrefix(value, "{"), "}")
+func (p *Parser) parseExpr() (*ast.Expr, error) {
+	var frags []ast.Fragment
+	for {
+		switch {
+		case p.Accept(token.Expr):
+			frags = append(frags, &ast.Text{
+				Value: p.Text(),
+			})
+		case p.Accept(token.LessThan):
+			element, err := p.parseElement()
+			if err != nil {
+				return nil, err
+			}
+			frags = append(frags, element)
+		case p.Accept(token.CloseCurly):
+			return &ast.Expr{
+				Fragments: frags,
+			}, nil
+		default:
+			return nil, p.unexpected("expr")
+		}
+	}
 }

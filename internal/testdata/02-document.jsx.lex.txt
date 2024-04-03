@@ -4,7 +4,9 @@ identifier:"html"
 space:" "
 identifier:"lang"
 =
-expr:"{site.lang}"
+{
+expr:"site.lang"
+}
 >
 space:"\n"
 space:"        "
@@ -22,7 +24,9 @@ string:"\"description\""
 space:" "
 identifier:"content"
 =
-expr:"{site.description}"
+{
+expr:"site.description"
+}
 space:" "
 />
 space:"\n"
@@ -37,7 +41,9 @@ string:"\"og:title\""
 space:" "
 identifier:"content"
 =
-expr:"{site.title}"
+{
+expr:"site.title"
+}
 space:" "
 />
 space:"\n"
@@ -51,7 +57,9 @@ string:"\"og:url\""
 space:" "
 identifier:"content"
 =
-expr:"{site.url}"
+{
+expr:"site.url"
+}
 space:" "
 />
 space:"\n"
@@ -65,7 +73,9 @@ string:"\"og:description\""
 space:" "
 identifier:"content"
 =
-expr:"{site.description}"
+{
+expr:"site.description"
+}
 space:" "
 />
 space:"\n"
@@ -121,7 +131,13 @@ string:"\"og:image\""
 space:" "
 identifier:"content"
 =
-expr:"{`${site.card}`}"
+{
+expr:"`$"
+expr:"{"
+expr:"site.card"
+expr:"}"
+expr:"`"
+}
 space:" "
 />
 space:"\n"
@@ -150,7 +166,9 @@ string:"\"twitter:site\""
 space:" "
 identifier:"content"
 =
-expr:"{site.twitter}"
+{
+expr:"site.twitter"
+}
 space:" "
 />
 space:"\n"
@@ -164,7 +182,9 @@ string:"\"twitter:creator\""
 space:" "
 identifier:"content"
 =
-expr:"{site.twitter}"
+{
+expr:"site.twitter"
+}
 space:" "
 />
 space:"\n"
@@ -178,7 +198,13 @@ string:"\"twitter:image\""
 space:" "
 identifier:"content"
 =
-expr:"{`${site.card}`}"
+{
+expr:"`$"
+expr:"{"
+expr:"site.card"
+expr:"}"
+expr:"`"
+}
 space:" "
 />
 space:"\n"
@@ -193,7 +219,9 @@ string:"\"shortcut icon\""
 space:" "
 identifier:"href"
 =
-expr:"{site.favicon}"
+{
+expr:"site.favicon"
+}
 space:" "
 />
 space:"\n"
@@ -211,7 +239,9 @@ string:"\"16x16 32x32\""
 space:" "
 identifier:"href"
 =
-expr:"{site.favicon}"
+{
+expr:"site.favicon"
+}
 space:" "
 />
 space:"\n"
@@ -263,7 +293,27 @@ space:"\n"
 space:"            "
 identifier:"dangerouslySetInnerHTML"
 =
-expr:"{{\n              __html: `\n              * {\n                box-sizing: border-box;\n                text-rendering: optimizeLegibility;\n                -webkit-font-smoothing: antialiased;\n              }\n\n              html,\n              body,\n              #__next {\n                margin: 0;\n              }\n\n              html {\n              }\n\n              body {\n                font-family: -system-ui, sans-serif;\n                font-size: 16px;\n                background: #ffffff;\n              }\n            `,\n            }}"
+{
+expr:"{"
+expr:"\n              __html: `\n              * "
+expr:"{"
+expr:"\n                box-sizing: border-box;\n                text-rendering: optimizeLegibility;\n                -webkit-font-smoothing: antialiased;\n              "
+expr:"}"
+expr:"\n\n              html,\n              body,\n              #__next "
+expr:"{"
+expr:"\n                margin: 0;\n              "
+expr:"}"
+expr:"\n\n              html "
+expr:"{"
+expr:"\n              "
+expr:"}"
+expr:"\n\n              body "
+expr:"{"
+expr:"\n                font-family: -system-ui, sans-serif;\n                font-size: 16px;\n                background: #ffffff;\n              "
+expr:"}"
+expr:"\n            `,\n            "
+expr:"}"
+}
 space:"\n"
 space:"          "
 />
@@ -312,7 +362,15 @@ space:"\n"
 space:"            "
 identifier:"dangerouslySetInnerHTML"
 =
-expr:"{{\n              __html: `\n                window.dataLayer = window.dataLayer || [];\n                function gtag(){dataLayer.push(arguments);}\n                gtag('js', new Date());\n\n                gtag('config', 'UA-10351690-15');\n              `,\n            }}"
+{
+expr:"{"
+expr:"\n              __html: `\n                window.dataLayer = window.dataLayer || [];\n                function gtag()"
+expr:"{"
+expr:"dataLayer.push(arguments);"
+expr:"}"
+expr:"\n                gtag('js', new Date());\n\n                gtag('config', 'UA-10351690-15');\n              `,\n            "
+expr:"}"
+}
 space:"\n"
 space:"          "
 />

@@ -107,7 +107,7 @@ func (s *StringValue) Visit(v Visitor) {
 }
 
 type Expr struct {
-	Value string
+	Fragments []Fragment
 }
 
 func (e *Expr) attr()     {}
@@ -115,7 +115,13 @@ func (e *Expr) value()    {}
 func (e *Expr) fragment() {}
 
 func (e *Expr) String() string {
-	return "{" + e.Value + "}"
+	sb := new(strings.Builder)
+	sb.WriteString("{")
+	for _, f := range e.Fragments {
+		sb.WriteString(f.String())
+	}
+	sb.WriteString("}")
+	return sb.String()
 }
 
 func (e *Expr) Visit(v Visitor) {

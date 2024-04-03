@@ -50,6 +50,8 @@ type Lexer struct {
 	err   string      // Error message for an error token
 	prev  rune        // Previous rune
 
+	expressionDepth int // Depth of expression nesting
+
 	states []state // Stack of states
 	peaked []token.Token
 }
@@ -192,7 +194,8 @@ func childTagState(l *Lexer) (t token.Type) {
 		}
 	case '{':
 		l.step()
-		return exprState(l)
+		l.pushState(expressionState)
+		return token.OpenCurly
 	case '\n':
 		l.step()
 		return token.Space
@@ -277,7 +280,8 @@ func middleTagState(l *Lexer) (t token.Type) {
 		return stringState(l, '\'')
 	case l.cp == '{':
 		l.step()
-		return exprState(l)
+		l.pushState(expressionState)
+		return token.OpenCurly
 	case isNewline(l.cp):
 		l.step()
 		return token.Space
@@ -337,25 +341,33 @@ func stringState(l *Lexer, end rune) (t token.Type) {
 	}
 }
 
-func exprState(l *Lexer) (t token.Type) {
-	depth := 1
-	for {
-		switch {
-		case l.cp == eof:
+func expressionState(l *Lexer) (t token.Type) {
+	switch {
+	case l.cp == eof:
+		l.popState()
+		return l.unexpected()
+	case l.cp == '<':
+		l.step()
+		l.pushState(startOpenTagState)
+		return token.LessThan
+	case l.cp == '{':
+		l.step()
+		l.expressionDepth++
+		return token.Expr
+	case l.cp == '}':
+		l.step()
+		if l.expressionDepth == 0 {
 			l.popState()
-			return l.unexpected()
-		case l.cp == '{':
-			depth++
-			l.step()
-		case l.cp == '}':
-			l.step()
-			depth--
-			if depth == 0 {
-				return token.Expr
-			}
-		default:
+			return token.CloseCurly
+		}
+		l.expressionDepth--
+		return token.Expr
+	default:
+		l.step()
+		for l.cp != eof && l.cp != '}' && l.cp != '{' && (l.cp != '<' || !isBeforeTag(l.prev)) {
 			l.step()
 		}
+		return token.Expr
 	}
 }
 
@@ -377,4 +389,8 @@ func isSpace(cp rune) bool {
 
 func isNewline(cp rune) bool {
 	return cp == '\n'
+}
+
+func isBeforeTag(cp rune) bool {
+	return cp == 0 || isNewline(cp) || isSpace(cp) || cp == '('
 }

@@ -20,7 +20,9 @@ identifier:"button"
 space:" "
 identifier:"onClick"
 =
-expr:"{() => setCount(count + 1)}"
+{
+expr:"() => setCount(count + 1)"
+}
 >
 text:"Click me"
 </
@@ -33,7 +35,17 @@ identifier:"style"
 space:" "
 identifier:"scoped"
 >
-expr:"{`\n        p {\n          color: red;\n        }\n        button {\n          background: blue;\n        }\n      `}"
+{
+expr:"`\n        p "
+expr:"{"
+expr:"\n          color: red;\n        "
+expr:"}"
+expr:"\n        button "
+expr:"{"
+expr:"\n          background: blue;\n        "
+expr:"}"
+expr:"\n      `"
+}
 </
 identifier:"style"
 >

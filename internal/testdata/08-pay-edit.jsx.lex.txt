@@ -10,7 +10,9 @@ identifier:"UserError"
 space:" "
 identifier:"error"
 =
-expr:"{customer.error}"
+{
+expr:"customer.error"
+}
 space:" "
 />
 space:" "
@@ -20,7 +22,9 @@ identifier:"NewCustomer"
 space:" "
 identifier:"team"
 =
-expr:"{team}"
+{
+expr:"team"
+}
 space:" "
 />
 space:" "
@@ -36,7 +40,9 @@ identifier:"UserError"
 space:" "
 identifier:"error"
 =
-expr:"{updatedCustomer.error}"
+{
+expr:"updatedCustomer.error"
+}
 space:" "
 />
 space:" "
@@ -83,7 +89,9 @@ identifier:"className"
 =
 string:"\"content\""
 >
-expr:"{content}"
+{
+expr:"content"
+}
 </
 identifier:"div"
 >
@@ -114,7 +122,33 @@ identifier:"style"
 space:" "
 identifier:"jsx"
 >
-expr:"{`\n          .page {\n            display: flex;\n            align-items: center;\n            min-width: 100vw;\n            min-height: 100vh;\n            background: #f4f9ff;\n          }\n\n          .cloud-1 {\n            background-image: url('/static/images/cloud-1.svg');\n            position: absolute;\n            width: 159px;\n            height: 92px;\n            top: 50px;\n            right: 800px;\n            animation: float infinite 5s ease-in;\n          }\n\n          .cloud-2 {\n            background-image: url('/static/images/cloud-2.svg');\n            position: absolute;\n            height: 128px;\n            width: 228px;\n            right: 500px;\n            top: 30px;\n            animation: float infinite 5s ease-in;\n          }\n\n          .error:empty {\n            display: none;\n          }\n\n          .content {\n            text-align: center;\n            margin: 0 auto;\n          }\n\n          .footer {\n            position: absolute;\n            bottom: 0;\n            overflow: hidden;\n            width: 100%;\n          }\n        `}"
+{
+expr:"`\n          .page "
+expr:"{"
+expr:"\n            display: flex;\n            align-items: center;\n            min-width: 100vw;\n            min-height: 100vh;\n            background: #f4f9ff;\n          "
+expr:"}"
+expr:"\n\n          .cloud-1 "
+expr:"{"
+expr:"\n            background-image: url('/static/images/cloud-1.svg');\n            position: absolute;\n            width: 159px;\n            height: 92px;\n            top: 50px;\n            right: 800px;\n            animation: float infinite 5s ease-in;\n          "
+expr:"}"
+expr:"\n\n          .cloud-2 "
+expr:"{"
+expr:"\n            background-image: url('/static/images/cloud-2.svg');\n            position: absolute;\n            height: 128px;\n            width: 228px;\n            right: 500px;\n            top: 30px;\n            animation: float infinite 5s ease-in;\n          "
+expr:"}"
+expr:"\n\n          .error:empty "
+expr:"{"
+expr:"\n            display: none;\n          "
+expr:"}"
+expr:"\n\n          .content "
+expr:"{"
+expr:"\n            text-align: center;\n            margin: 0 auto;\n          "
+expr:"}"
+expr:"\n\n          .footer "
+expr:"{"
+expr:"\n            position: absolute;\n            bottom: 0;\n            overflow: hidden;\n            width: 100%;\n          "
+expr:"}"
+expr:"\n        `"
+}
 </
 identifier:"style"
 >
@@ -131,7 +165,11 @@ identifier:"div"
 space:" "
 identifier:"style"
 =
-expr:"{{ maxWidth: 500 }}"
+{
+expr:"{"
+expr:" maxWidth: 500 "
+expr:"}"
+}
 >
 space:"\n"
 space:"    "
@@ -153,7 +191,9 @@ text:"Here's the error we got back: "
 <
 identifier:"code"
 >
-expr:"{error}"
+{
+expr:"error"
+}
 </
 identifier:"code"
 >
@@ -193,7 +233,11 @@ identifier:"div"
 space:" "
 identifier:"style"
 =
-expr:"{{ maxWidth: 400 }}"
+{
+expr:"{"
+expr:" maxWidth: 400 "
+expr:"}"
+}
 >
 space:"\n"
 space:"    "
@@ -235,7 +279,11 @@ identifier:"div"
 space:" "
 identifier:"style"
 =
-expr:"{{ maxWidth: 400 }}"
+{
+expr:"{"
+expr:" maxWidth: 400 "
+expr:"}"
+}
 >
 space:"\n"
 space:"    "
@@ -267,7 +315,11 @@ identifier:"div"
 space:" "
 identifier:"style"
 =
-expr:"{{ maxWidth: 400 }}"
+{
+expr:"{"
+expr:" maxWidth: 400 "
+expr:"}"
+}
 >
 space:"\n"
 space:"    "
@@ -291,7 +343,13 @@ identifier:"a"
 space:" "
 identifier:"href"
 =
-expr:"{`/pay/${team}`}"
+{
+expr:"`/pay/$"
+expr:"{"
+expr:"team"
+expr:"}"
+expr:"`"
+}
 >
 space:"\n"
 space:"        "
@@ -299,7 +357,9 @@ text:"https://standupjack.com/pay/\n        {team}\n      "
 </
 identifier:"a"
 >
-expr:"{' '}"
+{
+expr:"' '"
+}
 space:"\n"
 space:"      "
 text:"to make a payment.\n    "
