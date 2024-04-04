@@ -38,6 +38,10 @@ func (p *Printer) VisitText(t *ast.Text) {
 	p.s.WriteString(t.Value)
 }
 
+func (p *Printer) VisitComment(c *ast.Comment) {
+	p.s.WriteString(c.String())
+}
+
 func (p *Printer) VisitField(f *ast.Field) {
 	p.s.WriteString(f.Name)
 	p.s.WriteString("=")

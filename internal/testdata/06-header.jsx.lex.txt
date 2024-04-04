@@ -29,21 +29,7 @@ string:"\"buttons\""
 >
 text:"\n          "
 {
-expr:"/* "
-<
-identifier:"Button"
-space:" "
-identifier:"href"
-=
-{
-expr:"`mailto:${props.email}`"
-}
->
-text:"Contact"
-</
-identifier:"Button"
->
-expr:" */"
+comment:"/* <Button href={`mailto:${props.email}`}>Contact</Button> */"
 }
 text:"\n          "
 <
@@ -210,25 +196,7 @@ string:"\"mobile-buttons\""
 >
 text:"\n        "
 {
-expr:"/* "
-<
-identifier:"a"
-space:" "
-identifier:"className"
-=
-string:"\"Button\""
-space:" "
-identifier:"href"
-=
-{
-expr:"`mailto:${props.email}`"
-}
->
-text:"\n          Contact\n        "
-</
-identifier:"a"
->
-expr:" */"
+comment:"/* <a className=\"Button\" href={`mailto:${props.email}`}>\n          Contact\n        </a> */"
 }
 text:"\n        "
 <

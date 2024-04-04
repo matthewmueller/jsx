@@ -13,6 +13,7 @@ type Visitor interface {
 	VisitExpr(*Expr)
 	VisitBoolValue(*BoolValue)
 	VisitElement(*Element)
+	VisitComment(*Comment)
 }
 
 type Node interface {
@@ -45,6 +46,13 @@ type Fragment interface {
 	fragment()
 }
 
+var (
+	_ Fragment = (*Text)(nil)
+	_ Fragment = (*Comment)(nil)
+	_ Fragment = (*Element)(nil)
+	_ Fragment = (*Expr)(nil)
+)
+
 type Text struct {
 	Value string
 }
@@ -59,10 +67,29 @@ func (r *Text) Visit(v Visitor) {
 	v.VisitText(r)
 }
 
+type Comment struct {
+	Value string
+}
+
+func (c *Comment) fragment() {}
+
+func (c *Comment) String() string {
+	return "/*" + c.Value + "*/"
+}
+
+func (c *Comment) Visit(v Visitor) {
+	v.VisitComment(c)
+}
+
 type Attr interface {
 	Node
 	attr()
 }
+
+var (
+	_ Attr = (*Field)(nil)
+	_ Attr = (*Expr)(nil)
+)
 
 type Field struct {
 	Name  string
@@ -91,6 +118,12 @@ type Value interface {
 	Node
 	value()
 }
+
+var (
+	_ Value = (*StringValue)(nil)
+	_ Value = (*BoolValue)(nil)
+	_ Value = (*Expr)(nil)
+)
 
 type StringValue struct {
 	Value string

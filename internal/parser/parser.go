@@ -3,6 +3,7 @@ package parser
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/matthewmueller/jsx/ast"
 	"github.com/matthewmueller/jsx/internal/lexer"
@@ -289,6 +290,10 @@ func (p *Parser) parseExpr() (*ast.Expr, error) {
 				return nil, err
 			}
 			frags = append(frags, element)
+		case p.Accept(token.Comment):
+			frags = append(frags, &ast.Comment{
+				Value: strings.Trim(p.Text(), "/*"),
+			})
 		case p.Accept(token.CloseCurly):
 			return &ast.Expr{
 				Fragments: frags,

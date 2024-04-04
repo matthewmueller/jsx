@@ -97,6 +97,7 @@ func TestSample(t *testing.T) {
 	equal(t, children, `< identifier:"body" > text:"\n\t" < identifier:"Page" space:" " /> text:"\n\t" < identifier:"Scripts" space:" " /> text:"\n" </ identifier:"body" > text:"\n"`)
 	equal(t, `hello <>fragment</>`, `text:"hello " < > text:"fragment" </ >`)
 	equal(t, newlined, `text:"export default () => (\n\t" < identifier:"div" space:"\n\t\t" identifier:"className" = string:"\"hello\"" space:"\n\t" > text:"\n\t\thello\n\t\t" < identifier:"span" > text:"world" </ identifier:"span" > text:"\n\t" </ identifier:"div" > text:"\n)"`)
+	equal(t, `function() { return (<h2 {...props}>{message}</h2>) }`, `text:"function() { return (" < identifier:"h2" space:" " { expr:"...props" } > { expr:"message" } </ identifier:"h2" > text:") }"`)
 }
 
 func TestInExpr(t *testing.T) {
@@ -106,19 +107,10 @@ func TestInExpr(t *testing.T) {
 	equal(t, `export default function (props: Record<string>) { return (<H2 func={() => <Header {...props}>hello <span>world</span></Header>} />) }`, `text:"export default function (props: Record<string>) { return (" < identifier:"H2" space:" " identifier:"func" = { expr:"() => " < identifier:"Header" space:" " { expr:"...props" } > text:"hello " < identifier:"span" > text:"world" </ identifier:"span" > </ identifier:"Header" > } space:" " /> text:") }"`)
 }
 
-func TestTemplateLiteral(t *testing.T) {
-	t.Skip("template literals are not supported yet")
-	equal(t, `export default () => (<h2 class={`+"`"+`hello`+"`"+`}>`, ``)
-	equal(t, `export default () => (<h2 class={`+"`"+`${hello}`+"`"+`}>`, ``)
-	equal(t, `export default () => (<h2 class={`+"`"+`${hello}${world}`+"`"+`}>`, ``)
-	equal(t, `export default () => (<h2 class={`+"`"+`${hello}${world}!`+"`"+`}>`, ``)
-	equal(t, `export default () => (<h2 class={`+"`"+`hello ${hello}${world}!`+"`"+`}>`, ``)
-	equal(t, `export default () => (<h2 class={`+"`"+`hello ${hello} ${world}!`+"`"+`}>`, ``)
-}
-
 func TestJSXComment(t *testing.T) {
-	t.Skip("jsx comments are not supported yet")
-	equal(t, `export default () => (<h2>{/* hello world */}</h2>)`, ``)
+	equal(t, `export default () => (<h2>{/* hello world */}</h2>)`, `text:"export default () => (" < identifier:"h2" > { comment:"/* hello world */" } </ identifier:"h2" > text:")"`)
+	equal(t, `export default () => (<h2>hello {/* hello world */} world</h2>)`, `text:"export default () => (" < identifier:"h2" > text:"hello " { comment:"/* hello world */" } text:" world" </ identifier:"h2" > text:")"`)
+	equal(t, `export default () => (<h2>hello {hello /* hello world */} world</h2>)`, `text:"export default () => (" < identifier:"h2" > text:"hello " { expr:"hello " comment:"/* hello world */" } text:" world" </ identifier:"h2" > text:")"`)
 }
 
 func TestFile(t *testing.T) {

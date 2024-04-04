@@ -83,6 +83,7 @@ func TestSample(t *testing.T) {
 	equal(t, `hello <h2>Record<string,string></h2>`, `hello <h2>Record<string,string></h2>`)
 	equal(t, `type Record<string> = {}; function() { return <h2>hello world</h2> }`, `type Record<string> = {}; function() { return <h2>hello world</h2> }`)
 	equal(t, `type Record<string> = {}; function() { return (<h2>hello world</h2>) }`, `type Record<string> = {}; function() { return (<h2>hello world</h2>) }`)
+	equal(t, `function() { return (<h2 {...props}>{message}</h2>) }`, `function() { return (<h2 {...props}>{message}</h2>) }`)
 }
 
 func TestStyle(t *testing.T) {
@@ -130,22 +131,75 @@ func TestMultiLineExpr(t *testing.T) {
 	}})
 }
 
-func TestTemplateLiteral(t *testing.T) {
-	t.Skip("template literals are not supported yet")
-	equal(t, `export default () => (<h2 class={`+"`"+`hello`+"`"+`}>`, ``)
-	equal(t, `export default () => (<h2 class={`+"`"+`${hello}`+"`"+`}>`, ``)
-	equal(t, `export default () => (<h2 class={`+"`"+`${hello}${world}`+"`"+`}>`, ``)
-	equal(t, `export default () => (<h2 class={`+"`"+`${hello}${world}!`+"`"+`}>`, ``)
-	equal(t, `export default () => (<h2 class={`+"`"+`hello ${hello}${world}!`+"`"+`}>`, ``)
-	equal(t, `export default () => (<h2 class={`+"`"+`hello ${hello} ${world}!`+"`"+`}>`, ``)
-}
-
 func TestInExpr(t *testing.T) {
-	t.Skip("elements in an expr is not supported yet")
 	equal(t, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`)
 	equal(t, `export default function { return (<H2 func={() => <Header>hello world</Header>} />) }`, `export default function { return (<H2 func={() => <Header>hello world</Header>} />) }`)
-	equalAST(t, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`, nil)
-	equalAST(t, `export default function { return (<H2 func={() => <Header>hello world</Header>} />) }`, nil)
+	equalAST(t, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`, &ast.Script{Body: []ast.Fragment{
+		&ast.Text{Value: "export default function { return ("},
+		&ast.Element{
+			Name: "H1",
+			Attrs: []ast.Attr{
+				&ast.Field{
+					Name: "func",
+					Value: &ast.Expr{
+						Fragments: []ast.Fragment{
+							&ast.Text{
+								Value: "() => ",
+							},
+							&ast.Element{
+								Name: "h1",
+								Children: []ast.Fragment{
+									&ast.Text{
+										Value: "hello world",
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			SelfClosing: true,
+		},
+		&ast.Text{
+			Value: ") }",
+		},
+	}})
+	equalAST(t, `export default function { return (<H2 func={() => <Header>hello world</Header>} />) }`, &ast.Script{Body: []ast.Fragment{
+		&ast.Text{Value: "export default function { return ("},
+		&ast.Element{
+			Name: "H2",
+			Attrs: []ast.Attr{
+				&ast.Field{
+					Name: "func",
+					Value: &ast.Expr{
+						Fragments: []ast.Fragment{
+							&ast.Text{
+								Value: "() => ",
+							},
+							&ast.Element{
+								Name: "Header",
+								Children: []ast.Fragment{
+									&ast.Text{
+										Value: "hello world",
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			SelfClosing: true,
+		},
+		&ast.Text{
+			Value: ") }",
+		},
+	}})
+}
+
+func TestJSXComment(t *testing.T) {
+	equal(t, `export default () => (<h2>{/* hello world */}</h2>)`, `export default () => (<h2>{/* hello world */}</h2>)`)
+	equal(t, `export default () => (<h2>hello {/* hello world */} world</h2>)`, `export default () => (<h2>hello {/* hello world */} world</h2>)`)
+	equal(t, `export default () => (<h2>hello {hello /* hello world */} world</h2>)`, `export default () => (<h2>hello {hello /* hello world */} world</h2>)`)
 }
 
 func TestFile(t *testing.T) {

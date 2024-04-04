@@ -327,6 +327,8 @@ func expressionState(l *Lexer) (t token.Type) {
 		l.popState()
 		l.step()
 		return token.CloseCurly
+	case strings.HasPrefix(l.input[l.end:], "/*"):
+		return commentState(l)
 	default:
 		for {
 			if l.cp == '{' {
@@ -335,7 +337,7 @@ func expressionState(l *Lexer) (t token.Type) {
 				depth--
 			}
 			l.step()
-			if l.cp == eof || (l.cp == '<' && isBeforeTag(l.prev)) || (l.cp == '}' && depth == 0) {
+			if l.cp == eof || (l.cp == '<' && isBeforeTag(l.prev)) || (l.cp == '}' && depth == 0) || strings.HasPrefix(l.input[l.end:], "/*") {
 				break
 			}
 		}
@@ -361,4 +363,18 @@ func isSpace(cp rune) bool {
 
 func isBeforeTag(cp rune) bool {
 	return cp == 0 || isSpace(cp) || cp == '('
+}
+
+func commentState(l *Lexer) token.Type {
+	for {
+		switch {
+		case l.cp == eof:
+			return l.errorf("unclosed comment")
+		case l.cp == '/' && l.prev == '*':
+			l.step()
+			return token.Comment
+		default:
+			l.step()
+		}
+	}
 }

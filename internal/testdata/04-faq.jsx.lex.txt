@@ -93,37 +93,7 @@ identifier:"p"
 >
 text:"\n            "
 {
-expr:"/* "
-<
-identifier:"p"
->
-text:"\n              I'll be offering yearly pricing very soon for "
-<
-identifier:"strong"
->
-text:"$2/user/month"
-</
-identifier:"strong"
->
-text:". If\n              you're interested in that, please "
-<
-identifier:"a"
-space:" "
-identifier:"href"
-=
-{
-expr:"'mailto:' + props.email"
-}
->
-text:"contact me"
-</
-identifier:"a"
->
-text:".\n            "
-</
-identifier:"p"
->
-expr:" */"
+comment:"/* <p>\n              I'll be offering yearly pricing very soon for <strong>$2/user/month</strong>. If\n              you're interested in that, please <a href={'mailto:' + props.email}>contact me</a>.\n            </p> */"
 }
 text:"\n          "
 </
