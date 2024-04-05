@@ -1,3 +1,8 @@
+# 0.0.4 / 2024-04-04
+
+- fix lexing inner fragments
+- fix parsing components with a dot.
+
 # 0.0.3 / 2024-04-03
 
 - add support for jsx comments
