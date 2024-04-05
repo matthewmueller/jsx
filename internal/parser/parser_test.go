@@ -2,6 +2,7 @@ package parser_test
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
@@ -34,7 +35,7 @@ func equalAST(t *testing.T, input string, expected ast.Node) {
 
 var update = flag.Bool("update", false, "update golden files")
 
-func equalFile(t *testing.T, path string) {
+func equalTSXFile(t *testing.T, path string) {
 	t.Helper()
 	t.Run(path, func(t *testing.T) {
 		t.Helper()
@@ -64,6 +65,19 @@ func equalFile(t *testing.T, path string) {
 	})
 }
 
+func equalJSXFile(t *testing.T, path string) {
+	t.Helper()
+	t.Run(path, func(t *testing.T) {
+		t.Helper()
+		input, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		actual := parser.Print(path, string(input))
+		diff.TestString(t, actual, string(input))
+	})
+}
+
 const children = `<body>
   <Page />
   <Scripts />
@@ -84,6 +98,7 @@ func TestSample(t *testing.T) {
 	equal(t, `type Record<string> = {}; function() { return <h2>hello world</h2> }`, `type Record<string> = {}; function() { return <h2>hello world</h2> }`)
 	equal(t, `type Record<string> = {}; function() { return (<h2>hello world</h2>) }`, `type Record<string> = {}; function() { return (<h2>hello world</h2>) }`)
 	equal(t, `function() { return (<h2 {...props}>{message}</h2>) }`, `function() { return (<h2 {...props}>{message}</h2>) }`)
+	equal(t, `<><React.Fragment><>hello world</></React.Fragment></>`, `<><React.Fragment><>hello world</></React.Fragment></>`)
 }
 
 func TestStyle(t *testing.T) {
@@ -202,17 +217,29 @@ func TestJSXComment(t *testing.T) {
 	equal(t, `export default () => (<h2>hello {hello /* hello world */} world</h2>)`, `export default () => (<h2>hello {hello /* hello world */} world</h2>)`)
 }
 
-func TestFile(t *testing.T) {
-	equalFile(t, "01-hello.tsx")
-	equalFile(t, "02-document.jsx")
-	equalFile(t, "03-button.jsx")
-	equalFile(t, "04-faq.jsx")
-	equalFile(t, "05-footer.jsx")
-	equalFile(t, "06-header.jsx")
-	equalFile(t, "07-index.jsx")
-	equalFile(t, "08-pay-edit.jsx")
-	equalFile(t, "09-pay.jsx")
-	equalFile(t, "10-privacy.jsx")
-	equalFile(t, "11-slack-button.jsx")
-	equalFile(t, "12-document.tsx")
+func TestTSXFile(t *testing.T) {
+	equalTSXFile(t, "01-hello.tsx")
+	equalTSXFile(t, "02-document.jsx")
+	equalTSXFile(t, "03-button.jsx")
+	equalTSXFile(t, "04-faq.jsx")
+	equalTSXFile(t, "05-footer.jsx")
+	equalTSXFile(t, "06-header.jsx")
+	equalTSXFile(t, "07-index.jsx")
+	equalTSXFile(t, "08-pay-edit.jsx")
+	equalTSXFile(t, "09-pay.jsx")
+	equalTSXFile(t, "10-privacy.jsx")
+	equalTSXFile(t, "11-slack-button.jsx")
+	equalTSXFile(t, "12-document.tsx")
+}
+
+// These tests come from styled-jsx
+func TestStyledJSXFile(t *testing.T) {
+	files, err := filepath.Glob(filepath.Join("..", "testdata", "styled-jsx", "*.js"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println(files)
+	for _, file := range files {
+		equalJSXFile(t, file)
+	}
 }

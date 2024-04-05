@@ -98,6 +98,12 @@ func TestSample(t *testing.T) {
 	equal(t, `hello <>fragment</>`, `text:"hello " < > text:"fragment" </ >`)
 	equal(t, newlined, `text:"export default () => (\n\t" < identifier:"div" space:"\n\t\t" identifier:"className" = string:"\"hello\"" space:"\n\t" > text:"\n\t\thello\n\t\t" < identifier:"span" > text:"world" </ identifier:"span" > text:"\n\t" </ identifier:"div" > text:"\n)"`)
 	equal(t, `function() { return (<h2 {...props}>{message}</h2>) }`, `text:"function() { return (" < identifier:"h2" space:" " { expr:"...props" } > { expr:"message" } </ identifier:"h2" > text:") }"`)
+	equal(t, `<React.Fragment>hello</React.Fragment>`, `< identifier:"React.Fragment" > text:"hello" </ identifier:"React.Fragment" >`)
+	equal(t, `<>hello</>`, `< > text:"hello" </ >`)
+	equal(t, `<a><a></a></a>`, `< identifier:"a" > < identifier:"a" > </ identifier:"a" > </ identifier:"a" >`)
+	equal(t, `<a><></></a>`, `< identifier:"a" > < > </ > </ identifier:"a" >`)
+	equal(t, `<><></></>`, `< > < > </ > </ >`)
+	equal(t, `<><React.Fragment><>hello world</></React.Fragment></>`, `< > < identifier:"React.Fragment" > < > text:"hello world" </ > </ identifier:"React.Fragment" > </ >`)
 }
 
 func TestInExpr(t *testing.T) {

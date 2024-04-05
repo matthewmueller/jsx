@@ -135,9 +135,9 @@ func (l *Lexer) errorf(msg string, args ...interface{}) token.Type {
 
 func (l *Lexer) unexpected() token.Type {
 	if l.cp == eof {
-		return l.errorf("unexpected end of input")
+		return l.errorf("unexpected end of input while lexing")
 	}
-	return l.errorf("unexpected tokens '%s'", l.input[l.start:l.end])
+	return l.errorf("unexpected token '%s' while lexing", l.input[l.start:l.end])
 }
 
 func initialState(l *Lexer) (t token.Type) {
@@ -174,6 +174,9 @@ func childTagState(l *Lexer) (t token.Type) {
 		case isAlpha(l.cp):
 			l.pushState(startOpenTagState)
 			return token.LessThan
+		case l.cp == '>':
+			l.pushState(startOpenTagState)
+			return token.LessThan
 		default:
 			return l.unexpected()
 		}
@@ -207,7 +210,7 @@ func startOpenTagState(l *Lexer) (t token.Type) {
 		return token.GreaterThan
 	case isAlpha(l.cp):
 		l.step()
-		for isAlphaNumeric(l.cp) || isDash(l.cp) {
+		for isAlphaNumeric(l.cp) || isDash(l.cp) || l.cp == '.' {
 			l.step()
 		}
 		l.popState()
@@ -277,7 +280,7 @@ func startCloseTagState(l *Lexer) (t token.Type) {
 	switch {
 	case isAlpha(l.cp) || isDash(l.cp):
 		l.step()
-		for isAlphaNumeric(l.cp) || isDash(l.cp) {
+		for isAlphaNumeric(l.cp) || isDash(l.cp) || l.cp == '.' {
 			l.step()
 		}
 		return token.Identifier

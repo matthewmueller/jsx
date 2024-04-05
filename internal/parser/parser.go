@@ -87,7 +87,7 @@ func (p *Parser) Expect(tokens ...token.Type) error {
 		if peaked.Type == token.Error {
 			return fmt.Errorf(peaked.Text)
 		} else if peaked.Type != tok {
-			return fmt.Errorf("expected %s, got %s", tok, peaked.Type)
+			return fmt.Errorf("expected %s, got %s (%d:%d)", tok, peaked.Type, peaked.Line, peaked.Start)
 		}
 	}
 	for i := 0; i < len(tokens); i++ {
@@ -99,7 +99,7 @@ func (p *Parser) Expect(tokens ...token.Type) error {
 // TODO: this needs to be updated to better handle peaked tokens
 func (p *Parser) unexpected(prefix string) error {
 	token := p.l.Latest()
-	return fmt.Errorf("parser: %s unexpected token %s (%d:%d)", prefix, token.String(), token.Line, token.Start)
+	return fmt.Errorf("%s unexpected token %s (%d:%d)", prefix, token.String(), token.Line, token.Start)
 }
 
 func (p *Parser) parseScript() (*ast.Script, error) {
@@ -193,7 +193,8 @@ func (p *Parser) parseElement() (ast.Fragment, error) {
 	if err := p.Expect(token.Identifier); err != nil {
 		return nil, err
 	} else if p.Text() != node.Name {
-		return nil, fmt.Errorf("expected closing tag %s, got %s", node.Name, p.Text())
+		token := p.l.Latest()
+		return nil, fmt.Errorf("expected closing tag %s, got %s (%d:%d)", node.Name, p.Text(), token.Line, token.Start)
 	}
 	if err := p.Expect(token.GreaterThan); err != nil {
 		return nil, err
@@ -236,7 +237,7 @@ func (p *Parser) parseField() (*ast.Field, error) {
 	for p.Accept(token.Space) {
 	}
 	// Handle boolean attributes
-	if p.Is(token.Identifier, token.GreaterThan, token.SlashGreaterThan) {
+	if p.Is(token.Identifier, token.GreaterThan, token.SlashGreaterThan, token.OpenCurly) {
 		return &ast.Field{
 			Name: name,
 			Value: &ast.BoolValue{
