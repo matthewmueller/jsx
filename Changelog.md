@@ -1,3 +1,7 @@
+# 0.0.5 / 2024-04-26
+
+- pass lexing errors through
+
 # 0.0.4 / 2024-04-04
 
 - fix lexing inner fragments
