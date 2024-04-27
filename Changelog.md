@@ -1,3 +1,7 @@
+# 0.0.6 / 2024-04-26
+
+- remove fmt
+
 # 0.0.5 / 2024-04-26
 
 - pass lexing errors through
