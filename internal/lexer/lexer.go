@@ -71,7 +71,7 @@ func (l *Lexer) nextToken() token.Token {
 		}
 	}
 	if tokenType == token.Error {
-		t.Error = l.err
+		t.Text = l.err
 		l.err = ""
 	}
 	return t

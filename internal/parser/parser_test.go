@@ -243,3 +243,14 @@ func TestStyledJSXFile(t *testing.T) {
 		equalJSXFile(t, file)
 	}
 }
+
+func TestSyntaxError(t *testing.T) {
+	ast, err := parser.Parse("input.jsx", `export default () => <h1>hello world</h1`)
+	if err == nil {
+		t.Fatal("expected an error")
+	}
+	if ast != nil {
+		t.Fatal("expected nil ast")
+	}
+	diff.TestString(t, err.Error(), "expected >, got unexpected end of input while lexing (1:40)")
+}

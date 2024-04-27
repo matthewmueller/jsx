@@ -10,7 +10,6 @@ type Type string
 type Token struct {
 	Type  Type
 	Text  string
-	Error string // Error message for an error token
 	Start int
 	Line  int
 }
@@ -18,11 +17,6 @@ type Token struct {
 func (t *Token) String() string {
 	s := new(strings.Builder)
 	s.WriteString(string(t.Type))
-	if t.Error != "" {
-		s.WriteString(":")
-		s.WriteString(strconv.Quote(t.Error))
-		return s.String()
-	}
 	if t.Text != "" && t.Text != string(t.Type) {
 		s.WriteString(":")
 		s.WriteString(strconv.Quote(t.Text))

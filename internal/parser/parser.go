@@ -85,7 +85,7 @@ func (p *Parser) Expect(tokens ...token.Type) error {
 	for i, tok := range tokens {
 		peaked := p.l.Peak(i + 1)
 		if peaked.Type == token.Error {
-			return fmt.Errorf(peaked.Text)
+			return fmt.Errorf("expected %s, got %s (%d:%d)", tok, peaked.Text, peaked.Line, peaked.Start)
 		} else if peaked.Type != tok {
 			return fmt.Errorf("expected %s, got %s (%d:%d)", tok, peaked.Type, peaked.Line, peaked.Start)
 		}
@@ -197,6 +197,7 @@ func (p *Parser) parseElement() (ast.Fragment, error) {
 		return nil, fmt.Errorf("expected closing tag %s, got %s (%d:%d)", node.Name, p.Text(), token.Line, token.Start)
 	}
 	if err := p.Expect(token.GreaterThan); err != nil {
+		fmt.Println("HERE?", err)
 		return nil, err
 	}
 	return node, nil
