@@ -197,7 +197,6 @@ func (p *Parser) parseElement() (ast.Fragment, error) {
 		return nil, fmt.Errorf("expected closing tag %s, got %s (%d:%d)", node.Name, p.Text(), token.Line, token.Start)
 	}
 	if err := p.Expect(token.GreaterThan); err != nil {
-		fmt.Println("HERE?", err)
 		return nil, err
 	}
 	return node, nil
