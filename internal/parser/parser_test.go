@@ -230,6 +230,7 @@ func TestTSXFile(t *testing.T) {
 	equalTSXFile(t, "10-privacy.jsx")
 	equalTSXFile(t, "11-slack-button.jsx")
 	equalTSXFile(t, "12-document.tsx")
+	equalTSXFile(t, "13-inner-fragment.tsx")
 }
 
 // These tests come from styled-jsx

@@ -132,4 +132,5 @@ func TestFile(t *testing.T) {
 	equalFile(t, "10-privacy.jsx")
 	equalFile(t, "11-slack-button.jsx")
 	equalFile(t, "12-document.tsx")
+	equalFile(t, "13-inner-fragment.tsx")
 }

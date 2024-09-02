@@ -1,0 +1,120 @@
+text:"import { format as timeago } from \"timeago.js\"\nimport { useSignal } from \"@preact/signals\"\nimport type { Comment } from \"./types\"\n\ntype Props = {\n  comment: Comment\n}\n\nexport default function Comment({ comment }: Props) {\n  const show = useSignal(true)\n\n  function toggle() {\n    show.value = !show.value\n  }\n\n  return (\n    "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"comment\""
+>
+text:"\n      "
+<
+identifier:"div"
+space:" "
+identifier:"class"
+=
+string:"\"header\""
+>
+text:"\n        "
+<
+identifier:"a"
+space:" "
+identifier:"class"
+=
+string:"\"fold\""
+space:" "
+identifier:"href"
+=
+string:"\"#\""
+space:" "
+identifier:"onClick"
+=
+{
+expr:"toggle"
+}
+>
+text:"\n          "
+{
+expr:"show.value ? \"↓\" : `→`"
+}
+text:"\n        "
+</
+identifier:"a"
+>
+{
+expr:"\" \""
+}
+text:"\n        "
+{
+expr:"comment.author"
+}
+text:" "
+{
+expr:"timeago(comment.created_at)"
+}
+text:"\n      "
+</
+identifier:"div"
+>
+text:"\n      "
+{
+expr:"show.value && (\n        "
+<
+>
+text:"\n          "
+<
+identifier:"div"
+space:"\n            "
+identifier:"class"
+=
+string:"\"body\""
+space:"\n            "
+identifier:"dangerouslySetInnerHTML"
+=
+{
+expr:"{ __html: comment.text }"
+}
+space:"\n          "
+/>
+text:"\n          "
+{
+expr:"(comment.children || []).map((child, i) => (\n            "
+<
+identifier:"Comment"
+space:" "
+identifier:"key"
+=
+{
+expr:"i"
+}
+space:" "
+identifier:"comment"
+=
+{
+expr:"child"
+}
+space:" "
+/>
+expr:"\n          ))"
+}
+text:"\n        "
+</
+>
+expr:"\n      )"
+}
+text:"\n      "
+<
+identifier:"style"
+space:" "
+identifier:"jsx"
+>
+{
+expr:"`\n        .comment {\n          padding: 10px;\n        }\n        .header {\n          color: gray;\n          font-size: 75%;\n        }\n        .fold {\n          text-decoration: none;\n          color: inherit;\n        }\n        .body {\n          padding-left: 13px;\n          font-size: 14px;\n        }\n        .body :global(a) {\n          text-decoration: none;\n          color: inherit;\n        }\n        .body :global(a:hover) {\n          text-decoration: underline;\n        }\n      `"
+}
+</
+identifier:"style"
+>
+text:"\n    "
+</
+identifier:"div"
+>
+text:"\n  )\n}\n"
