@@ -149,6 +149,7 @@ func TestMultiLineExpr(t *testing.T) {
 func TestInExpr(t *testing.T) {
 	equal(t, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`)
 	equal(t, `export default function { return (<H2 func={() => <Header>hello world</Header>} />) }`, `export default function { return (<H2 func={() => <Header>hello world</Header>} />) }`)
+	equal(t, `export default function () { return (<H2 func={<Header {...props}>hello <span>world</span></Header>}/>)}`, `export default function () { return (<H2 func={<Header {...props}>hello <span>world</span></Header>} />)}`)
 	equalAST(t, `export default function { return (<H1 func={() => <h1>hello world</h1>} />) }`, &ast.Script{Body: []ast.Fragment{
 		&ast.Text{Value: "export default function { return ("},
 		&ast.Element{

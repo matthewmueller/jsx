@@ -365,7 +365,7 @@ func isSpace(cp rune) bool {
 }
 
 func isBeforeTag(cp rune) bool {
-	return cp == 0 || isSpace(cp) || cp == '('
+	return cp == 0 || isSpace(cp) || cp == '(' || cp == '{'
 }
 
 func commentState(l *Lexer) token.Type {
