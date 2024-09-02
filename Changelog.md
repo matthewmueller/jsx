@@ -1,3 +1,7 @@
+# 0.0.7 / 2024-09-02
+
+- fix when jsx immediately after {
+
 # 0.0.6 / 2024-04-26
 
 - remove fmt
