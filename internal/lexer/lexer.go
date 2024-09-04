@@ -294,22 +294,41 @@ func startCloseTagState(l *Lexer) (t token.Type) {
 	}
 }
 
-func stringState(l *Lexer, end rune) (t token.Type) {
+func stringState(l *Lexer, quote rune) (t token.Type) {
 	for {
 		switch {
 		case l.cp == eof:
 			l.popState()
 			return l.unexpected()
-		case l.cp == end:
+		case l.cp == quote:
 			l.step()
 			return token.String
 		case l.cp == '\\':
 			l.step()
-			if l.cp == end {
+			if l.cp == quote {
 				l.step()
 			}
 		case l.cp == '\n':
 			return l.errorf("unexpected newline in string")
+		default:
+			l.step()
+		}
+	}
+}
+
+func stringWithinExpr(l *Lexer, quote rune) {
+	l.step()
+	for {
+		switch {
+		case l.cp == eof:
+			return
+		case l.cp == quote:
+			return
+		case l.cp == '\\':
+			l.step()
+			if l.cp == quote {
+				l.step()
+			}
 		default:
 			l.step()
 		}
@@ -338,6 +357,12 @@ func expressionState(l *Lexer) (t token.Type) {
 				depth++
 			} else if l.cp == '}' {
 				depth--
+			} else if l.cp == '"' {
+				stringWithinExpr(l, '"')
+			} else if l.cp == '\'' {
+				stringWithinExpr(l, '\'')
+			} else if l.cp == '`' {
+				stringWithinExpr(l, '`')
 			}
 			l.step()
 			if l.cp == eof || (l.cp == '<' && isBeforeTag(l.prev)) || (l.cp == '}' && depth == 0) || strings.HasPrefix(l.input[l.end:], "/*") {

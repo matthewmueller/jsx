@@ -135,3 +135,9 @@ func TestFile(t *testing.T) {
 	equalFile(t, "12-document.tsx")
 	equalFile(t, "13-inner-fragment.tsx")
 }
+
+func TestIssue1(t *testing.T) {
+	equal(t, `<div>{h.components( [ { field: x => "(<><button>PUSH_ME</button></>)", label: "Actions"} ])}</div>`, `< identifier:"div" > { expr:"h.components( [ { field: x => \"(<><button>PUSH_ME</button></>)\", label: \"Actions\"} ])" } </ identifier:"div" >`)
+	equal(t, `<div>{h.components( [ { field: x => '(<><button>PUSH_ME</button></>)', label: 'Actions'} ])}</div>`, `< identifier:"div" > { expr:"h.components( [ { field: x => '(<><button>PUSH_ME</button></>)', label: 'Actions'} ])" } </ identifier:"div" >`)
+	equal(t, `<div>{h.components( [ { field: x => `+"`"+`(<><button>PUSH_ME</button></>)`+"`"+`, label: `+"`"+`Actions`+"`"+`} ])}</div>`, `< identifier:"div" > { expr:"h.components( [ { field: x => `+"`"+`(<><button>PUSH_ME</button></>)`+"`"+`, label: `+"`"+`Actions`+"`"+`} ])" } </ identifier:"div" >`)
+}

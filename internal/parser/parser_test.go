@@ -256,3 +256,16 @@ func TestSyntaxError(t *testing.T) {
 	}
 	diff.TestString(t, err.Error(), "expected >, got unexpected end of input while lexing (1:40)")
 }
+
+func TestIssue1(t *testing.T) {
+	equalAST(t, `<div>{h.components( [ { field: x => "(<><button>PUSH_ME</button></>)", label: "Actions"} ])}</div>`, &ast.Script{Body: []ast.Fragment{
+		&ast.Element{
+			Name: "div",
+			Children: []ast.Fragment{
+				&ast.Expr{Fragments: []ast.Fragment{
+					&ast.Text{Value: `h.components( [ { field: x => "(<><button>PUSH_ME</button></>)", label: "Actions"} ])`},
+				}},
+			},
+		},
+	}})
+}
