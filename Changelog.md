@@ -1,3 +1,8 @@
+# 0.0.8 / 2024-09-03
+
+- fix unquoting string attributes. closes: #2
+- handle jsx elements within strings. closes: #1
+
 # 0.0.7 / 2024-09-02
 
 - fix when jsx immediately after {
