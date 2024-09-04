@@ -141,3 +141,7 @@ func TestIssue1(t *testing.T) {
 	equal(t, `<div>{h.components( [ { field: x => '(<><button>PUSH_ME</button></>)', label: 'Actions'} ])}</div>`, `< identifier:"div" > { expr:"h.components( [ { field: x => '(<><button>PUSH_ME</button></>)', label: 'Actions'} ])" } </ identifier:"div" >`)
 	equal(t, `<div>{h.components( [ { field: x => `+"`"+`(<><button>PUSH_ME</button></>)`+"`"+`, label: `+"`"+`Actions`+"`"+`} ])}</div>`, `< identifier:"div" > { expr:"h.components( [ { field: x => `+"`"+`(<><button>PUSH_ME</button></>)`+"`"+`, label: `+"`"+`Actions`+"`"+`} ])" } </ identifier:"div" >`)
 }
+
+func TestIssue2(t *testing.T) {
+	equal(t, `<div class="child-width-1-2\@_m"> </div>`, `< identifier:"div" space:" " identifier:"class" = string:"\"child-width-1-2\\@_m\"" > text:" " </ identifier:"div" >`)
+}

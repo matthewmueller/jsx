@@ -2,7 +2,6 @@ package parser
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/matthewmueller/jsx/ast"
@@ -263,18 +262,28 @@ func (p *Parser) parseField() (*ast.Field, error) {
 func (p *Parser) parseAttrValue() (ast.Value, error) {
 	switch {
 	case p.Accept(token.String):
-		value, err := strconv.Unquote(p.Text())
-		if err != nil {
-			return nil, err
-		}
+		raw := p.Text()
 		return &ast.StringValue{
-			Value: value,
+			Value: unquote(raw),
+			Raw:   raw,
 		}, nil
 	case p.Accept(token.OpenCurly):
 		return p.parseExpr()
 	default:
 		return nil, p.unexpected("attr value")
 	}
+}
+
+// Unquote the string. We can't use Go's strconv.Unquote because it doesn't
+// handle single quotes and backslashes the same way that HTML does.
+func unquote(s string) string {
+	sl := len(s)
+	if s[0] == '"' && s[sl-1] == '"' {
+		s = s[1 : sl-1]
+	} else if s[0] == '\'' && s[sl-1] == '\'' {
+		s = s[1 : sl-1]
+	}
+	return s
 }
 
 func (p *Parser) parseExpr() (*ast.Expr, error) {

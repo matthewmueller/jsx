@@ -269,3 +269,38 @@ func TestIssue1(t *testing.T) {
 		},
 	}})
 }
+
+func TestIssue2(t *testing.T) {
+	equal(t, `<div class='test'> </div>`, `<div class='test'> </div>`)
+	equalAST(t, `<div class='test'> </div>`, &ast.Script{Body: []ast.Fragment{
+		&ast.Element{
+			Name: "div",
+			Attrs: []ast.Attr{
+				&ast.Field{
+					Name: "class",
+					Value: &ast.StringValue{
+						Value: "test",
+						Raw:   "'test'",
+					},
+				},
+			},
+			Children: []ast.Fragment{&ast.Text{Value: " "}},
+		},
+	}})
+	equal(t, `<div class="child-width-1-2\@_m"> </div>`, `<div class="child-width-1-2\@_m"> </div>`)
+	equalAST(t, `<div class="child-width-1-2\@_m"> </div>`, &ast.Script{Body: []ast.Fragment{
+		&ast.Element{
+			Name: "div",
+			Attrs: []ast.Attr{
+				&ast.Field{
+					Name: "class",
+					Value: &ast.StringValue{
+						Value: "child-width-1-2\\@_m",
+						Raw:   `"child-width-1-2\@_m"`,
+					},
+				},
+			},
+			Children: []ast.Fragment{&ast.Text{Value: " "}},
+		},
+	}})
+}

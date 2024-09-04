@@ -127,12 +127,13 @@ var (
 
 type StringValue struct {
 	Value string
+	Raw   string
 }
 
 func (s *StringValue) value() {}
 
 func (s *StringValue) String() string {
-	return strconv.Quote(s.Value)
+	return s.Raw
 }
 
 func (s *StringValue) Visit(v Visitor) {
