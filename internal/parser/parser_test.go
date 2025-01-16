@@ -99,6 +99,19 @@ func TestSample(t *testing.T) {
 	equal(t, `type Record<string> = {}; function() { return (<h2>hello world</h2>) }`, `type Record<string> = {}; function() { return (<h2>hello world</h2>) }`)
 	equal(t, `function() { return (<h2 {...props}>{message}</h2>) }`, `function() { return (<h2 {...props}>{message}</h2>) }`)
 	equal(t, `<><React.Fragment><>hello world</></React.Fragment></>`, `<><React.Fragment><>hello world</></React.Fragment></>`)
+
+	equal(t, `hello <span data-x={<span>tag in attribute</span>}>world</span>`, `hello <span data-x={<span>tag in attribute</span>}>world</span>`)
+	equal(t, `hello <span data-x={window ? <span>content1</span> : <span>content2</span>}>world</span>`, `hello <span data-x={window ? <span>content1</span> : <span>content2</span>}>world</span>`)
+	equal(t, `hello <span data-x={<>text</>}></span>`, `hello <span data-x={<>text</>}></span>`)
+
+	equal(t, `hello <span data-x={true}>world</span>`, `hello <span data-x={true}>world</span>`)
+	equal(t, `hello <span data-x={i > 0}>world</span>`, `hello <span data-x={i > 0}>world</span>`)
+	equal(t, `hello <span data-x={i >= 0}>world</span>`, `hello <span data-x={i >= 0}>world</span>`)
+	equal(t, `hello <span data-x={i < 0}>world</span>`, `hello <span data-x={i < 0}>world</span>`)
+	equal(t, `hello <span data-x={i <= 0}>world</span>`, `hello <span data-x={i <= 0}>world</span>`)
+	equal(t, `hello <span data-x={i != 0}>world</span>`, `hello <span data-x={i != 0}>world</span>`)
+	equal(t, `hello <span data-x={i == 0}>world</span>`, `hello <span data-x={i == 0}>world</span>`)
+	equal(t, `hello <span data-x={i == 0}>world</span>`, `hello <span data-x={i == 0}>world</span>`)
 }
 
 func TestStyle(t *testing.T) {
