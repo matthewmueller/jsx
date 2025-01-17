@@ -112,6 +112,10 @@ func TestInExpr(t *testing.T) {
 	equal(t, `export default function (props) { return (<H2 func={() => <Header {...props}>hello <span>world</span></Header>} />) }`, `text:"export default function (props) { return (" < identifier:"H2" space:" " identifier:"func" = { expr:"() => " < identifier:"Header" space:" " { expr:"...props" } > text:"hello " < identifier:"span" > text:"world" </ identifier:"span" > </ identifier:"Header" > } space:" " /> text:") }"`)
 	equal(t, `export default function (props: Record<string>) { return (<H2 func={() => <Header {...props}>hello <span>world</span></Header>} />) }`, `text:"export default function (props: Record<string>) { return (" < identifier:"H2" space:" " identifier:"func" = { expr:"() => " < identifier:"Header" space:" " { expr:"...props" } > text:"hello " < identifier:"span" > text:"world" </ identifier:"span" > </ identifier:"Header" > } space:" " /> text:") }"`)
 	equal(t, `export default function () { return (<H2 func={<Header {...props}>hello <span>world</span></Header>}/>)}`, `text:"export default function () { return (" < identifier:"H2" space:" " identifier:"func" = { < identifier:"Header" space:" " { expr:"...props" } > text:"hello " < identifier:"span" > text:"world" </ identifier:"span" > </ identifier:"Header" > } /> text:")}"`)
+
+	equal(t, `export default function () { return (<span data-x={<>text</>}></span>)}`, `text:"export default function () { return (" < identifier:"span" space:" " identifier:"data-x" = { < > text </ > } > </ identifier:"span" > text:")}"`)
+	equal(t, `export default function () { return (<span data-x={<span data-x={<span>foo</span>}>text</span>}></span>)}`, `text:"export default function () { return (" < identifier:"span" space:" " identifier:"data-x" = { < identifier:"span" space:" " identifier:"data-x" = { < identifier:"span" > text:"foo" </ identifier:"span" > } > text </ identifier:"span" > } > </ identifier:"span" > text:")}"`)
+
 }
 
 func TestJSXComment(t *testing.T) {

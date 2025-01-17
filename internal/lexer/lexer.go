@@ -337,11 +337,12 @@ func stringWithinExpr(l *Lexer, quote rune) {
 
 func expressionState(l *Lexer) (t token.Type) {
 	depth := 0
+	nextRune, _ := utf8.DecodeRuneInString(l.input[l.next:])
 	switch {
 	case l.cp == eof:
 		l.popState()
 		return l.unexpected()
-	case l.cp == '<' && isBeforeTag(l.prev):
+	case l.cp == '<' && isBeforeTag(l.prev) && (isAlpha(nextRune) || nextRune == '>'):
 		l.pushState(startOpenTagState)
 		l.step()
 		return token.LessThan
