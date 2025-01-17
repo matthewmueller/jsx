@@ -1,3 +1,7 @@
+# 0.0.9 / 2025-01-16
+
+- fix: less than (<) in expressions
+
 # 0.0.8 / 2024-09-03
 
 - fix unquoting string attributes. closes: #2
