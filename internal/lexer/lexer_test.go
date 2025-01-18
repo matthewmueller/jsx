@@ -149,3 +149,9 @@ func TestIssue1(t *testing.T) {
 func TestIssue2(t *testing.T) {
 	equal(t, `<div class="child-width-1-2\@_m"> </div>`, `< identifier:"div" space:" " identifier:"class" = string:"\"child-width-1-2\\@_m\"" > text:" " </ identifier:"div" >`)
 }
+
+func TestAttributes(t *testing.T) {
+	equal(t, `<div x:bind="model"></div>`, `< identifier:"div" space:" " identifier:"x:bind" = string:"\"model\"" > </ identifier:"div" >`)
+	equal(t, `<div x_bind="model"></div>`, `< identifier:"div" space:" " identifier:"x_bind" = string:"\"model\"" > </ identifier:"div" >`)
+	equal(t, `<div x.bind="model"></div>`, `< identifier:"div" space:" " identifier:"x.bind" = string:"\"model\"" > </ identifier:"div" >`)
+}
