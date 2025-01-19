@@ -243,7 +243,7 @@ func middleTagState(l *Lexer) (t token.Type) {
 		return l.unexpected()
 	case isAlpha(l.cp):
 		l.step()
-		for isAlphaNumeric(l.cp) || isDash(l.cp) {
+		for isAlphaNumeric(l.cp) || isDash(l.cp) || l.cp == '.' || l.cp == '_' || l.cp == ':' {
 			l.step()
 		}
 		return token.Identifier
