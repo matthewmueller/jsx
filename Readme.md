@@ -4,7 +4,7 @@
 
 JSX parser for `.jsx` and `.tsx` files.
 
-This package is primarily used to rewrite JSX in JS files (think [styled-jsx](https://github.com/vercel/styled-jsx)). This package does not parse JS, rather it finds JSX within JS.
+This package is primarily used to rewrite JSX in JS files (think [styled-jsx](https://github.com/matthewmueller/styledjsx)). This package does not parse JS, rather it finds JSX within JS.
 
 ## Install
 
