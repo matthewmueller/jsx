@@ -2,7 +2,6 @@ package parser_test
 
 import (
 	"flag"
-	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
@@ -35,7 +34,7 @@ func equalAST(t *testing.T, input string, expected ast.Node) {
 
 var update = flag.Bool("update", false, "update golden files")
 
-func equalTSXFile(t *testing.T, path string) {
+func equalFile(t *testing.T, path string) {
 	t.Helper()
 	t.Run(path, func(t *testing.T) {
 		t.Helper()
@@ -232,19 +231,19 @@ func TestJSXComment(t *testing.T) {
 }
 
 func TestTSXFile(t *testing.T) {
-	equalTSXFile(t, "01-hello.tsx")
-	equalTSXFile(t, "02-document.jsx")
-	equalTSXFile(t, "03-button.jsx")
-	equalTSXFile(t, "04-faq.jsx")
-	equalTSXFile(t, "05-footer.jsx")
-	equalTSXFile(t, "06-header.jsx")
-	equalTSXFile(t, "07-index.jsx")
-	equalTSXFile(t, "08-pay-edit.jsx")
-	equalTSXFile(t, "09-pay.jsx")
-	equalTSXFile(t, "10-privacy.jsx")
-	equalTSXFile(t, "11-slack-button.jsx")
-	equalTSXFile(t, "12-document.tsx")
-	equalTSXFile(t, "13-inner-fragment.tsx")
+	equalFile(t, "01-hello.tsx")
+	equalFile(t, "02-document.jsx")
+	equalFile(t, "03-button.jsx")
+	equalFile(t, "04-faq.jsx")
+	equalFile(t, "05-footer.jsx")
+	equalFile(t, "06-header.jsx")
+	equalFile(t, "07-index.jsx")
+	equalFile(t, "08-pay-edit.jsx")
+	equalFile(t, "09-pay.jsx")
+	equalFile(t, "10-privacy.jsx")
+	equalFile(t, "11-slack-button.jsx")
+	equalFile(t, "12-document.tsx")
+	equalFile(t, "13-inner-fragment.tsx")
 }
 
 // These tests come from styled-jsx
@@ -253,7 +252,6 @@ func TestStyledJSXFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Println(files)
 	for _, file := range files {
 		equalJSXFile(t, file)
 	}
@@ -316,4 +314,8 @@ func TestIssue2(t *testing.T) {
 			Children: []ast.Fragment{&ast.Text{Value: " "}},
 		},
 	}})
+}
+
+func TestTemplFile(t *testing.T) {
+	equalFile(t, "14-time.templ")
 }

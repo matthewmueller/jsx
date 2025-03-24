@@ -155,3 +155,14 @@ func TestAttributes(t *testing.T) {
 	equal(t, `<div x_bind="model"></div>`, `< identifier:"div" space:" " identifier:"x_bind" = string:"\"model\"" > </ identifier:"div" >`)
 	equal(t, `<div x.bind="model"></div>`, `< identifier:"div" space:" " identifier:"x.bind" = string:"\"model\"" > </ identifier:"div" >`)
 }
+
+func TestForLoop(t *testing.T) {
+	equal(t, `<div>for i := 0; i < 25; i++ {  }</div>`, `< identifier:"div" > text:"for i := 0; i " < space:" " text:"2" text:"5; i++ " { expr:"  " } </ identifier:"div" >`)
+	equal(t, `<div>for i := 0; i <25; i++ {  }</div>`, `< identifier:"div" > text:"for i := 0; i " text:"<25; i++ " { expr:"  " } </ identifier:"div" >`)
+	equal(t, `<   div></div>`, `< space:"   " identifier:"div" > </ identifier:"div" >`)
+	equal(t, `<div><   a></a></div>`, `< identifier:"div" > < space:"   " identifier:"a" > </ identifier:"a" > </ identifier:"div" >`)
+}
+
+func TestTempl(t *testing.T) {
+	equalFile(t, "14-time.templ")
+}

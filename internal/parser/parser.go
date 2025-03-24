@@ -135,7 +135,9 @@ func (p *Parser) parseText() (*ast.Text, error) {
 }
 
 func (p *Parser) parseElement() (ast.Fragment, error) {
-	// Sometimes < are false positives (typically when there are generics)
+	for p.Accept(token.Space) {
+	}
+	// Sometimes < are false positives (typically when there are generics or less than signs)
 	if p.Accept(token.Text) {
 		return &ast.Text{
 			Value: "<" + p.Text(),

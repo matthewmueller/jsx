@@ -1,0 +1,11 @@
+package view
+
+import "time"
+
+templ Time(t time.Time) {
+  <relative-time datetime={ t.Format(time.RFC3339) }>
+    for i := 0; i < 25; i++ {
+      &nbsp;
+    }
+  </relative-time>
+}

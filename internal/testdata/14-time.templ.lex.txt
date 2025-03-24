@@ -1,0 +1,23 @@
+text:"package view\n\nimport \"time\"\n\ntempl Time(t time.Time) {\n  "
+<
+identifier:"relative-time"
+space:" "
+identifier:"datetime"
+=
+{
+expr:" t.Format(time.RFC3339) "
+}
+>
+text:"\n    for i := 0; i "
+<
+space:" "
+text:"2"
+text:"5; i++ "
+{
+expr:"\n      &nbsp;\n    "
+}
+text:"\n  "
+</
+identifier:"relative-time"
+>
+text:"\n}\n"

@@ -171,14 +171,20 @@ func childTagState(l *Lexer) (t token.Type) {
 			l.popState()
 			l.pushState(startCloseTagState)
 			return token.LessThanSlash
-		case isAlpha(l.cp):
+		case isAlpha(l.cp) || isSpace(l.cp):
 			l.pushState(startOpenTagState)
 			return token.LessThan
 		case l.cp == '>':
 			l.pushState(startOpenTagState)
 			return token.LessThan
 		default:
-			return l.unexpected()
+			for {
+				l.step()
+				if l.cp == eof || l.cp == '<' || l.cp == '{' {
+					break
+				}
+			}
+			return token.Text
 		}
 	case l.cp == '{':
 		l.step()
