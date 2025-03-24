@@ -1,3 +1,7 @@
+# 0.0.11 / 2025-03-23
+
+- handle < that aren't elements
+
 # 0.0.10 / 2025-01-19
 
 - Added support for ':', '.' and '\_' in attribute name
