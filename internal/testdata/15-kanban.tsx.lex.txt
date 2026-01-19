@@ -1,0 +1,543 @@
+text:"import React, { useCallback, useEffect, useRef, useState } from \"react\"\nimport { createPortal } from \"react-dom\"\nimport {\n  closestCenter,\n  pointerWithin,\n  rectIntersection,\n  CollisionDetection,\n  DndContext,\n  DragOverlay,\n  DropAnimation,\n  getFirstCollision,\n  KeyboardSensor,\n  MouseSensor,\n  TouchSensor,\n  Modifiers,\n  useDroppable,\n  UniqueIdentifier,\n  useSensors,\n  useSensor,\n  MeasuringStrategy,\n  KeyboardCoordinateGetter,\n  defaultDropAnimationSideEffects,\n  DroppableContainer as DndDroppableContainer,\n  KeyboardCode,\n  closestCorners,\n} from \"@dnd-kit/core\"\nimport {\n  AnimateLayoutChanges,\n  SortableContext,\n  useSortable,\n  arrayMove,\n  defaultAnimateLayoutChanges,\n  verticalListSortingStrategy,\n  SortingStrategy,\n  horizontalListSortingStrategy,\n} from \"@dnd-kit/sortable\"\nimport { CSS } from \"@dnd-kit/utilities\"\n\n// NOTE: These components are imported from your local setup.\n// You can replace them with your own components or simple divs.\nimport { Item } from \"../Item\"\nimport { Container, ContainerProps } from \"../Container\"\n\nexport type KanbanItems = Record<UniqueIdentifier, UniqueIdentifier[]>\n\nexport type KanbanBoardItemChangeReason = \"drag\" | \"drop\"\n\nexport interface KanbanBoardProps {\n  containers: UniqueIdentifier[]\n  items: KanbanItems\n  onContainerChange?: (containers: UniqueIdentifier[]) => void\n  onItemChange?: (\n    items: KanbanItems,\n    reason: KanbanBoardItemChangeReason,\n  ) => void\n  renderItem?: (id: UniqueIdentifier, isDragging?: boolean) => React.ReactNode\n  renderContainerHeader?: (id: UniqueIdentifier) => React.ReactNode\n  renderContainerFooter?: (id: UniqueIdentifier) => React.ReactNode\n  wrapperStyle?: (args: { index: number }) => React.CSSProperties\n  itemStyle?: (args: {\n    value: UniqueIdentifier\n    index: number\n    overIndex: number\n    isDragging: boolean\n    containerId: UniqueIdentifier\n    isSorting: boolean\n    isDragOverlay: boolean\n  }) => React.CSSProperties\n  vertical?: boolean\n  handle?: boolean\n  scrollable?: boolean\n  modifiers?: Modifiers\n  strategy?: SortingStrategy\n\n  // Optional extras\n  minimal?: boolean\n  trashable?: boolean\n  activationConstraint?: {\n    distance?: number\n    tolerance: number\n    delay: number\n  }\n}\n\nconst defaultDropAnimation: DropAnimation = {\n  sideEffects: defaultDropAnimationSideEffects({\n    styles: {\n      active: {\n        opacity: \"0.5\",\n      },\n    },\n  }),\n}\n\nexport const PLACEHOLDER_ID = \"placeholder\"\n\nexport function KanbanBoard({\n  containers,\n  items,\n  onContainerChange,\n  onItemChange,\n  renderItem,\n  renderContainerHeader,\n  renderContainerFooter,\n  wrapperStyle = () => ({}),\n  itemStyle = () => ({}),\n  vertical = false,\n  handle = false,\n  scrollable,\n  modifiers,\n  strategy = verticalListSortingStrategy,\n  minimal = false,\n  trashable = false,\n  activationConstraint,\n}: KanbanBoardProps) {\n  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)\n  // const lastOverId = useRef<UniqueIdentifier | null>(null)\n  // const recentlyMovedToNewContainer = useRef(false)\n\n  const isSortingContainer =\n    activeId != null ? containers.includes(activeId) : false\n\n  // const collisionDetectionStrategy: CollisionDetection = useCallback(\n  //   (args) => {\n  //     if (activeId && activeId in items) {\n  //       return closestCenter({\n  //         ...args,\n  //         droppableContainers: args.droppableContainers.filter(\n  //           (container) => container.id in items,\n  //         ),\n  //       })\n  //     }\n\n  //     // Start by finding any intersecting droppable\n  //     const pointerIntersections = pointerWithin(args)\n  //     const intersections =\n  //       pointerIntersections.length > 0\n  //         ? pointerIntersections\n  //         : rectIntersection(args)\n  //     let overId = getFirstCollision(intersections, \"id\")\n\n  //     if (overId != null) {\n  //       if (overId === TRASH_ID) {\n  //         return intersections\n  //       }\n\n  //       if (overId in items) {\n  //         const containerItems = items[overId]\n\n  //         // If a container is matched and it contains items\n  //         if (containerItems.length > 0) {\n  //           // Return the closest droppable within that container\n  //           overId = closestCenter({\n  //             ...args,\n  //             droppableContainers: args.droppableContainers.filter(\n  //               (container) =>\n  //                 container.id !== overId &&\n  //                 containerItems.includes(container.id),\n  //             ),\n  //           })[0]?.id\n  //         }\n  //       }\n\n  //       lastOverId.current = overId\n  //       return [{ id: overId }]\n  //     }\n\n  //     // if (recentlyMovedToNewContainer.current) {\n  //     //   lastOverId.current = activeId\n  //     // }\n\n  //     return lastOverId.current ? [{ id: lastOverId.current }] : []\n  //   },\n  //   [activeId, items],\n  // )\n\n  // const [clonedItems, setClonedItems] = useState<KanbanItems | null>(null)\n\n  const sensors = useSensors(\n    useSensor(MouseSensor, {\n      activationConstraint,\n    }),\n    useSensor(TouchSensor, {\n      activationConstraint,\n    }),\n    useSensor(KeyboardSensor, {\n      coordinateGetter: coordinateGetter,\n    }),\n  )\n\n  const findContainer = (id: UniqueIdentifier) => {\n    if (id in items) {\n      return id\n    }\n    return Object.keys(items).find((key) => items[key].includes(id))\n  }\n\n  const getIndex = (id: UniqueIdentifier) => {\n    const container = findContainer(id)\n    if (!container) {\n      return -1\n    }\n    const index = items[container].indexOf(id)\n    return index\n  }\n\n  const onDragCancel = () => {\n    // if (clonedItems) {\n    //   if (onItemChange) onItemChange(clonedItems, \"cancel\" as any) // Reverting types if needed, but strict is better. 'cancel' not in type?\n    // }\n    setActiveId(null)\n    // setClonedItems(null)\n  }\n\n  // useEffect(() => {\n  //   requestAnimationFrame(() => {\n  //     recentlyMovedToNewContainer.current = false\n  //   })\n  // }, [items])\n\n  return (\n    "
+<
+identifier:"DndContext"
+space:"\n      "
+identifier:"sensors"
+=
+{
+expr:"sensors"
+}
+space:"\n      "
+comment:"// collisionDetection={collisionDetectionStrategy}\n"
+space:"      "
+comment:"// measuring={{\n"
+space:"      "
+comment:"//   droppable: {\n"
+space:"      "
+comment:"//     strategy: MeasuringStrategy.Always,\n"
+space:"      "
+comment:"//   },\n"
+space:"      "
+comment:"// }}\n"
+space:"      "
+identifier:"onDragStart"
+=
+{
+expr:"({ active }) => {\n        setActiveId(active.id)\n        // setClonedItems(items)\n      }"
+}
+space:"\n      "
+identifier:"onDragOver"
+=
+{
+expr:"({ active, over }) => {\n        const overId = over?.id\n\n        if (overId == null || active.id in items) {\n          return\n        }\n\n        const overContainer = findContainer(overId)\n        const activeContainer = findContainer(active.id)\n\n        if (!overContainer || !activeContainer) {\n          return\n        }\n\n        if (activeContainer !== overContainer) {\n          const activeItems = items[activeContainer]\n          const overItems = items[overContainer]\n          const overIndex = overItems.indexOf(overId)\n          const activeIndex = activeItems.indexOf(active.id)\n\n          let newIndex: number\n\n          if (overId in items) {\n            newIndex = overItems.length + 1\n          } else {\n            const isBelowOverItem =\n              over &&\n              active.rect.current.translated &&\n              active.rect.current.translated.top >\n                over.rect.top + over.rect.height\n\n            const modifier = isBelowOverItem ? 1 : 0\n\n            newIndex =\n              overIndex >= 0 ? overIndex + modifier : overItems.length + 1\n          }\n\n          // recentlyMovedToNewContainer.current = true\n\n          const newItems = {\n            ...items,\n            [activeContainer]: items[activeContainer].filter(\n              (item) => item !== active.id,\n            ),\n            [overContainer]: [\n              ...items[overContainer].slice(0, newIndex),\n              items[activeContainer][activeIndex],\n              ...items[overContainer].slice(\n                newIndex,\n                items[overContainer].length,\n              ),\n            ],\n          }\n\n          if (onItemChange) onItemChange(newItems, \"drag\")\n        }\n      }"
+}
+space:"\n      "
+identifier:"onDragEnd"
+=
+{
+expr:"({ active, over }) => {\n        if (active.id in items && over?.id) {\n          const activeIndex = containers.indexOf(active.id)\n          const overIndex = containers.indexOf(over.id)\n          if (onContainerChange) {\n            onContainerChange(arrayMove(containers, activeIndex, overIndex))\n          }\n        }\n\n        const activeContainer = findContainer(active.id)\n\n        if (!activeContainer) {\n          setActiveId(null)\n          return\n        }\n\n        const overId = over?.id\n\n        if (overId == null) {\n          setActiveId(null)\n          return\n        }\n\n        if (overId === PLACEHOLDER_ID) {\n          const newContainerId = getNextContainerId()\n\n          if (onContainerChange) {\n            onContainerChange([...containers, newContainerId])\n          }\n          const newItems = {\n            ...items,\n            [activeContainer]: items[activeContainer].filter(\n              (id) => id !== activeId,\n            ),\n            [newContainerId]: [active.id],\n          }\n          if (onItemChange) onItemChange(newItems, \"drop\")\n          setActiveId(null)\n          return\n        }\n\n        const overContainer = findContainer(overId)\n\n        if (overContainer) {\n          const activeIndex = items[activeContainer].indexOf(active.id)\n          const overIndex = items[overContainer].indexOf(overId)\n\n          if (activeIndex !== overIndex) {\n            const newItems = {\n              ...items,\n              [overContainer]: arrayMove(\n                items[overContainer],\n                activeIndex,\n                overIndex,\n              ),\n            }\n            if (onItemChange) onItemChange(newItems, \"drop\")\n          } else {\n            // Signal a drop even if no change, so parent knows drag ended\n            if (onItemChange) onItemChange(items, \"drop\")\n          }\n        }\n\n        setActiveId(null)\n      }"
+}
+space:"\n      "
+identifier:"cancelDrop"
+=
+{
+expr:"(args) => {\n        // Add constraint check or passed prop\n        return false\n      }"
+}
+space:"\n      "
+identifier:"onDragCancel"
+=
+{
+expr:"onDragCancel"
+}
+space:"\n      "
+identifier:"modifiers"
+=
+{
+expr:"modifiers"
+}
+space:"\n    "
+>
+text:"\n      "
+<
+identifier:"div"
+space:"\n        "
+identifier:"style"
+=
+{
+expr:"{\n          display: \"inline-grid\",\n          boxSizing: \"border-box\",\n          gridAutoFlow: vertical ? \"row\" : \"column\",\n          alignItems: \"start\",\n        }"
+}
+space:"\n      "
+>
+text:"\n        "
+<
+identifier:"SortableContext"
+space:"\n          "
+identifier:"items"
+=
+{
+expr:"[...containers, PLACEHOLDER_ID]"
+}
+space:"\n          "
+identifier:"strategy"
+=
+{
+expr:"\n            vertical\n              ? verticalListSortingStrategy\n              : horizontalListSortingStrategy\n          "
+}
+space:"\n        "
+>
+text:"\n          "
+{
+expr:"containers.map((containerId) => (\n            "
+<
+identifier:"DroppableContainer"
+space:"\n              "
+identifier:"key"
+=
+{
+expr:"containerId"
+}
+space:"\n              "
+identifier:"id"
+=
+{
+expr:"containerId"
+}
+space:"\n              "
+identifier:"label"
+=
+{
+expr:"\n                renderContainerHeader ? undefined : `Column ${containerId}`\n              "
+}
+space:"\n              "
+identifier:"columns"
+=
+{
+expr:"1"
+}
+space:"\n              "
+identifier:"items"
+=
+{
+expr:"items[containerId]"
+}
+space:"\n              "
+identifier:"scrollable"
+=
+{
+expr:"scrollable"
+}
+space:"\n              "
+identifier:"style"
+=
+{
+expr:"undefined"
+}
+space:"\n              "
+identifier:"unstyled"
+=
+{
+expr:"minimal"
+}
+space:"\n              "
+identifier:"onRemove"
+=
+{
+expr:"() => handleRemove(containerId)"
+}
+space:"\n            "
+>
+text:"\n              "
+{
+expr:"renderContainerHeader\n                ? renderContainerHeader(containerId)\n                : null"
+}
+text:"\n              "
+<
+identifier:"SortableContext"
+space:" "
+identifier:"items"
+=
+{
+expr:"items[containerId]"
+}
+space:" "
+identifier:"strategy"
+=
+{
+expr:"strategy"
+}
+>
+text:"\n                "
+{
+expr:"items[containerId].map((value, index) => {\n                  return (\n                    "
+<
+identifier:"SortableItem"
+space:"\n                      "
+identifier:"disabled"
+=
+{
+expr:"isSortingContainer"
+}
+space:"\n                      "
+identifier:"key"
+=
+{
+expr:"value"
+}
+space:"\n                      "
+identifier:"id"
+=
+{
+expr:"value"
+}
+space:"\n                      "
+identifier:"index"
+=
+{
+expr:"index"
+}
+space:"\n                      "
+identifier:"handle"
+=
+{
+expr:"handle"
+}
+space:"\n                      "
+identifier:"style"
+=
+{
+expr:"itemStyle"
+}
+space:"\n                      "
+identifier:"wrapperStyle"
+=
+{
+expr:"wrapperStyle"
+}
+space:"\n                      "
+identifier:"renderItem"
+=
+{
+expr:"renderItem"
+}
+space:"\n                      "
+identifier:"containerId"
+=
+{
+expr:"containerId"
+}
+space:"\n                      "
+identifier:"getIndex"
+=
+{
+expr:"getIndex"
+}
+space:"\n                    "
+/>
+expr:"\n                  )\n                "
+}
+text:")}\n              "
+</
+identifier:"SortableContext"
+>
+text:"\n              "
+{
+expr:"renderContainerFooter\n                ? renderContainerFooter(containerId)\n                : null"
+}
+text:"\n            "
+</
+identifier:"DroppableContainer"
+>
+expr:"\n          ))"
+}
+text:"\n        "
+</
+identifier:"SortableContext"
+>
+text:"\n      "
+</
+identifier:"div"
+>
+text:"\n      "
+{
+expr:"typeof document !== \"undefined\" &&\n        createPortal(\n          "
+<
+identifier:"DragOverlay"
+space:"\n          "
+comment:"// adjustScale={true}\n"
+space:"          "
+comment:"// style={{ rotate: \"2.5deg\" }}\n"
+space:"          "
+comment:"// dropAnimation={defaultDropAnimation}\n"
+space:"          "
+>
+text:"\n            "
+{
+expr:"activeId\n              ? containers.includes(activeId)\n                ? renderContainerDragOverlay(activeId)\n                : renderSortableItemDragOverlay(activeId)\n              : null"
+}
+text:"\n          "
+</
+identifier:"DragOverlay"
+>
+expr:",\n          document.body,\n        )"
+}
+text:"\n    "
+</
+identifier:"DndContext"
+>
+text:"\n  )\n\n  function renderSortableItemDragOverlay(id: UniqueIdentifier) {\n    return (\n      "
+<
+identifier:"Item"
+space:"\n        "
+identifier:"handle"
+=
+{
+expr:"handle"
+}
+space:"\n        "
+identifier:"style"
+=
+{
+expr:"itemStyle({\n          containerId: findContainer(id) as UniqueIdentifier,\n          overIndex: -1,\n          index: getIndex(id),\n          value: id,\n          isSorting: true,\n          isDragging: true,\n          isDragOverlay: true,\n        })"
+}
+space:"\n        "
+identifier:"wrapperStyle"
+=
+{
+expr:"wrapperStyle({ index: 0 })"
+}
+space:"\n        "
+identifier:"value"
+=
+{
+expr:"renderItem ? renderItem(id, true) : id"
+}
+space:"\n        "
+identifier:"dragOverlay"
+space:"\n      "
+/>
+text:"\n    )\n  }\n\n  function renderContainerDragOverlay(containerId: UniqueIdentifier) {\n    return (\n      "
+<
+identifier:"Container"
+space:"\n        "
+identifier:"label"
+=
+{
+expr:"`Column ${containerId}`"
+}
+space:"\n        "
+identifier:"columns"
+=
+{
+expr:"1"
+}
+space:"\n        "
+identifier:"style"
+=
+{
+expr:"{\n          height: \"100%\",\n        }"
+}
+space:"\n        "
+identifier:"shadow"
+space:"\n        "
+identifier:"unstyled"
+=
+{
+expr:"false"
+}
+space:"\n      "
+>
+text:"\n        "
+{
+expr:"items[containerId].map((item, index) => (\n          "
+<
+identifier:"Item"
+space:"\n            "
+identifier:"key"
+=
+{
+expr:"item"
+}
+space:"\n            "
+identifier:"handle"
+=
+{
+expr:"handle"
+}
+space:"\n            "
+identifier:"style"
+=
+{
+expr:"itemStyle({\n              containerId,\n              overIndex: -1,\n              index: getIndex(item),\n              value: item,\n              isDragging: false,\n              isSorting: false,\n              isDragOverlay: false,\n            })"
+}
+space:"\n            "
+identifier:"wrapperStyle"
+=
+{
+expr:"wrapperStyle({ index })"
+}
+space:"\n            "
+identifier:"value"
+=
+{
+expr:"renderItem ? renderItem(item) : item"
+}
+space:"\n          "
+/>
+expr:"\n        ))"
+}
+text:"\n      "
+</
+identifier:"Container"
+>
+text:"\n    )\n  }\n\n  function handleRemove(containerID: UniqueIdentifier) {\n    if (onContainerChange) {\n      onContainerChange(containers.filter((id) => id !== containerID))\n    }\n  }\n\n  function getNextContainerId() {\n    const containerIds = Object.keys(items)\n    const lastContainerId = containerIds[containerIds.length - 1]\n    return String.fromCharCode(lastContainerId.charCodeAt(0) + 1)\n  }\n}\n\n// Helpers and Sub-components\n\nconst animateLayoutChanges: AnimateLayoutChanges = (args) =>\n  defaultAnimateLayoutChanges({ ...args, wasDragging: true })\n\nfunction DroppableContainer({\n  children,\n  columns = 1,\n  disabled,\n  id,\n  items,\n  style,\n  ...props\n}: ContainerProps & {\n  disabled?: boolean\n  id: UniqueIdentifier\n  items: UniqueIdentifier[]\n  style?: React.CSSProperties\n}) {\n  const {\n    active,\n    attributes,\n    isDragging,\n    listeners,\n    over,\n    setNodeRef,\n    transition,\n    transform,\n  } = useSortable({\n    id,\n    data: {\n      type: \"container\",\n      children: items,\n    },\n    animateLayoutChanges,\n  })\n  const isOverContainer = over\n    ? (id === over.id && active?.data.current?.type !== \"container\") ||\n      items.includes(over.id)\n    : false\n\n  return (\n    "
+<
+identifier:"Container"
+space:"\n      "
+identifier:"ref"
+=
+{
+expr:"disabled ? undefined : setNodeRef"
+}
+space:"\n      "
+identifier:"style"
+=
+{
+expr:"{\n        ...style,\n        transition,\n        transform: CSS.Translate.toString(transform),\n        opacity: isDragging ? 0.5 : undefined,\n      }"
+}
+space:"\n      "
+identifier:"hover"
+=
+{
+expr:"isOverContainer"
+}
+space:"\n      "
+identifier:"handleProps"
+=
+{
+expr:"{\n        ...attributes,\n        ...listeners,\n      }"
+}
+space:"\n      "
+identifier:"columns"
+=
+{
+expr:"columns"
+}
+space:"\n      "
+{
+expr:"...props"
+}
+space:"\n    "
+>
+text:"\n      "
+{
+expr:"children"
+}
+text:"\n    "
+</
+identifier:"Container"
+>
+text:"\n  )\n}\n\ninterface SortableItemProps {\n  containerId: UniqueIdentifier\n  id: UniqueIdentifier\n  index: number\n  handle: boolean\n  disabled?: boolean\n  style(args: any): React.CSSProperties\n  getIndex(id: UniqueIdentifier): number\n  renderItem?: (id: UniqueIdentifier, isDragging?: boolean) => React.ReactNode\n  wrapperStyle({ index }: { index: number }): React.CSSProperties\n}\n\nfunction SortableItem({\n  disabled,\n  id,\n  index,\n  handle,\n  renderItem,\n  style,\n  containerId,\n  getIndex,\n  wrapperStyle,\n}: SortableItemProps) {\n  const {\n    setNodeRef,\n    setActivatorNodeRef,\n    listeners,\n    isDragging,\n    isSorting,\n    over,\n    overIndex,\n    transform,\n    transition,\n  } = useSortable({\n    id,\n  })\n  const mounted = useMountStatus()\n  const mountedWhileDragging = isDragging && !mounted\n\n  return (\n    "
+<
+identifier:"Item"
+space:"\n      "
+identifier:"ref"
+=
+{
+expr:"disabled ? undefined : setNodeRef"
+}
+space:"\n      "
+identifier:"dragging"
+=
+{
+expr:"isDragging"
+}
+space:"\n      "
+identifier:"sorting"
+=
+{
+expr:"isSorting"
+}
+space:"\n      "
+identifier:"handle"
+=
+{
+expr:"handle"
+}
+space:"\n      "
+identifier:"handleProps"
+=
+{
+expr:"handle ? { ref: setActivatorNodeRef } : undefined"
+}
+space:"\n      "
+identifier:"index"
+=
+{
+expr:"index"
+}
+space:"\n      "
+identifier:"wrapperStyle"
+=
+{
+expr:"wrapperStyle({ index })"
+}
+space:"\n      "
+identifier:"style"
+=
+{
+expr:"style({\n        index,\n        value: id,\n        isDragging,\n        isSorting,\n        overIndex: over ? getIndex(over.id) : overIndex,\n        containerId,\n      })"
+}
+space:"\n      "
+identifier:"transition"
+=
+{
+expr:"transition"
+}
+space:"\n      "
+identifier:"transform"
+=
+{
+expr:"transform"
+}
+space:"\n      "
+identifier:"fadeIn"
+=
+{
+expr:"mountedWhileDragging"
+}
+space:"\n      "
+identifier:"listeners"
+=
+{
+expr:"listeners"
+}
+space:"\n      "
+identifier:"value"
+=
+{
+expr:"renderItem ? renderItem(id, isDragging) : id"
+}
+space:"\n    "
+/>
+text:"\n  )\n}\n\nfunction useMountStatus() {\n  const [isMounted, setIsMounted] = useState(false)\n\n  useEffect(() => {\n    const timeout = setTimeout(() => setIsMounted(true), 500)\n    return () => clearTimeout(timeout)\n  }, [])\n\n  return isMounted\n}\n\nfunction Trash({ id }: { id: UniqueIdentifier }) {\n  const { setNodeRef, isOver } = useDroppable({\n    id,\n  })\n\n  return (\n    "
+<
+identifier:"div"
+space:"\n      "
+identifier:"ref"
+=
+{
+expr:"setNodeRef"
+}
+space:"\n      "
+identifier:"style"
+=
+{
+expr:"{\n        display: \"flex\",\n        alignItems: \"center\",\n        justifyContent: \"center\",\n        position: \"fixed\",\n        left: \"50%\",\n        marginLeft: -150,\n        bottom: 20,\n        width: 300,\n        height: 60,\n        borderRadius: 5,\n        border: \"1px solid\",\n        borderColor: isOver ? \"red\" : \"#DDD\",\n      }"
+}
+space:"\n    "
+>
+text:"\n      Drop here to delete\n    "
+</
+identifier:"div"
+>
+text:"\n  )\n}\n\n// Inlined Coordinate Getter\nconst directions: string[] = [\n  KeyboardCode.Down,\n  KeyboardCode.Right,\n  KeyboardCode.Up,\n  KeyboardCode.Left,\n]\n\nconst coordinateGetter: KeyboardCoordinateGetter = (\n  event,\n  { context: { active, droppableRects, droppableContainers, collisionRect } },\n) => {\n  if (directions.includes(event.code)) {\n    event.preventDefault()\n\n    if (!active || !collisionRect) {\n      return\n    }\n\n    const filteredContainers: DndDroppableContainer[] = []\n\n    droppableContainers.getEnabled().forEach((entry) => {\n      if (!entry || entry?.disabled) {\n        return\n      }\n\n      const rect = droppableRects.get(entry.id)\n\n      if (!rect) {\n        return\n      }\n\n      const data = entry.data.current\n\n      if (data) {\n        const { type, children } = data\n\n        if (type === \"container\" && children?.length > 0) {\n          if (active.data.current?.type !== \"container\") {\n            return\n          }\n        }\n      }\n\n      filteredContainers.push(entry)\n    })\n\n    const collisions = closestCorners({\n      active,\n      collisionRect: collisionRect,\n      droppableRects,\n      droppableContainers: filteredContainers,\n      pointerCoordinates: null,\n    })\n    const closestId = getFirstCollision(collisions, \"id\")\n\n    if (closestId != null) {\n      const newDroppable = droppableContainers.get(closestId)\n      const newNode = newDroppable?.node.current\n      const newRect = newDroppable?.rect.current\n\n      if (newNode && newRect) {\n        if (newDroppable.id === PLACEHOLDER_ID) {\n          return {\n            x: newRect.left + (newRect.width - collisionRect.width) / 2,\n            y: newRect.top + (newRect.height - collisionRect.height) / 2,\n          }\n        }\n\n        if (newDroppable.data.current?.type === \"container\") {\n          return {\n            x: newRect.left + 20,\n            y: newRect.top + 74,\n          }\n        }\n\n        return {\n          x: newRect.left,\n          y: newRect.top,\n        }\n      }\n    }\n  }\n\n  return undefined\n}\n"

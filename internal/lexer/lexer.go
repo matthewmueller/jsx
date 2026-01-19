@@ -246,6 +246,11 @@ func middleTagState(l *Lexer) (t token.Type) {
 			l.popState()
 			return token.SlashGreaterThan
 		}
+		// inline comment support
+		if l.cp == '/' {
+			l.step()
+			return commentInlineState(l)
+		}
 		return l.unexpected()
 	case isAlpha(l.cp):
 		l.step()
@@ -357,7 +362,7 @@ func expressionState(l *Lexer) (t token.Type) {
 		l.step()
 		return token.CloseCurly
 	case strings.HasPrefix(l.input[l.end:], "/*"):
-		return commentState(l)
+		return commentBlockState(l)
 	default:
 		for {
 			if l.cp == '{' {
@@ -400,12 +405,26 @@ func isBeforeTag(cp rune) bool {
 	return cp == 0 || isSpace(cp) || cp == '(' || cp == '{'
 }
 
-func commentState(l *Lexer) token.Type {
+func commentBlockState(l *Lexer) token.Type {
 	for {
 		switch {
 		case l.cp == eof:
 			return l.errorf("unclosed comment")
 		case l.cp == '/' && l.prev == '*':
+			l.step()
+			return token.Comment
+		default:
+			l.step()
+		}
+	}
+}
+
+func commentInlineState(l *Lexer) token.Type {
+	for {
+		switch {
+		case l.cp == eof:
+			return token.Comment
+		case l.cp == '\n':
 			l.step()
 			return token.Comment
 		default:

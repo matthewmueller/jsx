@@ -118,10 +118,22 @@ func TestInExpr(t *testing.T) {
 
 }
 
-func TestJSXComment(t *testing.T) {
+func TestJSXCommentBlock(t *testing.T) {
 	equal(t, `export default () => (<h2>{/* hello world */}</h2>)`, `text:"export default () => (" < identifier:"h2" > { comment:"/* hello world */" } </ identifier:"h2" > text:")"`)
 	equal(t, `export default () => (<h2>hello {/* hello world */} world</h2>)`, `text:"export default () => (" < identifier:"h2" > text:"hello " { comment:"/* hello world */" } text:" world" </ identifier:"h2" > text:")"`)
 	equal(t, `export default () => (<h2>hello {hello /* hello world */} world</h2>)`, `text:"export default () => (" < identifier:"h2" > text:"hello " { expr:"hello " comment:"/* hello world */" } text:" world" </ identifier:"h2" > text:")"`)
+}
+
+func TestJSXCommentInline(t *testing.T) {
+	equal(t, `export default () => (<h2
+		// hello world
+	></h2>)`, `text:"export default () => (" < identifier:"h2" space:"\n\t\t" comment:"// hello world\n" space:"\t" > </ identifier:"h2" > text:")"`)
+	equal(t, `export default () => (<h2
+		className="hello" // hello world
+		// one
+		// two
+		// three
+	></h2>)`, `text:"export default () => (" < identifier:"h2" space:"\n\t\t" identifier:"className" = string:"\"hello\"" space:" " comment:"// hello world\n" space:"\t\t" comment:"// one\n" space:"\t\t" comment:"// two\n" space:"\t\t" comment:"// three\n" space:"\t" > </ identifier:"h2" > text:")"`)
 }
 
 func TestFile(t *testing.T) {
@@ -138,6 +150,8 @@ func TestFile(t *testing.T) {
 	equalFile(t, "11-slack-button.jsx")
 	equalFile(t, "12-document.tsx")
 	equalFile(t, "13-inner-fragment.tsx")
+	equalFile(t, "14-time.templ")
+	equalFile(t, "15-kanban.tsx")
 }
 
 func TestIssue1(t *testing.T) {

@@ -55,28 +55,27 @@ func (p *Parser) Is(types ...token.Type) bool {
 	return false
 }
 
-// Returns true if all the given tokens are next
+// Returns true if any the given tokens are next
 func (p *Parser) Check(tokens ...token.Type) bool {
-	for i, token := range tokens {
-		if p.l.Peak(i+1).Type != token {
-			return false
+	for _, tok := range tokens {
+		peaked := p.l.Peak(1)
+		if peaked.Type == tok {
+			return true
 		}
 	}
-	return true
+	return false
 }
 
 func (p *Parser) More() bool {
 	return p.Check(token.EOF)
 }
 
-// Returns true if all the given tokens are next
+// Returns true if any of the given tokens are next
 func (p *Parser) Accept(tokens ...token.Type) bool {
 	if !p.Check(tokens...) {
 		return false
 	}
-	for i := 0; i < len(tokens); i++ {
-		p.l.Next()
-	}
+	p.l.Next()
 	return true
 }
 
@@ -161,16 +160,16 @@ func (p *Parser) parseElement() (ast.Fragment, error) {
 	node := &ast.Element{
 		Name: name,
 	}
-	for p.Accept(token.Space) {
+	for p.Accept(token.Space, token.Comment) {
 	}
 	// Handle attributes
-	for !p.Check(token.SlashGreaterThan) && !p.Check(token.GreaterThan) {
+	for !p.Check(token.SlashGreaterThan, token.GreaterThan) {
 		attr, err := p.parseAttr()
 		if err != nil {
 			return nil, err
 		}
 		node.Attrs = append(node.Attrs, attr)
-		for p.Accept(token.Space) {
+		for p.Accept(token.Space, token.Comment) {
 		}
 	}
 	if p.Accept(token.SlashGreaterThan) {

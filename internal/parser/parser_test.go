@@ -244,6 +244,8 @@ func TestTSXFile(t *testing.T) {
 	equalFile(t, "11-slack-button.jsx")
 	equalFile(t, "12-document.tsx")
 	equalFile(t, "13-inner-fragment.tsx")
+	equalFile(t, "14-time.templ")
+	equalFile(t, "15-kanban.tsx")
 }
 
 // These tests come from styled-jsx
@@ -316,6 +318,22 @@ func TestIssue2(t *testing.T) {
 	}})
 }
 
-func TestTemplFile(t *testing.T) {
-	equalFile(t, "14-time.templ")
+func TestCommentInline(t *testing.T) {
+	equal(t, `export default () => (<h2
+		// hello world
+	></h2>)`, `export default () => (<h2></h2>)`)
+	equal(t, `export default () => (<h2
+		// before
+		className="hello" // inline
+		// one
+		// two
+		// three
+	></h2>)`, `export default () => (<h2 className="hello"></h2>)`)
+	equal(t, `export default () => (<img
+		// before
+		className="hello" // inline
+		// one
+		// two
+		// three
+	/>)`, `export default () => (<img className="hello" />)`)
 }
