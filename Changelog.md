@@ -1,3 +1,7 @@
+# 0.0.12 / 2026-01-19
+
+- support inline comments
+
 # 0.0.11 / 2025-03-23
 
 - handle < that aren't elements
