@@ -2,6 +2,7 @@ package parser
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/matthewmueller/jsx/ast"
@@ -47,12 +48,7 @@ func (p *Parser) Type() token.Type {
 // Checks that the next token is one of the given types
 func (p *Parser) Is(types ...token.Type) bool {
 	token := p.l.Peak(1)
-	for _, t := range types {
-		if token.Type == t {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(types, token.Type)
 }
 
 // Returns true if any the given tokens are next
@@ -88,7 +84,7 @@ func (p *Parser) Expect(tokens ...token.Type) error {
 			return fmt.Errorf("expected %s, got %s (%d:%d)", tok, peaked.Type, peaked.Line, peaked.Start)
 		}
 	}
-	for i := 0; i < len(tokens); i++ {
+	for range tokens {
 		p.l.Next()
 	}
 	return nil

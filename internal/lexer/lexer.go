@@ -128,7 +128,7 @@ func (l *Lexer) popState() {
 	l.states = l.states[:len(l.states)-1]
 }
 
-func (l *Lexer) errorf(msg string, args ...interface{}) token.Type {
+func (l *Lexer) errorf(msg string, args ...any) token.Type {
 	l.err = fmt.Sprintf(msg, args...)
 	return token.Error
 }
