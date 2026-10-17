@@ -186,11 +186,15 @@ func (p *Parser) parseElement() (ast.Fragment, error) {
 	}
 
 	// Closing tag
+	for p.Accept(token.Space) {
+	}
 	if err := p.Expect(token.Identifier); err != nil {
 		return nil, err
 	} else if p.Text() != node.Name {
 		token := p.l.Latest()
 		return nil, fmt.Errorf("expected closing tag %s, got %s (%d:%d)", node.Name, p.Text(), token.Line, token.Start)
+	}
+	for p.Accept(token.Space) {
 	}
 	if err := p.Expect(token.GreaterThan); err != nil {
 		return nil, err
@@ -211,6 +215,8 @@ func (p *Parser) parseJSXFragment() (*ast.Element, error) {
 		node.Children = append(node.Children, child)
 	}
 	// Closing tag
+	for p.Accept(token.Space) {
+	}
 	if err := p.Expect(token.GreaterThan); err != nil {
 		return nil, err
 	}
@@ -233,7 +239,7 @@ func (p *Parser) parseField() (*ast.Field, error) {
 	for p.Accept(token.Space) {
 	}
 	// Handle boolean attributes
-	if p.Is(token.Identifier, token.GreaterThan, token.SlashGreaterThan, token.OpenCurly) {
+	if p.Is(token.Identifier, token.GreaterThan, token.SlashGreaterThan, token.OpenCurly, token.Comment) {
 		return &ast.Field{
 			Name: name,
 			Value: &ast.BoolValue{
@@ -299,7 +305,7 @@ func (p *Parser) parseExpr() (*ast.Expr, error) {
 			frags = append(frags, element)
 		case p.Accept(token.Comment):
 			frags = append(frags, &ast.Comment{
-				Value: strings.Trim(p.Text(), "/*"),
+				Value: strings.TrimSuffix(strings.TrimPrefix(p.Text(), "/*"), "*/"),
 			})
 		case p.Accept(token.CloseCurly):
 			return &ast.Expr{

@@ -185,6 +185,41 @@ func TestLessThan(t *testing.T) {
 	equal(t, `const x = a < b; export default () => <h1>{a < b && c}</h1>`, `text:"const x = a < b; export default () => " < identifier:"h1" > { expr:"a " expr:"< b && c" } </ identifier:"h1" >`)
 }
 
+func TestSkipJS(t *testing.T) {
+	equal(t, `throw new Error("use within a <Theme>"); x = <h1>hi</h1>`, `text:"throw new Error(\"use within a <Theme>\"); x = " < identifier:"h1" > text:"hi" </ identifier:"h1" >`)
+	equal(t, "// wrap in <StrictMode>\nx = <h1>hi</h1>", `text:"// wrap in <StrictMode>\nx = " < identifier:"h1" > text:"hi" </ identifier:"h1" >`)
+	equal(t, `/* renders a <Button> */ x = <h1>hi</h1>`, `text:"/* renders a <Button> */ x = " < identifier:"h1" > text:"hi" </ identifier:"h1" >`)
+	equal(t, "const html = `\n<p>Hello<br>World</p>\n`", "text:\"const html = `\\n<p>Hello<br>World</p>\\n`\"")
+	equal(t, `const re = /(<br>)/g`, `text:"const re = /(<br>)/g"`)
+	equal(t, "<div>{\n  // don't do this\n  foo\n}</div>", `< identifier:"div" > { expr:"\n  // don't do this\n  foo\n" } </ identifier:"div" >`)
+	equal(t, `<div>{path.split("\\")}</div>`, `< identifier:"div" > { expr:"path.split(\"\\\\\")" } </ identifier:"div" >`)
+	equal(t, `<div>{s.replace(/'/g, "")}</div>`, `< identifier:"div" > { expr:"s.replace(/'/g, \"\")" } </ identifier:"div" >`)
+	equal(t, "x = `url(${btoa(`<svg><path d=\"${c}\"/><path/></svg>`)})`", "text:\"x = `url(${btoa(`<svg><path d=\\\"${c}\\\"/><path/></svg>`)})`\"")
+	equal(t, "<div title={`${x ? `it's` : ''}`}>x</div>", "< identifier:\"div\" space:\" \" identifier:\"title\" = { expr:\"`${x ? `it's` : ''}`\" } > text:\"x\" </ identifier:\"div\" >")
+	equal(t, "<E s={`url(${`/api/${id}/a.png`})`} />", "< identifier:\"E\" space:\" \" identifier:\"s\" = { expr:\"`url(${`/api/${id}/a.png`})`\" } space:\" \" />")
+}
+
+func TestExprDepth(t *testing.T) {
+	equal(t, `<A f={() => { return <B /> }} />`, `< identifier:"A" space:" " identifier:"f" = { expr:"() => { return " < identifier:"B" space:" " /> expr:" }" } space:" " />`)
+	equal(t, `<div style={{ color: 'red' /* note */ }} />`, `< identifier:"div" space:" " identifier:"style" = { expr:"{ color: 'red' " comment:"/* note */" expr:" }" } space:" " />`)
+	equal(t, `<ul>{items.map(item => { return <li>{item}</li> })}</ul>`, `< identifier:"ul" > { expr:"items.map(item => { return " < identifier:"li" > { expr:"item" } </ identifier:"li" > expr:" })" } </ identifier:"ul" >`)
+}
+
+func TestTagNames(t *testing.T) {
+	equal(t, `<div><Checkmark_S /></div>`, `< identifier:"div" > < identifier:"Checkmark_S" space:" " /> </ identifier:"div" >`)
+	equal(t, `<UNSAFE_Provider>hi</UNSAFE_Provider>`, `< identifier:"UNSAFE_Provider" > text:"hi" </ identifier:"UNSAFE_Provider" >`)
+	equal(t, `<svg:rect />`, `< identifier:"svg:rect" space:" " />`)
+	equal(t, `<div><_3D_L /></div>`, `< identifier:"div" > < identifier:"_3D_L" space:" " /> </ identifier:"div" >`)
+	equal(t, `<$Comp _x="1">hi</$Comp>`, `< identifier:"$Comp" space:" " identifier:"_x" = string:"\"1\"" > text:"hi" </ identifier:"$Comp" >`)
+}
+
+func TestBeforeTag(t *testing.T) {
+	equal(t, `x = [<a />,<b />]`, `text:"x = [" < identifier:"a" space:" " /> text:"," < identifier:"b" space:" " /> text:"]"`)
+	equal(t, `f = ()=><a />`, `text:"f = ()=>" < identifier:"a" space:" " />`)
+	equal(t, `<ul>{[<li>Don't</li>]}</ul>`, `< identifier:"ul" > { expr:"[" < identifier:"li" > text:"Don't" </ identifier:"li" > expr:"]" } </ identifier:"ul" >`)
+	equal(t, `<div>{a&&<b />}</div>`, `< identifier:"div" > { expr:"a&&" < identifier:"b" space:" " /> } </ identifier:"div" >`)
+}
+
 func TestTempl(t *testing.T) {
 	equalFile(t, "14-time.templ")
 }

@@ -233,9 +233,9 @@ expr:"getIndex"
 }
 space:"\n                    "
 />
-expr:"\n                  )\n                "
+expr:"\n                  )\n                })"
 }
-text:")}\n              "
+text:"\n              "
 </
 identifier:"SortableContext"
 >

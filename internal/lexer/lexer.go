@@ -150,7 +150,9 @@ func initialState(l *Lexer) (t token.Type) {
 		return token.LessThan
 	default:
 		for {
-			l.step()
+			if !l.skipJS() {
+				l.step()
+			}
 			if l.cp == eof || (l.cp == '<' && l.isTagStart()) {
 				break
 			}
@@ -171,7 +173,7 @@ func childTagState(l *Lexer) (t token.Type) {
 			l.popState()
 			l.pushState(startCloseTagState)
 			return token.LessThanSlash
-		case isAlpha(l.cp) || isSpace(l.cp):
+		case isNameStart(l.cp) || isSpace(l.cp):
 			l.pushState(startOpenTagState)
 			return token.LessThan
 		case l.cp == '>':
@@ -188,7 +190,7 @@ func childTagState(l *Lexer) (t token.Type) {
 		}
 	case l.cp == '{':
 		l.step()
-		l.pushState(expressionState)
+		l.pushState(expressionState())
 		return token.OpenCurly
 	default:
 		for {
@@ -214,9 +216,9 @@ func startOpenTagState(l *Lexer) (t token.Type) {
 		l.popState()
 		l.pushState(childTagState)
 		return token.GreaterThan
-	case isAlpha(l.cp):
+	case isNameStart(l.cp):
 		l.step()
-		for isAlphaNumeric(l.cp) || isDash(l.cp) || l.cp == '.' {
+		for isNamePart(l.cp) {
 			l.step()
 		}
 		l.popState()
@@ -239,6 +241,8 @@ func middleTagState(l *Lexer) (t token.Type) {
 		l.popState()
 		l.pushState(childTagState)
 		return token.GreaterThan
+	case strings.HasPrefix(l.input[l.end:], "/*"):
+		return commentBlockState(l)
 	case l.cp == '/':
 		l.step()
 		if l.cp == '>' {
@@ -252,9 +256,9 @@ func middleTagState(l *Lexer) (t token.Type) {
 			return commentInlineState(l)
 		}
 		return l.unexpected()
-	case isAlpha(l.cp):
+	case isNameStart(l.cp):
 		l.step()
-		for isAlphaNumeric(l.cp) || isDash(l.cp) || l.cp == '.' || l.cp == '_' || l.cp == ':' {
+		for isNamePart(l.cp) {
 			l.step()
 		}
 		return token.Identifier
@@ -269,7 +273,7 @@ func middleTagState(l *Lexer) (t token.Type) {
 		return stringState(l, '\'')
 	case l.cp == '{':
 		l.step()
-		l.pushState(expressionState)
+		l.pushState(expressionState())
 		return token.OpenCurly
 	case isSpace(l.cp):
 		l.step()
@@ -289,9 +293,9 @@ func middleTagState(l *Lexer) (t token.Type) {
 
 func startCloseTagState(l *Lexer) (t token.Type) {
 	switch {
-	case isAlpha(l.cp) || isDash(l.cp):
+	case isNameStart(l.cp) || isDash(l.cp):
 		l.step()
-		for isAlphaNumeric(l.cp) || isDash(l.cp) || l.cp == '.' {
+		for isNamePart(l.cp) {
 			l.step()
 		}
 		return token.Identifier
@@ -299,12 +303,20 @@ func startCloseTagState(l *Lexer) (t token.Type) {
 		l.step()
 		l.popState()
 		return token.GreaterThan
+	case isSpace(l.cp):
+		l.step()
+		for isSpace(l.cp) {
+			l.step()
+		}
+		return token.Space
 	default:
 		l.step()
 		return l.unexpected()
 	}
 }
 
+// stringState lexes an attribute string. JSX attribute strings have no escapes
+// and may span lines.
 func stringState(l *Lexer, quote rune) (t token.Type) {
 	for {
 		switch {
@@ -314,74 +326,142 @@ func stringState(l *Lexer, quote rune) (t token.Type) {
 		case l.cp == quote:
 			l.step()
 			return token.String
-		case l.cp == '\\':
-			l.step()
-			if l.cp == quote {
-				l.step()
-			}
-		case l.cp == '\n':
-			return l.errorf("unexpected newline in string")
 		default:
 			l.step()
 		}
 	}
 }
 
-func stringWithinExpr(l *Lexer, quote rune) {
-	l.step()
-	for {
+// skipJS skips over a JS string, template literal, comment or regex at the
+// current position, so their contents aren't mistaken for JSX or braces.
+func (l *Lexer) skipJS() bool {
+	rest := l.input[l.end:]
+	switch {
+	case l.cp == '"' || l.cp == '\'':
+		quote := l.cp
+		l.step()
+		for l.cp != quote && l.cp != eof && l.cp != '\n' {
+			if l.cp == '\\' {
+				l.step()
+			}
+			l.step()
+		}
+		l.step()
+		return true
+	case l.cp == '`':
+		l.step()
+		for l.cp != '`' && l.cp != eof {
+			switch {
+			case l.cp == '\\':
+				l.step()
+				l.step()
+			case strings.HasPrefix(l.input[l.end:], "${"):
+				l.step()
+				l.skipBraces()
+			default:
+				l.step()
+			}
+		}
+		l.step()
+		return true
+	case strings.HasPrefix(rest, "//"):
+		for l.cp != '\n' && l.cp != eof {
+			l.step()
+		}
+		return true
+	case strings.HasPrefix(rest, "/*"):
+		l.step()
+		l.step()
+		for l.cp != eof && !strings.HasPrefix(l.input[l.end:], "*/") {
+			l.step()
+		}
+		l.step()
+		l.step()
+		return true
+	case l.cp == '/' && l.isRegexStart():
+		inClass := false
+		l.step()
+		for l.cp != eof && l.cp != '\n' && (inClass || l.cp != '/') {
+			switch l.cp {
+			case '\\':
+				l.step()
+			case '[':
+				inClass = true
+			case ']':
+				inClass = false
+			}
+			l.step()
+		}
+		l.step()
+		return true
+	default:
+		return false
+	}
+}
+
+// skipBraces skips from the current '{' to its matching '}'
+func (l *Lexer) skipBraces() {
+	depth := 0
+	for l.cp != eof {
+		if l.cp == '{' {
+			depth++
+		} else if l.cp == '}' {
+			depth--
+			if depth == 0 {
+				l.step()
+				return
+			}
+		}
+		if !l.skipJS() {
+			l.step()
+		}
+	}
+}
+
+// isRegexStart reports whether the '/' at the current position starts a regex
+// rather than a division, i.e. it follows an operator or the start of input.
+func (l *Lexer) isRegexStart() bool {
+	before := strings.TrimRightFunc(l.input[:l.end], isSpace)
+	return before == "" || strings.ContainsRune("(,=:[!&|?{;", rune(before[len(before)-1]))
+}
+
+// expressionState returns a new state for lexing a {...} expression. The brace
+// depth lives in the closure so it survives the expression being split into
+// multiple tokens (e.g. by a nested element or a comment).
+func expressionState() state {
+	depth := 0
+	return func(l *Lexer) (t token.Type) {
+		nextRune, _ := utf8.DecodeRuneInString(l.input[l.next:])
 		switch {
 		case l.cp == eof:
-			return
-		case l.cp == quote:
-			return
-		case l.cp == '\\':
+			l.popState()
+			return l.unexpected()
+		case l.cp == '<' && isBeforeTag(l.prev) && (isNameStart(nextRune) || nextRune == '>'):
+			l.pushState(startOpenTagState)
 			l.step()
-			if l.cp == quote {
-				l.step()
-			}
+			return token.LessThan
+		case l.cp == '}' && depth == 0:
+			l.popState()
+			l.step()
+			return token.CloseCurly
+		case strings.HasPrefix(l.input[l.end:], "/*"):
+			return commentBlockState(l)
 		default:
-			l.step()
-		}
-	}
-}
-
-func expressionState(l *Lexer) (t token.Type) {
-	depth := 0
-	nextRune, _ := utf8.DecodeRuneInString(l.input[l.next:])
-	switch {
-	case l.cp == eof:
-		l.popState()
-		return l.unexpected()
-	case l.cp == '<' && isBeforeTag(l.prev) && (isAlpha(nextRune) || nextRune == '>'):
-		l.pushState(startOpenTagState)
-		l.step()
-		return token.LessThan
-	case l.cp == '}' && depth == 0:
-		l.popState()
-		l.step()
-		return token.CloseCurly
-	case strings.HasPrefix(l.input[l.end:], "/*"):
-		return commentBlockState(l)
-	default:
-		for {
-			if l.cp == '{' {
-				depth++
-			} else if l.cp == '}' {
-				depth--
-			} else if l.cp == '"' {
-				stringWithinExpr(l, '"')
-			} else if l.cp == '\'' {
-				stringWithinExpr(l, '\'')
-			} else if l.cp == '`' {
-				stringWithinExpr(l, '`')
+			for {
+				if l.cp == '{' {
+					depth++
+				} else if l.cp == '}' {
+					depth--
+				}
+				if !l.skipJS() {
+					l.step()
+				}
+				if l.cp == eof || (l.cp == '<' && isBeforeTag(l.prev)) || (l.cp == '}' && depth == 0) || strings.HasPrefix(l.input[l.end:], "/*") {
+					break
+				}
 			}
-			l.step()
-			if l.cp == eof || (l.cp == '<' && isBeforeTag(l.prev)) || (l.cp == '}' && depth == 0) || strings.HasPrefix(l.input[l.end:], "/*") {
-				break
-			}
+			return token.Expr
 		}
-		return token.Expr
 	}
 }
 
@@ -397,12 +477,25 @@ func isDash(cp rune) bool {
 	return cp == '-'
 }
 
+// isNameStart reports whether cp can start a tag or attribute name
+func isNameStart(cp rune) bool {
+	return isAlpha(cp) || cp == '_' || cp == '$'
+}
+
+// isNamePart reports whether cp can continue a tag or attribute name
+// (e.g. my-el, Foo.Bar, Icon_S, $Comp, svg:rect)
+func isNamePart(cp rune) bool {
+	return isAlphaNumeric(cp) || isDash(cp) || cp == '.' || cp == '_' || cp == '$' || cp == ':'
+}
+
 func isSpace(cp rune) bool {
 	return cp == ' ' || cp == '\t' || cp == '\n' || cp == '\r'
 }
 
+// isBeforeTag reports whether a tag can start right after cp (e.g. `(<a>`,
+// `[<a>`, `=><a>`, `&&<a>`)
 func isBeforeTag(cp rune) bool {
-	return cp == 0 || isSpace(cp) || cp == '(' || cp == '{'
+	return cp == 0 || isSpace(cp) || strings.ContainsRune("({[,=>?:&|", cp)
 }
 
 // isTagStart reports whether the '<' at the current position starts a tag. A
@@ -413,11 +506,15 @@ func (l *Lexer) isTagStart() bool {
 }
 
 func commentBlockState(l *Lexer) token.Type {
+	// Skip the opening /* so that /*/ isn't treated as closed
+	l.step()
+	l.step()
 	for {
 		switch {
 		case l.cp == eof:
 			return l.errorf("unclosed comment")
-		case l.cp == '/' && l.prev == '*':
+		case strings.HasPrefix(l.input[l.end:], "*/"):
+			l.step()
 			l.step()
 			return token.Comment
 		default:

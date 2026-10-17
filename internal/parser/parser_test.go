@@ -120,6 +120,32 @@ func TestLessThan(t *testing.T) {
 	equal(t, `const x = a < b; export default () => <h1>{a < b && c}</h1>`, `const x = a < b; export default () => <h1>{a < b && c}</h1>`)
 }
 
+func TestSkipJS(t *testing.T) {
+	equal(t, `const msg = "Line 1 <br/>Line 2"`, `const msg = "Line 1 <br/>Line 2"`)
+	equal(t, `console.warn("A <Checkbox> element"); x = <h1>hi</h1>`, `console.warn("A <Checkbox> element"); x = <h1>hi</h1>`)
+	equal(t, "// uses <Field>\nx = <h1>hi</h1>", "// uses <Field>\nx = <h1>hi</h1>")
+	equal(t, "<div>{\n  // render <Modal> here\n  foo\n}</div>", "<div>{\n  // render <Modal> here\n  foo\n}</div>")
+	equal(t, `<div>{s.replace(/"/g, '&quot;')}</div>`, `<div>{s.replace(/"/g, '&quot;')}</div>`)
+}
+
+func TestExprDepth(t *testing.T) {
+	equal(t, `<A f={() => { if (a < b) go() }} />`, `<A f={() => { if (a < b) go() }} />`)
+	equal(t, `<div className={cx({ active: i <= n })} />`, `<div className={cx({ active: i <= n })} />`)
+	equal(t, `<K map={{ card: { render: () => <X />, drag: true }, other: 1 }} />`, `<K map={{ card: { render: () => <X />, drag: true }, other: 1 }} />`)
+	equal(t, `<T keys={/* @__PURE__ */ new Set({ a: 1 })} />`, `<T keys={/* @__PURE__ */ new Set({ a: 1 })} />`)
+}
+
+func TestAttrString(t *testing.T) {
+	equal(t, `<a title="C:\" href="x">x</a>`, `<a title="C:\" href="x">x</a>`)
+	equal(t, "<path d=\"M0 0\n  L10 10\" />", "<path d=\"M0 0\n  L10 10\" />")
+}
+
+func TestClosingTagSpace(t *testing.T) {
+	equal(t, `<a>x</a >`, `<a>x</a>`)
+	equal(t, "<a>x</ a\n>", `<a>x</a>`)
+	equal(t, `<>x</ >`, `<>x</>`)
+}
+
 func TestStyle(t *testing.T) {
 	equalAST(t, `export default () => <style scoped>{`+"`"+`h1 { background-color: lightblue; }`+"`"+`}</style>`,
 		&ast.Script{Body: []ast.Fragment{
@@ -343,4 +369,13 @@ func TestCommentInline(t *testing.T) {
 		// two
 		// three
 	/>)`, `export default () => (<img className="hello" />)`)
+	equal(t, "<button\n  disabled // not yet\n  onClick={x}\n/>", `<button disabled onClick={x} />`)
+}
+
+func TestCommentBlockInTag(t *testing.T) {
+	equal(t, `<div /* note */ id="a">x</div>`, `<div id="a">x</div>`)
+	equal(t, `<input disabled /* note */ />`, `<input disabled />`)
+	equal(t, `<div>{/*/ odd */}</div>`, `<div>{/*/ odd */}</div>`)
+	equal(t, `<div>{/** doc **/}</div>`, `<div>{/** doc **/}</div>`)
+	equal(t, "/*/ <b> */ x = <h1>hi</h1>", "/*/ <b> */ x = <h1>hi</h1>")
 }
