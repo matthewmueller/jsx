@@ -1,3 +1,13 @@
+# 0.0.13 / 2026-10-17
+
+- fix: treat `a < b` (whitespace on both sides) as less than, not a tag
+- fix: skip JS strings, template literals, comments and regex so JSX-like text inside them isn't parsed (e.g. `console.warn("use a <Provider>")`)
+- fix: keep brace depth when an expression contains a nested element or comment (e.g. `f={() => { return <B /> }}`)
+- fix: allow `_`, `$` and `:` in tag names (e.g. `<Icon_S />`, `<_3D />`, `<svg:rect />`)
+- fix: allow backslashes and newlines in attribute strings
+- fix: recognize JSX right after `[`, `,`, `=`, `=>`, `?`, `:`, `&&` and `||` without a space
+- fix: support comments between attributes and whitespace in closing tags
+
 # 0.0.12 / 2026-01-19
 
 - support inline comments
