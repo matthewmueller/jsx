@@ -113,6 +113,13 @@ func TestSample(t *testing.T) {
 	equal(t, `hello <span data-x={i == 0}>world</span>`, `hello <span data-x={i == 0}>world</span>`)
 }
 
+func TestLessThan(t *testing.T) {
+	equal(t, `if (a < b && c) {}`, `if (a < b && c) {}`)
+	equal(t, `const x = a < b ? 1 : 2`, `const x = a < b ? 1 : 2`)
+	equal(t, `for (let i = 0; i < n; i++) {}`, `for (let i = 0; i < n; i++) {}`)
+	equal(t, `const x = a < b; export default () => <h1>{a < b && c}</h1>`, `const x = a < b; export default () => <h1>{a < b && c}</h1>`)
+}
+
 func TestStyle(t *testing.T) {
 	equalAST(t, `export default () => <style scoped>{`+"`"+`h1 { background-color: lightblue; }`+"`"+`}</style>`,
 		&ast.Script{Body: []ast.Fragment{

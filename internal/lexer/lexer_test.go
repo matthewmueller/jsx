@@ -177,6 +177,14 @@ func TestForLoop(t *testing.T) {
 	equal(t, `<div><   a></a></div>`, `< identifier:"div" > < space:"   " identifier:"a" > </ identifier:"a" > </ identifier:"div" >`)
 }
 
+func TestLessThan(t *testing.T) {
+	equal(t, `if (a < b && c) {}`, `text:"if (a < b && c) {}"`)
+	equal(t, `const x = a < b ? 1 : 2`, `text:"const x = a < b ? 1 : 2"`)
+	equal(t, `for (let i = 0; i < 25; i++) {}`, `text:"for (let i = 0; i < 25; i++) {}"`)
+	equal(t, "if (\n\ta <\n\tb\n) {}", `text:"if (\n\ta <\n\tb\n) {}"`)
+	equal(t, `const x = a < b; export default () => <h1>{a < b && c}</h1>`, `text:"const x = a < b; export default () => " < identifier:"h1" > { expr:"a " expr:"< b && c" } </ identifier:"h1" >`)
+}
+
 func TestTempl(t *testing.T) {
 	equalFile(t, "14-time.templ")
 }

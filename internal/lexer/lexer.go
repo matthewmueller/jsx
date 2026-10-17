@@ -144,14 +144,14 @@ func initialState(l *Lexer) (t token.Type) {
 	switch {
 	case l.cp == eof:
 		return token.EOF
-	case l.cp == '<' && isBeforeTag(l.prev):
+	case l.cp == '<' && l.isTagStart():
 		l.pushState(startOpenTagState)
 		l.step()
 		return token.LessThan
 	default:
 		for {
 			l.step()
-			if l.cp == eof || (l.cp == '<' && isBeforeTag(l.prev)) {
+			if l.cp == eof || (l.cp == '<' && l.isTagStart()) {
 				break
 			}
 		}
@@ -403,6 +403,13 @@ func isSpace(cp rune) bool {
 
 func isBeforeTag(cp rune) bool {
 	return cp == 0 || isSpace(cp) || cp == '(' || cp == '{'
+}
+
+// isTagStart reports whether the '<' at the current position starts a tag. A
+// '<' with whitespace on both sides is a less than sign (e.g. `a < b`).
+func (l *Lexer) isTagStart() bool {
+	next, _ := utf8.DecodeRuneInString(l.input[l.next:])
+	return isBeforeTag(l.prev) && !(isSpace(l.prev) && isSpace(next))
 }
 
 func commentBlockState(l *Lexer) token.Type {
